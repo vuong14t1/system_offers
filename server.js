@@ -13,21 +13,13 @@ var mongoose = require('./mongoose');
 var app = express();
 
 var contains = require('./methods/array_contains');
-var post_users = require('./routes/post_users');
+var users_route = require('./routes/users_route');
+var group_objects_route = require('./routes/group_objects_route');
+var group_offers_route = require('./routes/group_objects_route');
 
-/*var a = [1,2,3,4,5];
-console.log(contains(a, 6) + ' test');*/
-
-//把特定方法引入视图层
 app.locals.moment = require('moment');
 app.locals.contains = contains;
 
-//var url = 'mongodb://mongo.duapp.com:8908/xgQLEdSsexdigfKfZxwj';
-//var user = '78b39e5c37054e82865b9d2bda504946';
-//var pas = 'd61d4f7285e44b7083000c287f65074f';
-
-//mongoose连接主机：127.0.0.1，端口：12345，数据库：blog
-//mongoose.connect( url ,{user:user,pass:pas});
 mongoose.getConnect();
 
 // view engine setup
@@ -67,7 +59,9 @@ app.use(function(req, res, next){
 });
 
 // app.use('/', index);
-app.use('/tracking_user', post_users);
+app.use('/tracking_user', users_route);
+app.use('/group_objects', group_objects_route);
+app.use('/group_offers', group_offers_route);
 
 
 // catch 404 and forward to error handler
@@ -126,7 +120,6 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-//引入socket模块
 var serverSocket = require('./websocket/server_socket');
 serverSocket(server);
 

@@ -19,7 +19,7 @@ var group_objects = new Schema({
         to: Number
     },
 
-    amountPay: {
+    numberPay: {
         from: Number,
         to: Number
     },

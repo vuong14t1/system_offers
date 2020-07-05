@@ -6,7 +6,7 @@ var users = new Schema({
         default: -1,
         require: true
     },
-    groupObjectId: {
+    groupObject: {
         type: Schema.Types.ObjectId,
         ref: 'group_object'
     },
@@ -17,6 +17,10 @@ var users = new Schema({
                 default: "IAP"
             },
             cost: {
+                type: Number,
+                default: 0
+            },
+            number: {
                 type: Number,
                 default: 0
             }

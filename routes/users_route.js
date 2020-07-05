@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Users = require('../models/users');
 var ERROR_CODE = require('../const/error_code');
+var CHANNEL_PAYMENT = require('../const/channel_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
@@ -87,17 +88,16 @@ router.post('/lastPayment', function(req, res, next){
     Users.findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;
-            var indexChannelP = user.channelPayment.findIndex(function (o) {
-                return o.channel == body.channelPayment
-            });
-            console.log("index channel " + indexChannelP);
-            if(indexChannelP > -1) {
-                user.channelPayment[indexChannelP].cost += body.lastPaidPack;
+            var channel = CHANNEL_PAYMENT[body.channelPayment + ''];
+            if(user.channelPayment[channel] != null) {
+                user.channelPayment[channel].cost += body.lastPaidPack;
+                user.channelPayment[channel].number += 1;
             }else{
-                user.channelPayment = user.channelPayment.concat([{
+                user.channelPayment[channel] = {
                     channel: body.channelPayment,
-                    cost: body.lastPaidPack
-                }]);
+                    cost: body.lastPaidPack,
+                    number: 1
+                }
             }
             console.log('after save ' + JSON.stringify(user));
             user.save(function (error, user) {
@@ -109,7 +109,7 @@ router.post('/lastPayment', function(req, res, next){
                 }
             });
         }else{
-            Users.create({userId: body.userId, lastPaidPack: body.lastPaidPack, channelPayment: [{channel: body.channelPayment, cost: lastPaidPack}]}, function(error, user) {
+            Users.create({userId: body.userId, lastPaidPack: body.lastPaidPack, channelPayment: [{channel: body.channelPayment, cost: body.lastPaidPack}]}, function(error, user) {
                 if(error) {
                     console.log('post user login error');
                     res.send({erroCode: ERROR_CODE.FAIL});

@@ -1,12 +1,12 @@
 # NodeJs + Mongodb + Express + Socket.io
 
-**a simple blog system powered by Nodejs, Mongoldb, Express and Socket.io**
+**a simple system offers powered by Nodejs, Mongoldb, Express and Socket.io**
 
 ### How to use?
 
 > npm install
 
-open the bae.js file. config your database name and password. 
+open the mongoose.js file. config your database name and password. 
 
 ### How to start it?
 
