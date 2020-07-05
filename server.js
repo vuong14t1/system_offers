@@ -15,7 +15,7 @@ var app = express();
 var contains = require('./methods/array_contains');
 var users_route = require('./routes/users_route');
 var group_objects_route = require('./routes/group_objects_route');
-var group_offers_route = require('./routes/group_objects_route');
+var group_offers_route = require('./routes/group_offers_route');
 
 app.locals.moment = require('moment');
 app.locals.contains = contains;

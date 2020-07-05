@@ -21,6 +21,7 @@ router.get('/list', function (req, res, next) {
         });
         console.log("list object " + JSON.stringify(objects));
     });
+    
 });
 
 router.post('/create', function (req, res, next) {
