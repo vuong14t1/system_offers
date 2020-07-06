@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var ERROR_CODE = require('../const/error_code');
 var GroupOffers = require('../models/group_offers');
+var OfferLives = require('../models/offer_lives');
+var Users = require('../models/users');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
     console.log('Time req group offer: ', Date.now());
@@ -67,6 +69,26 @@ router.post('/delete', function (req, res, next) {
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
+            //find all offer live refer to self
+            OfferLives.find({groupOffer: body.idOffer}, function (err, offerLives) {
+                console.log('ref offer lives ' + JSON.stringify(offerLives));
+                for(var i in offerLives) {
+                    //notify to user
+                    Users.find({groupObject: offerLives[i].groupObject}, function (err, users) {
+                        console.log('ref offer users ' + JSON.stringify(users));
+                        for(var i in users) {
+                            if(users[i]) {
+                                users[i].isModifiedOffer = true;
+                                users[i].save();
+                            }
+                        }
+                    });
+                    //delete ref to group offer
+                    offerLives[i].groupOffer = null;
+                    offerLives[i].save();
+                }
+            });
+
             res.send({
                 errorCode: ERROR_CODE.SUCCESS
             });
@@ -88,6 +110,16 @@ router.post('/edit', function (req, res, next) {
             res.send({
                 errorCode: ERROR_CODE.SUCCESS,
                 data: raw
+            });
+            //find all offer live refer to self
+            OfferLives.find({groupOffer: raw._id}, function (err, offerLives) {
+                for(var i in offerLives) {
+                    //notify to user
+                    Users.find({groupObject: offerLives[i].groupObject}, function (err, user) {
+                        user.isModifiedOffer = true;
+                        user.save();
+                    });
+                }
             });
         }
     });

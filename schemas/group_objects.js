@@ -1,6 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var group_objects = new Schema({
+    offerLive: {
+        type: Schema.Types.ObjectId,
+        ref: 'offer_live'
+    },
+
     totalUser: {
         type: Number,
         default: 0

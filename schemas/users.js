@@ -45,6 +45,11 @@ var users = new Schema({
     lastTimeOnline: {
         type: Number,
         default: Date.now()
+    },
+
+    isModifiedOffer: {
+       type: Boolean,
+       default: false
     }
 });
 
