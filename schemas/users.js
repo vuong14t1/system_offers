@@ -50,6 +50,11 @@ var users = new Schema({
     isModifiedOffer: {
        type: Boolean,
        default: false
+    },
+
+    channelGame: {
+        type: Number,
+        default: 1
     }
 });
 

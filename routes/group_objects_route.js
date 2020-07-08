@@ -32,7 +32,8 @@ router.post('/create', function (req, res, next) {
         numberPay: req.body.numberPay,
         lastPaidPack: req.body.lastPaidPack,
         age: req.body.age,
-        timeLastOnline: req.body.timeLastOnline
+        timeLastOnline: req.body.timeLastOnline,
+        channelGame: req.body.channelGame
     };
     var channel = CHANNEL_PAYMENT[body.channelPayment + ''];
     var timeMinAge = Date.now() - body.age.from;
@@ -42,6 +43,7 @@ router.post('/create', function (req, res, next) {
     Users.find({})
     .where('groupObject').exists(false)
     .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
+    .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
     .where("channelPayment."  + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
     .where("channelPayment." + channel + ".number").gte(body.numberPay.from).lte(body.numberPay.to)
     .where('lastPaidPack').gte(body.lastPaidPack.from).lte(body.lastPaidPack.to)
@@ -81,6 +83,11 @@ router.post('/create', function (req, res, next) {
             timeLastOnline: {
                 from: body.timeLastOnline.from,
                 to: body.timeLastOnline.to
+            },
+
+            channelGame: {
+                from: body.channelGame.from,
+                to: body.channelGame.to
             }
         }, function (error, groupObject) {
             if(error) {
@@ -100,11 +107,25 @@ router.post('/create', function (req, res, next) {
                 }
                 res.send({
                     errorCode: ERROR_CODE.SUCCESS,
-                    data: groupObject
+                    data: groupObject,
+                    dataUser: users
                 });
             }
         });
-    })
-    ;
+    });
+});
+
+router.post('/set_name', function (req, res, next) {
+    var body = {
+        idGroupOffer: req.body.idGroupOffer,
+        nameObject: req.body.nameObject
+    };
+    GroupObjects.findByIdAndUpdate(body.idGroupOffer, {nameObject: body.nameObject}, {new: true}, function (err, groupObject) {
+        if(err) {
+            res.send({errorCode: ERROR_CODE.FAIL});
+            return;
+        }
+        res.send({errorCode: ERROR_CODE.SUCCESS, data: groupObject});
+    });
 });
 module.exports = router;

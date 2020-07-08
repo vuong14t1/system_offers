@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var group_objects = new Schema({
+    nameObject: {
+        type: String,
+        default: "default"
+    },
     offerLive: {
         type: Schema.Types.ObjectId,
         ref: 'offer_live'
@@ -40,6 +44,11 @@ var group_objects = new Schema({
     },
 
     timeLastOnline: {
+        from: Number,
+        to: Number
+    },
+
+    channelGame: {
         from: Number,
         to: Number
     }
