@@ -4,9 +4,38 @@ var ERROR_CODE = require('../const/error_code');
 var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
 var CHANNEL_PAYMENT = require('../const/channel_const');
+const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
+    console.log('Time 111: ', Date.now())
+    if(!req.session.loggedIn) {
+        res.send({
+            errorCode: ERROR_CODE.NOT_LOGIN
+        });
+        return;
+    }
+    next()
+})
+
+router.use('/set_name',function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
+    if(req.session.role == ROLE.VIEWER) {
+        res.send({
+            errorCode: ERROR_CODE.NOT_PERMISSION
+        });
+        return;
+    }
+    next()
+})
+
+router.use('/create',function timeLog (req, res, next) {
+    console.log('Time: ', Date.now())
+    if(req.session.role == ROLE.VIEWER) {
+        res.send({
+            errorCode: ERROR_CODE.NOT_PERMISSION
+        });
+        return;
+    }
     next()
 })
 

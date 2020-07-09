@@ -5,12 +5,6 @@ var GroupObjects = require('../models/group_objects');
 var GroupOffers = require('../models/group_offers');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
-// middleware that is specific to this router
-router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    next()
-})
-
 router.post('/user_login', function (req, res, next) {
     console.log("post user login");
     var body = {

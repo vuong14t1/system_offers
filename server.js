@@ -9,6 +9,8 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose = require('./mongoose');
+var seedAccount = require("./seed_db/seed_accounts");
+var Accounts = require("./models/accounts");
 
 var app = express();
 
@@ -22,7 +24,7 @@ app.locals.moment = require('moment');
 app.locals.contains = contains;
 
 mongoose.getConnect();
-
+seedAccount.seedAccounts();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -46,13 +48,14 @@ app.use(session({
 }));
 
 app.use(function(req, res, next){
+  console.log("===== " + JSON.stringify(req.session));
   if(req.session.loggedIn){
         res.locals.authenticated = true;
-        // User.findById(req.session.loggedIn, function(err, doc){
-        //     if(err) return next(err);
-        //     res.locals.me = doc;
-        //     next();
-        // });
+        Accounts.findById(req.session.loggedIn, function(err, doc){
+            if(err) return next(err);
+            res.locals.me = doc;
+            next();
+        });
   } else {
         res.locals.authenticated = false;
         next();
