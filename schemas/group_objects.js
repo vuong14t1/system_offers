@@ -57,35 +57,3 @@ var group_objects = new Schema({
 
 module.exports = group_objects;
 
-const seeder = require('mongoose-seed');
-const faker = require('faker');
-
-let items = [];
-for(i=0; i < 15; i++){
-    items.push(
-        {
-            nameObject : faker.commerce.productName(),
-            totalUser : faker.lorem.number(),
-            totalGame : faker.random.number()
-        }
-    )
-}
-
-let data = [{
-    'model': 'group_objects',
-    'documents': items
-}]
-
-console.log(data);
-
-// connect mongodb
-seeder.connect('mongodb://localhost:27017/system_offers_1', function() {
-  seeder.loadModels([
-    '../../model/group_objects'  // load mongoose model 
-  ]);
-  seeder.clearModels(['group_objects'], function() {
-    seeder.populateModels(data, function() {
-      seeder.disconnect();
-    });
-  });
-});
