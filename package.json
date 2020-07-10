@@ -4,7 +4,8 @@
   "author": "luoran",
   "description": "The first bae nodejs app!",
   "scripts": {
-    "start": "node server.js"
+	"start": "node server.js",
+	"seed": "node schemas/seeder/db_seed.js"
   },
   "dependencies": {
     "async": "^3.2.0",

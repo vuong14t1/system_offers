@@ -56,8 +56,6 @@ let data = [{
     'documents': items
 }]
 
-console.log(data);
-
 // connect mongodb
 seeder.connect('mongodb://localhost:27017/system_offers_1', function() {
   seeder.loadModels([
