@@ -9,8 +9,11 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose = require('./mongoose');
+const cors = require('cors');
 
 var app = express();
+app.use(cors());
+app.options('*', cors());
 
 var contains = require('./methods/array_contains');
 var users_route = require('./routes/users_route');
