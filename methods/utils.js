@@ -17,8 +17,8 @@ Utility.getCurrentTime = function () {
 };
 
 //kiem tra xem cac offer het han hay chua de giai phong user khoi rang buoc
-Utility.checkStatusOfferLive = function () {
-    GroupObjects.find({}).populate("offerLive").exec(function (err, groupObjects) {
+Utility.checkStatusOfferLive = function (gameId) {
+    GroupObjects.getModel(gameId).find({}).populate("offerLive").exec(function (err, groupObjects) {
         if(err) {
             console.log('GroupObjects check status offer live error');
             return;
@@ -26,7 +26,7 @@ Utility.checkStatusOfferLive = function () {
         for(var i in groupObjects) {
             var groupObject = groupObjects[i];
             if(groupObject.offerLive && Utility.getCurrentTime() >= groupObject.offerLive.timeFinish) {
-                Users.find({groupObject: groupObject._id}, function (err, users) {
+                Users.getModel(gameId).find({groupObject: groupObject._id}, function (err, users) {
                     if(err) {
                         console.log('users check status offer live error');
                         return;

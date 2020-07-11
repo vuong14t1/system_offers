@@ -42,7 +42,7 @@ router.use('/create',function timeLog (req, res, next) {
 
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
-    utils.Utility.checkStatusOfferLive();
+    utils.Utility.checkStatusOfferLive(gameId);
     GroupObjects.getModel(gameId).find({}, function (error, objects) {
         if(error) {
             console.log(error);

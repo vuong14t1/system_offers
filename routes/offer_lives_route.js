@@ -31,7 +31,7 @@ router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
 
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
-    utils.Utility.checkStatusOfferLive();
+    utils.Utility.checkStatusOfferLive(gameId);
     OfferLives.getModel(gameId).find({}, function (err, offer_lives) {
         if(err) {
             res.send({
