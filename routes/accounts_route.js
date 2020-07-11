@@ -37,7 +37,7 @@ router.post("/login", function (req, res, next) {
     var body = {
         email: req.body.email,
         password: md5(req.body.password)
-    };
+	};
     Accounts.findOne({email: body.email, password: body.password}, function (err, account) {
         if(account) {
             if(err) {
