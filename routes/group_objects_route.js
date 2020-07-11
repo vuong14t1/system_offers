@@ -4,6 +4,7 @@ var ERROR_CODE = require('../const/error_code');
 var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
 var CHANNEL_PAYMENT = require('../const/channel_const');
+var utils = require('../methods/utils');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -40,6 +41,7 @@ router.use('/create',function timeLog (req, res, next) {
 })
 
 router.get('/list', function (req, res, next) {
+    utils.Utility.checkStatusOfferLive();
     GroupObjects.find({}, function (error, objects) {
         if(error) {
             console.log(error);

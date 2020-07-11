@@ -4,6 +4,7 @@ var ERROR_CODE = require('../const/error_code');
 var OfferLives = require('../models/offer_lives');
 var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
+var utils = require('../methods/utils');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -29,6 +30,7 @@ router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
 })
 
 router.get('/list', function (req, res, next) {
+    utils.Utility.checkStatusOfferLive();
     OfferLives.find({}, function (err, offer_lives) {
         if(err) {
             res.send({
