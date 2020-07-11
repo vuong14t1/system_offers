@@ -33,11 +33,12 @@ router.use('/list',function timeLog (req, res, next) {
 })
 
 router.post("/login", function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         email: req.body.email,
         password: md5(req.body.password)
     };
-    Accounts.findOne({email: body.email, password: body.password}, function (err, account) {
+    Accounts.getModel(gameId).findOne({email: body.email, password: body.password}, function (err, account) {
         if(account) {
             if(err) {
                 return next(err);
@@ -69,7 +70,8 @@ router.get("/logout", function (req, res, next) {
 });
 
 router.get('/list', function (req, res, next) {
-    Accounts.find({}, function (err, accounts) {
+    var gameId = req.query.gameId;
+    Accounts.getModel(gameId).find({}, function (err, accounts) {
         res.send({
             errorCode: ERROR_CODE.SUCCESS,
             data: accounts
@@ -78,10 +80,11 @@ router.get('/list', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         idAccount: req.body.idAccount
     };
-    Accounts.findByIdAndRemove(body.idAccount, function (err) {
+    Accounts.getModel(gameId).findByIdAndRemove(body.idAccount, function (err) {
         res.send({
             errorCode: ERROR_CODE.SUCCESS
         });
@@ -89,11 +92,12 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/edit', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         id: req.body.id,
         dataModify: req.body.dataModify
     };
-    Accounts.findByIdAndUpdate(body.id, dataModify, {new: true}, function(err, account) {
+    Accounts.getModel(gameId).findByIdAndUpdate(body.id, dataModify, {new: true}, function(err, account) {
         if(err) {
             return res.send({errorCode: ERROR_CODE.FAIL});
         }
@@ -105,11 +109,12 @@ router.post('/edit', function (req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         email: req.body.email,
         password: req.body.password,
         role: req.body.role
     };
-    Accounts.findOne({email: body.email});;
+    Accounts.getModel(gameId).findOne({email: body.email});;
 });
 module.exports = router;

@@ -41,8 +41,9 @@ router.use('/create',function timeLog (req, res, next) {
 })
 
 router.get('/list', function (req, res, next) {
+    var gameId = req.query.gameId;
     utils.Utility.checkStatusOfferLive();
-    GroupObjects.find({}, function (error, objects) {
+    GroupObjects.getModel(gameId).find({}, function (error, objects) {
         if(error) {
             console.log(error);
             return next();
@@ -56,6 +57,7 @@ router.get('/list', function (req, res, next) {
 });
 
 router.post('/create', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         totalGame: req.body.totalGame,
         channelPayment: req.body.channelPayment,
@@ -71,7 +73,7 @@ router.post('/create', function (req, res, next) {
     var timeMaxAge = Date.now() - body.age.to;
     var timeMinOnline = Date.now() - body.timeLastOnline.from;
     var timeMaxOnline = Date.now() - body.timeLastOnline.to;
-    Users.find({})
+    Users.getModel(gameId).find({})
     .where('groupObject').exists(false)
     .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
     .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
@@ -86,7 +88,7 @@ router.post('/create', function (req, res, next) {
             res.send({erroCode: ERROR_CODE.EMPTY});
             return;
         }
-        GroupObjects.create({
+        GroupObjects.getModel(gameId).create({
             totalUser: users.length,
             totalGame: {
                 from: body.totalGame.from,
@@ -147,11 +149,12 @@ router.post('/create', function (req, res, next) {
 });
 
 router.post('/set_name', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         idGroupOffer: req.body.idGroupOffer,
         nameObject: req.body.nameObject
     };
-    GroupObjects.findByIdAndUpdate(body.idGroupOffer, {nameObject: body.nameObject}, {new: true}, function (err, groupObject) {
+    GroupObjects.getModel(gameId).findByIdAndUpdate(body.idGroupOffer, {nameObject: body.nameObject}, {new: true}, function (err, groupObject) {
         if(err) {
             res.send({errorCode: ERROR_CODE.FAIL});
             return;

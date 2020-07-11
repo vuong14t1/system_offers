@@ -16,10 +16,10 @@ var app = express();
 
 var contains = require('./methods/array_contains');
 var users_route = require('./routes/users_route');
-var group_objects_route = require('./routes/group_objects_route');
-var group_offers_route = require('./routes/group_offers_route');
-var offer_lives_route = require('./routes/offer_lives_route');
-var accounts_route = require('./routes/accounts_route');
+// var group_objects_route = require('./routes/group_objects_route');
+// var group_offers_route = require('./routes/group_offers_route');
+// var offer_lives_route = require('./routes/offer_lives_route');
+// var accounts_route = require('./routes/accounts_route');
 
 app.locals.moment = require('moment');
 app.locals.contains = contains;
@@ -65,10 +65,10 @@ app.use(function(req, res, next){
 
 // app.use('/', index);
 app.use('/tracking_user', users_route);
-app.use('/group_objects', group_objects_route);
-app.use('/group_offers', group_offers_route);
-app.use('/offer_lives', offer_lives_route);
-app.use('/accounts_route', accounts_route);
+// app.use('/group_objects', group_objects_route);
+// app.use('/group_offers', group_offers_route);
+// app.use('/offer_lives', offer_lives_route);
+// app.use('/accounts_route', accounts_route);
 
 
 // catch 404 and forward to error handler
