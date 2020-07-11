@@ -4,9 +4,27 @@ var ERROR_CODE = require('../const/error_code');
 var GroupOffers = require('../models/group_offers');
 var OfferLives = require('../models/offer_lives');
 var Users = require('../models/users');
+const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-    console.log('Time req group offer: ', Date.now());
+    console.log('Time: ', Date.now())
+    if(!req.session.loggedIn) {
+        res.send({
+            errorCode: ERROR_CODE.NOT_LOGIN
+        });
+        return;
+    }
+    next()
+})
+
+router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
+    console.log('Time 111: ', Date.now())
+    if(req.session.role == ROLE.VIEWER) {
+        res.send({
+            errorCode: ERROR_CODE.NOT_PERMISSION
+        });
+        return;
+    }
     next()
 })
 
