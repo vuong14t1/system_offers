@@ -56,4 +56,3 @@ var group_objects = new Schema({
 });
 
 module.exports = group_objects;
-

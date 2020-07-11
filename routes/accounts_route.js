@@ -4,7 +4,7 @@ var ERROR_CODE = require('../const/error_code');
 var Accounts = require("../models/accounts");
 var md5 = require('md5');
 const ROLE = require('../const/role_const');
-router.use('/delete',function timeLog (req, res, next) {
+router.use(['/delete', '/edit'],function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
     if(!req.session.loggedIn) {
         res.send({
@@ -30,7 +30,6 @@ router.use('/list',function timeLog (req, res, next) {
         return;
     }
     next()
-    
 })
 
 router.post("/login", function (req, res, next) {
@@ -87,5 +86,30 @@ router.post('/delete', function (req, res, next) {
             errorCode: ERROR_CODE.SUCCESS
         });
     });
+});
+
+router.post('/edit', function (req, res, next) {
+    var body = {
+        id: req.body.id,
+        dataModify: req.body.dataModify
+    };
+    Accounts.findByIdAndUpdate(body.id, dataModify, {new: true}, function(err, account) {
+        if(err) {
+            return res.send({errorCode: ERROR_CODE.FAIL});
+        }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: account
+        });
+    });
+});
+
+router.post('/add', function(req, res, next) {
+    var body = {
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role
+    };
+    Accounts.findOne({email: body.email});;
 });
 module.exports = router;
