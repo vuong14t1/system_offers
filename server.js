@@ -14,8 +14,10 @@ var seedAccount = require("./seed_db/seed_accounts");
 var Accounts = require("./models/accounts");
 
 var app = express();
-app.use(cors());
-app.options('*', cors());
+app.use(cors({
+	credentials: true,
+	origin: "http://localhost:6969"
+  }));
 
 var contains = require('./methods/array_contains');
 var users_route = require('./routes/users_route');

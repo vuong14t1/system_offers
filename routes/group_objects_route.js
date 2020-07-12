@@ -7,7 +7,7 @@ var CHANNEL_PAYMENT = require('../const/channel_const');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-    console.log('Time 111: ', Date.now())
+	console.log('Time 111: ', Date.now())
     if(!req.session.loggedIn) {
         res.send({
             errorCode: ERROR_CODE.NOT_LOGIN
@@ -44,9 +44,10 @@ router.get('/list', function (req, res, next) {
         if(error) {
             console.log(error);
             return next();
-        }
-        res.send({erroCode: ERROR_CODE.SUCCESS,
-                    data: objects
+		}
+		res.send({
+			errorCode: ERROR_CODE.SUCCESS,
+            data: objects
         });
         console.log("list object " + JSON.stringify(objects));
     });
