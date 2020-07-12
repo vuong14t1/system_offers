@@ -2,6 +2,7 @@ var ROLE = require("../const/role_const");
 var Accounts = require("../models/accounts");
 var md5 = require('md5');
 function seedAccounts () {
+    var gameId = "p13";
     var super_admins = [
         {
             email: "vuongpq2",
@@ -11,9 +12,9 @@ function seedAccounts () {
     ];
     for(var i in super_admins) {
         super_admins[i].password = md5(super_admins[i].password);
-        Accounts.findOne({email: super_admins[i].email}, function (err, account) {
+        Accounts.getModel(gameId).findOne({email: super_admins[i].email}, function (err, account) {
             if(account == null) {
-                Accounts.create(super_admins[i], function (err, raw) {
+                Accounts.getModel(gameId).create(super_admins[i], function (err, raw) {
                     if(raw) {
                         console.log("seed account " + JSON.stringify(raw));
                     }

@@ -6,14 +6,15 @@ var GroupOffers = require('../models/group_offers');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 router.post('/user_login', function (req, res, next) {
-    console.log("post user login");
+    var gameId = req.query.gameId;
+    console.log("post user login " + gameId);
     var body = {
         userId: req.body.userId,
         timeCreateAccount: req.body.timeCreateAccount,
         lastTimeOnline: req.body.lastTimeOnline,
         channelGame: req.body.channelGame
     };
-    Users.findOne({userId: body.userId}, function(error, user){
+    Users.getModel(gameId).findOne({userId: body.userId}, function(error, user){
         if(error) return next(error);
         if(user != null) {        
             user.lastTimeOnline = body.lastTimeOnline;
@@ -29,7 +30,7 @@ router.post('/user_login', function (req, res, next) {
                 }
             });
         }else{
-            Users.create({
+            Users.getModel(gameId).create({
                 userId: body.userId,
                 timeCreateAccount: body.timeCreateAccount,
                 lastTimeOnline: body.lastTimeOnline,
@@ -50,12 +51,13 @@ router.post('/user_login', function (req, res, next) {
 });
 
 router.post('/stats_game', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         userId: req.body.userId,
         totalGame: req.body.totalGame,
         channelGame: req.body.channelGame
     };
-    Users.findOne({userId: body.userId}, function (error, user) {
+    Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.totalGame = body.totalGame;
             user.channelGame = body.channelGame;
@@ -67,7 +69,7 @@ router.post('/stats_game', function (req, res, next) {
                 }
             });
         }else{
-            Users.create({userId: body.userId, totalGame: body.totalGame, channelGame: body.channelGame}, function(error, user) {
+            Users.getModel(gameId).create({userId: body.userId, totalGame: body.totalGame, channelGame: body.channelGame}, function(error, user) {
                 if(error) {
                     console.log('post user login error');
                     res.send({erroCode: ERROR_CODE.FAIL});
@@ -81,12 +83,13 @@ router.post('/stats_game', function (req, res, next) {
 });
 
 router.post('/lastPayment', function(req, res, next){
+    var gameId = req.query.gameId;
     var body = {
         userId: req.body.userId,
         lastPaidPack: req.body.lastPaidPack,
         channelPayment: req.body.channelPayment
     };
-    Users.findOne({userId: body.userId}, function (error, user) {
+    Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;
             var channel = CHANNEL_PAYMENT[body.channelPayment + ''];
@@ -110,7 +113,7 @@ router.post('/lastPayment', function(req, res, next){
                 }
             });
         }else{
-            Users.create({userId: body.userId, lastPaidPack: body.lastPaidPack, channelPayment: [{channel: body.channelPayment, cost: body.lastPaidPack}]}, function(error, user) {
+            Users.getModel(gameId).create({userId: body.userId, lastPaidPack: body.lastPaidPack, channelPayment: [{channel: body.channelPayment, cost: body.lastPaidPack}]}, function(error, user) {
                 if(error) {
                     console.log('post user login error');
                     res.send({erroCode: ERROR_CODE.FAIL});
@@ -124,22 +127,23 @@ router.post('/lastPayment', function(req, res, next){
 });
 
 router.get('/get_offer', async function (req, res, next){
+    var gameId = req.query.gameId;
     var body = {
         userId: req.query.userId
     };
-    var user = await Users.findOne({userId: body.userId}, function (err, user) {
+    var user = await Users.getModel(gameId).findOne({userId: body.userId}, function (err, user) {
 
     });
     console.log("abc " + JSON.stringify(user));
     if(user != null) {
         if(user.isModifiedOffer) {
             if(user.groupObject != null) {
-                var groupObject = GroupObjects.findOne({_id: user.groupObject}).populate("offerLive").exec(function (err, groupObject) {
+                GroupObjects.getModel(gameId).findOne({_id: user.groupObject}).populate("offerLive").exec(function (err, groupObject) {
                     console.log("get offer " + JSON.stringify(groupObject.offerLive));
                     if(groupObject != null && groupObject.offerLive != null) {
                         var idOffer = groupObject.offerLive.groupOffer;
                         if(idOffer != null) {
-                            GroupOffers.findOne({_id: idOffer}, function (err, groupOffer) {
+                            GroupOffers.getModel(gameId).findOne({_id: idOffer}, function (err, groupOffer) {
                                 if(err) {
                                     res.send({
                                         errorCode: ERROR_CODE.FAIL

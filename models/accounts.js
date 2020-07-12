@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
 var accountSchema = require('../schemas/accounts');
-var Accounts = mongoose.model('account', accountSchema);
-module.exports = Accounts;
+function getModel(gameId){
+    return mongoose.model(gameId + '_account', accountSchema.getSchema(gameId));
+}
+module.exports.getModel = getModel;
