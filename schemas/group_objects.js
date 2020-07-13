@@ -10,7 +10,8 @@ function getSchema(gameId) {
             },
             offerLive: {
                 type: Schema.Types.ObjectId,
-                ref: gameId + '_offer_live'
+                ref: gameId + '_offer_live',
+                default: null
             },
         
             totalUser: {

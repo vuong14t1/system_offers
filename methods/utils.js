@@ -1,5 +1,6 @@
 var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
+var CHANNEL_PAYMENT = require('../const/channel_const');
 var Utility = {
 };
 Utility.setCurrentServerTime = function (time) {
@@ -40,4 +41,16 @@ Utility.checkStatusOfferLive = function (gameId) {
         }
     });
 };
+
+Utility.getDefaultSchema = function() {
+    var schema = [];
+    for(var i in CHANNEL_PAYMENT) {
+        schema[CHANNEL_PAYMENT[i]] = {
+            channel: i +' ',
+            cost: 0,
+            number: 0
+        };
+    }
+    return schema;
+}
 exports.Utility = Utility;

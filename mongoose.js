@@ -11,7 +11,7 @@ if (process.env.SERVER_SOFTWARE == 'bae/3.0') {
     url ="mongodb://"+ username +":"+ password +"@"+ host +":"+ port +"/"+ database;  
 } else {
     host = 'localhost';
-    database = 'system_offers_1';
+    database = 'system_offers_2';
     port = 27017;
     url = "mongodb://" + host + ":" + port + "/" + database;
 }
@@ -26,8 +26,6 @@ function getConnect(){
 	          user: username,  
 			  pass: password
 	};  
-	// mongoose.connect("mongodb://HahMqSkZWUq9QWHsWceXmG83:XH82hOf5MGzoMUMUkCNj0KdBvecF3mzP@mongo.duapp.com:8908/pQPzvWlctdHpUjrbtFnX");//需要验证账户  
-	// mongoose.connect("mongodb://" + username + ":" + password +"@"+ host + ":" + port + "/" + dbName);//需要验证账户  
 	mongoose.connect(url, opts);  
 	var dbcon = mongoose.connection;  
 	// var dbcon = mongoose.createConnection(url, opts);  

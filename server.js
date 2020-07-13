@@ -55,6 +55,10 @@ app.use(session({
 
 app.use(function(req, res, next){
   console.log("===== " + JSON.stringify(req.session));
+  var gameId = req.query.gameId;
+  if(gameId == null) return res.send({
+    errorCode: ERROR_CODE.NOT_FOUND_GAME_ID
+  });
   if(req.session.loggedIn){
         res.locals.authenticated = true;
         // Accounts.findById(req.session.loggedIn, function(err, doc){
@@ -133,6 +137,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 var serverSocket = require('./websocket/server_socket');
+const ERROR_CODE = require('./const/error_code');
 serverSocket(server);
 
 /**

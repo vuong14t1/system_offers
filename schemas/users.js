@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var schemaUsers = {};
+var utils = require('../methods/utils');
 function getSchema(gameId) {
     if(schemaUsers[gameId] == null) {
         schemaUsers[gameId] = new Schema({
@@ -11,24 +12,13 @@ function getSchema(gameId) {
             },
             groupObject: {
                 type: Schema.Types.ObjectId,
-                ref: gameId + '_group_object' 
+                ref: gameId + '_group_object',
+                default: null 
             },
-            channelPayment: [
-                {
-                    channel: {
-                        type: String,
-                        default: "IAP"
-                    },
-                    cost: {
-                        type: Number,
-                        default: 0
-                    },
-                    number: {
-                        type: Number,
-                        default: 0
-                    }
-                }
-            ],
+            channelPayment: {
+                type: Array,
+                default:utils.Utility.getDefaultSchema()
+            },
         
             totalGame: {
                 type: Number,

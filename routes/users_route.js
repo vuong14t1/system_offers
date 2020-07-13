@@ -138,12 +138,12 @@ router.get('/get_offer', async function (req, res, next){
     if(user != null) {
         if(user.isModifiedOffer) {
             if(user.groupObject != null) {
-                GroupObjects.getModel(gameId).findOne({_id: user.groupObject}).populate("offerLive").exec(function (err, groupObject) {
+                GroupObjects.getModel(gameId).findOne({_id: user.groupObject}).populate("offerLive").exec(async function (err, groupObject) {
                     console.log("get offer " + JSON.stringify(groupObject.offerLive));
                     if(groupObject != null && groupObject.offerLive != null) {
                         var idOffer = groupObject.offerLive.groupOffer;
                         if(idOffer != null) {
-                            GroupOffers.getModel(gameId).findOne({_id: idOffer}, function (err, groupOffer) {
+                            await GroupOffers.getModel(gameId).findOne({_id: idOffer}, async function (err, groupOffer) {
                                 if(err) {
                                     res.send({
                                         errorCode: ERROR_CODE.FAIL
@@ -164,7 +164,7 @@ router.get('/get_offer', async function (req, res, next){
                                     "timeFinish": groupObject.offerLive.timeFinish
                                 });
                                 user.isModifiedOffer = false;
-                                user.save();
+                                await user.save();
                             });
                         }else{
                             res.send({

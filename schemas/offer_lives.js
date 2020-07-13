@@ -6,12 +6,14 @@ function getSchema(gameId) {
         schemaOfferLives[gameId] = new Schema({
             groupOffer: {
                 type: Schema.Types.ObjectId,
-                ref: gameId + '_group_offer'
+                ref: gameId + '_group_offer',
+                default: null
             },
             
             groupObject: {
                 type: Schema.Types.ObjectId,
-                ref: gameId + '_group_object'
+                ref: gameId + '_group_object',
+                default: null
             },
         
             timeStart: {
