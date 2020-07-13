@@ -7,6 +7,11 @@ function seedAccounts () {
             email: "vuongpq2",
             password: "123456@p13",
             role: ROLE.SUPER_ADMIN
+		},
+		{
+            email: "duyenxinhdep",
+            password: "123456@p13",
+            role: ROLE.SUPER_ADMIN
         }
     ];
     for(var i in super_admins) {

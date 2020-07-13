@@ -64,7 +64,8 @@ router.post('/create', function (req, res, next) {
         age: req.body.age,
         timeLastOnline: req.body.timeLastOnline,
         channelGame: req.body.channelGame
-    };
+	};
+	console.log("create " + JSON.stringify(body));
     var channel = CHANNEL_PAYMENT[body.channelPayment + ''];
     var timeMinAge = Date.now() - body.age.from;
     var timeMaxAge = Date.now() - body.age.to;
@@ -93,7 +94,7 @@ router.post('/create', function (req, res, next) {
             },
             channelPayment: body.channelPayment,
             totalCost: {
-                from: body.totalCost.fromm,
+                from: body.totalCost.from,
                 to: body.totalCost.to
 ,
             },
@@ -147,10 +148,10 @@ router.post('/create', function (req, res, next) {
 
 router.post('/set_name', function (req, res, next) {
     var body = {
-        idGroupOffer: req.body.idGroupOffer,
+        idGroupObject: req.body.idGroupObject,
         nameObject: req.body.nameObject
     };
-    GroupObjects.findByIdAndUpdate(body.idGroupOffer, {nameObject: body.nameObject}, {new: true}, function (err, groupObject) {
+    GroupObjects.findByIdAndUpdate(body.idGroupObject, {nameObject: body.nameObject}, {new: true}, function (err, groupObject) {
         if(err) {
             res.send({errorCode: ERROR_CODE.FAIL});
             return;

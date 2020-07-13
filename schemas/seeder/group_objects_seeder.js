@@ -1,4 +1,3 @@
-
 const seeder = require('mongoose-seed');
 const faker = require('faker');
 
@@ -8,7 +7,10 @@ for(i=0; i < 15; i++){
         {
             nameObject : faker.commerce.productName(),
             totalUser : faker.random.number(),
-			totalGame : faker.random.number(),
+			totalGame : {
+				from: faker.random.number(),
+				to: faker.random.number()
+			},
 		
 			// offerLive: {
 			// 	type: Schema.Types.ObjectId,
