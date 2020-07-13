@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
 var groupOffersSchema = require('../schemas/group_offers');
-var GroupOffers = mongoose.model('group_offer', groupOffersSchema);
-module.exports = GroupOffers;
+function getModel(gameId) {
+    return mongoose.model(gameId + '_group_offer', groupOffersSchema.getSchema(gameId));
+}
+module.exports.getModel = getModel;

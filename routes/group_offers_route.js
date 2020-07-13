@@ -29,7 +29,8 @@ router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
 })
 
 router.get('/list', function (req, res, next) {
-    GroupOffers.find({}, function (error, offers) {
+    var gameId = req.query.gameId;
+    GroupOffers.getModel(gameId).find({}, function (error, offers) {
         if(error) {
             console.log(error);
             return next();
@@ -43,6 +44,7 @@ router.get('/list', function (req, res, next) {
 });
 
 router.post('/create', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         nameOffer: req.body.nameOffer,
         durationLive: req.body.durationLive,
@@ -53,7 +55,7 @@ router.post('/create', function (req, res, next) {
         originalCost: req.body.originalCost,
         promotionCost: req.body.promotionCost
     };
-    GroupOffers.create({
+    GroupOffers.getModel(gameId).create({
         nameOffer: body.nameOffer,
         durationLive: body.durationLive,
         durationCountDown: body.durationCountDown,
@@ -78,21 +80,22 @@ router.post('/create', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         idOffer: req.body.idOffer
     };
-    GroupOffers.findByIdAndRemove(body.idOffer, function (err) {
+    GroupOffers.getModel(gameId).findByIdAndRemove(body.idOffer, function (err) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
             //find all offer live refer to self
-            OfferLives.find({groupOffer: body.idOffer}, function (err, offerLives) {
+            OfferLives.getModel(gameId).find({groupOffer: body.idOffer}, function (err, offerLives) {
                 console.log('ref offer lives ' + JSON.stringify(offerLives));
                 for(var i in offerLives) {
                     //notify to user
-                    Users.find({groupObject: offerLives[i].groupObject}, function (err, users) {
+                    Users.getModel(gameId).find({groupObject: offerLives[i].groupObject}, function (err, users) {
                         console.log('ref offer users ' + JSON.stringify(users));
                         for(var i in users) {
                             if(users[i]) {
@@ -115,11 +118,12 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/edit', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         idOffer: req.body.idOffer,
         dataModify: req.body.dataModify
     };
-    GroupOffers.findOneAndUpdate({_id: body.idOffer}, body.dataModify, {new: true}, function (err, raw) {
+    GroupOffers.getModel(gameId).findOneAndUpdate({_id: body.idOffer}, body.dataModify, {new: true}, function (err, raw) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -130,7 +134,7 @@ router.post('/edit', function (req, res, next) {
                 data: raw
             });
             //find all offer live refer to self
-            OfferLives.find({groupOffer: raw._id}, function (err, offerLives) {
+            OfferLives.getModel(gameId).find({groupOffer: raw._id}, function (err, offerLives) {
                 for(var i in offerLives) {
                     //notify to user
                     Users.find({groupObject: offerLives[i].groupObject}, function (err, user) {

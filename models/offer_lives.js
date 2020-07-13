@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
 var offerLiveSchema = require('../schemas/offer_lives');
-var OfferLives = mongoose.model('offer_live', offerLiveSchema);
-module.exports = OfferLives;
+function getModel(gameId) {
+    return mongoose.model(gameId + '_offer_live', offerLiveSchema.getSchema(gameId))
+}
+module.exports.getModel = getModel;

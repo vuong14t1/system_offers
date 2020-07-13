@@ -4,6 +4,7 @@ var ERROR_CODE = require('../const/error_code');
 var OfferLives = require('../models/offer_lives');
 var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
+var utils = require('../methods/utils');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -29,7 +30,9 @@ router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
 })
 
 router.get('/list', function (req, res, next) {
-    OfferLives.find({}, function (err, offer_lives) {
+    var gameId = req.query.gameId;
+    utils.Utility.checkStatusOfferLive(gameId);
+    OfferLives.getModel(gameId).find({}, function (err, offer_lives) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -44,6 +47,7 @@ router.get('/list', function (req, res, next) {
 });
 
 router.post('/create', async function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         idObject: req.body.idObject,
         idOffer: req.body.idOffer,
@@ -52,7 +56,7 @@ router.post('/create', async function (req, res, next) {
     };
     console.log("id object" + body.idObject);
     //TODO kiem tra dieu kien object do da duoc live offer hay chua
-    OfferLives.create({
+    OfferLives.getModel(gameId).create({
         groupOffer: body.idOffer,
         groupObject: body.idObject,
         timeStart: body.timeStart,
@@ -62,12 +66,12 @@ router.post('/create', async function (req, res, next) {
             res.send({errorCode: ERROR_CODE.FAIL});
             return;
         }
-        GroupObjects.findById(body.idObject, function (error1, groupO) {
+        GroupObjects.getModel(gameId).findById(body.idObject, function (error1, groupO) {
             if(groupO) {
                 groupO.offerLive = raw._id;
                 groupO.save();
                 //notify to all users of group object
-                Users.find({
+                Users.getModel(gameId).find({
                     groupObject: groupO._id
                 }, function (err, users) {
                     for(var i in users) {
@@ -84,21 +88,22 @@ router.post('/create', async function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         idOfferLive: req.body.idOfferLive
     };
-    OfferLives.findByIdAndRemove(body.idOfferLive, function (err) {
+    OfferLives.getModel(gameId).findByIdAndRemove(body.idOfferLive, function (err) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
-            GroupObjects.findOne({offerLive: body.idOfferLive}, function (error1, groupO) {
+            GroupObjects.getModel(gameId).findOne({offerLive: body.idOfferLive}, function (error1, groupO) {
                 if(groupO) {
                     groupO.offerLive = null;
                     groupO.save();
                     //notify to all users of group object
-                    Users.find({
+                    Users.getModel(gameId).find({
                         groupObject: groupO._id
                     }, function (err, users) {
                         for(var i in users) {
@@ -117,11 +122,12 @@ router.post('/delete', function (req, res, next) {
 });
 
 router.post('/edit', function (req, res, next) {
+    var gameId = req.query.gameId;
     var body = {
         idOfferLive: req.body.idOfferLive,
         dataModify: req.body.dataModify
     };
-    OfferLives.findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}, function (err, offerLive) {
+    OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}, function (err, offerLive) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -129,7 +135,7 @@ router.post('/edit', function (req, res, next) {
             return;
         }
         //notify to all users of group object
-        Users.find({
+        Users.getModel(gameId).find({
             groupObject: offerLive.groupObject
         }, function (err, users) {
             for(var i in users) {
