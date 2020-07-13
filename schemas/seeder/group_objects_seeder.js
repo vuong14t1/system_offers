@@ -1,6 +1,8 @@
 const seeder = require('mongoose-seed');
 const faker = require('faker');
-
+var GroupObjects = require("../../models/group_objects");
+var GAME = require('../../const/game_const');
+let gameId = GAME.P13_NAME;
 let items = [];
 for(i=0; i < 15; i++){
     items.push(
@@ -54,16 +56,16 @@ for(i=0; i < 15; i++){
 }
 
 let data = [{
-    'model': 'group_object',
+    'model': gameId + '_group_object',
     'documents': items
 }]
 
 // connect mongodb
 seeder.connect('mongodb://localhost:27017/system_offers_1', function() {
   seeder.loadModels([
-    'models/group_objects.js'  // load mongoose model 
+    'models/group_objects.js' // load mongoose model 
   ]);
-  seeder.clearModels(['group_object'], function() {
+  seeder.clearModels([gameId + '_group_object'], function() {
     seeder.populateModels(data, function() {
       seeder.disconnect();
     });

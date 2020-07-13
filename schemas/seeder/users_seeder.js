@@ -6,7 +6,8 @@ const faker = require('faker');
 const _ = require('lodash');
 const Users = require('../../models/users');
 const GroupObject = require('../../models/group_objects');
-
+var GAME = require('../../const/game_const');
+let gameId = GAME.P13_NAME;
 
 new Promise((resolve) => {
     mongoose.connect('mongodb://localhost:27017/system_offers_1', {
@@ -58,13 +59,13 @@ new Promise((resolve) => {
 }).then((items) => {
     seeder.connect('mongodb://localhost:27017/system_offers_1', function() {
         let data = [{
-			'model': 'user',
+			'model': gameId + '_users',
 			'documents': items
 		}]
         seeder.loadModels([
 			'models/users.js'  // load mongoose model 
         ]);
-        seeder.clearModels(['user'], function() {
+        seeder.clearModels([gameId + '_users'], function() {
 			seeder.populateModels(data, function() {
 			  seeder.disconnect();
 			});

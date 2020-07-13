@@ -69,20 +69,21 @@ router.post('/create', function (req, res, next) {
         timeLastOnline: req.body.timeLastOnline,
         channelGame: req.body.channelGame
 	};
-	console.log("create " + JSON.stringify(body));
+	console.log("create " + JSON.stringify(body), gameId);
     var channel = CHANNEL_PAYMENT[body.channelPayment + ''];
     var timeMinAge = Date.now() - body.age.from;
     var timeMaxAge = Date.now() - body.age.to;
     var timeMinOnline = Date.now() - body.timeLastOnline.from;
-    var timeMaxOnline = Date.now() - body.timeLastOnline.to;
+	var timeMaxOnline = Date.now() - body.timeLastOnline.to;
+	console.log("ahihi ", Users.getModel(gameId));
     Users.getModel(gameId).find({})
-    .where('groupObject').exists(false)
-    .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
-    .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
-    .where("channelPayment."  + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
-    .where("channelPayment." + channel + ".number").gte(body.numberPay.from).lte(body.numberPay.to)
-    .where('lastPaidPack').gte(body.lastPaidPack.from).lte(body.lastPaidPack.to)
-    .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
+    // .where('groupObject').exists(false)
+    // .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
+    // .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
+    // .where("channelPayment."  + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
+    // .where("channelPayment." + channel + ".number").gte(body.numberPay.from).lte(body.numberPay.to)
+    // .where('lastPaidPack').gte(body.lastPaidPack.from).lte(body.lastPaidPack.to)
+    // .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
     // .where('timeLastOnline').gte(timeMinOnline).lte(timeMaxOnline)
     .exec(function (error, users){
         console.log('============ res ' + JSON.stringify(users));

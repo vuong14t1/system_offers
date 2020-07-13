@@ -6,6 +6,8 @@ const faker = require('faker');
 const _ = require('lodash');
 const GroupOffer = require('../../models/group_offers');
 const GroupObject = require('../../models/group_objects');
+var GAME = require('../../const/game_const');
+let gameId = GAME.P13_NAME;
 
 
 new Promise((resolve) => {
@@ -56,13 +58,13 @@ new Promise((resolve) => {
 }).then((items) => {
     seeder.connect('mongodb://localhost:27017/system_offers_1', function() {
         let data = [{
-			'model': 'offer_live',
+			'model': gameId + '_offer_live',
 			'documents': items
 		}]
         seeder.loadModels([
 			'models/offer_lives.js'  // load mongoose model 
         ]);
-        seeder.clearModels(['offer_live'], function() {
+        seeder.clearModels([gameId + '_offer_live'], function() {
 			seeder.populateModels(data, function() {
 			  seeder.disconnect();
 			});
