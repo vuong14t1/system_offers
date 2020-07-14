@@ -79,7 +79,7 @@ router.post('/create', function (req, res, next) {
     });
 });
 
-router.post('/delete', function (req, res, next) {
+router.post('/delete', async function (req, res, next) {
     var gameId = req.query.gameId;
     var body = {
         idOffer: req.body.idOffer
@@ -91,11 +91,11 @@ router.post('/delete', function (req, res, next) {
             });
         }else{
             //find all offer live refer to self
-            OfferLives.getModel(gameId).find({groupOffer: body.idOffer}, function (err, offerLives) {
+            OfferLives.getModel(gameId).find({groupOffer: body.idOffer}, async function (err, offerLives) {
                 console.log('ref offer lives ' + JSON.stringify(offerLives));
-                for(var i in offerLives) {
+                for await(let offerLive of offerLives) {
                     //notify to user
-                    Users.getModel(gameId).find({groupObject: offerLives[i].groupObject}, function (err, users) {
+                    await Users.getModel(gameId).find({groupObject: offerLive.groupObject}, function (err, users) {
                         console.log('ref offer users ' + JSON.stringify(users));
                         for(var i in users) {
                             if(users[i]) {
@@ -105,8 +105,8 @@ router.post('/delete', function (req, res, next) {
                         }
                     });
                     //delete ref to group offer
-                    offerLives[i].groupOffer = null;
-                    offerLives[i].save();
+                    offerLives.groupOffer = null;
+                    await offerLives.save();
                 }
             });
 

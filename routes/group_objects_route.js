@@ -72,7 +72,7 @@ router.post('/create', function (req, res, next) {
         channelGame: req.body.channelGame
 	};
 	console.log("create " + JSON.stringify(body), gameId);
-    var channel = CHANNEL_PAYMENT[body.channelPayment + ''];
+    var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
     var timeMinAge = utils.Utility.getCurrentTime() - body.age.from;
     var timeMaxAge = utils.Utility.getCurrentTime() - body.age.to;
     var timeMinOnline = utils.Utility.getCurrentTime() - body.timeLastOnline.from;
@@ -81,7 +81,7 @@ router.post('/create', function (req, res, next) {
     .where('groupObject').equals(null)
     .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
     .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
-    .where("channelPayment."  + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
+    .where("channelPayment." + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
     .where("channelPayment." + channel + ".number").gte(body.numberPay.from).lte(body.numberPay.to)
     .where('lastPaidPack').gte(body.lastPaidPack.from).lte(body.lastPaidPack.to)
     // .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
@@ -208,7 +208,7 @@ router.post('/edit', async function (req, res, next) {
         .where('groupObject').exists(false)
         .where('totalGame').gte(groupObject.totalGame.from).lte(groupObject.totalGame.to)
         .where('channelGame').gte(groupObject.channelGame.from).lte(groupObject.channelGame.to)
-        .where("channelPayment."  + channel + ".cost").gte(groupObject.totalCost.from).lte(groupObject.totalCost.to)
+        .where("channelPayment." + channel + ".cost").gte(groupObject.totalCost.from).lte(groupObject.totalCost.to)
         .where("channelPayment." + channel + ".number").gte(groupObject.numberPay.from).lte(groupObject.numberPay.to)
         .where('lastPaidPack').gte(groupObject.lastPaidPack.from).lte(groupObject.lastPaidPack.to)
         // .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
@@ -256,6 +256,22 @@ router.post('/delete', async function (req, res, next) {
     });
     res.send({
         erroCode: ERROR_CODE.SUCCESS
+    });
+});
+
+router.get('/list_user', function (req, res, next) {
+    var gameId = req.query.gameId;
+    var body = {
+        idGroupObject: req.body.idGroupObject,
+        indexPage: req.body.indexPage
+    };
+    if(body.indexPage == null) {
+        body.indexPage = 0;
+    }
+    var numberOfPage = 10;
+    Users.getModel(gameId).find({groupObject: body.idGroupObject}).skip(body.indexPage * numberOfPage).exec(function (err, users) {
+        if(err) return res.send({errorCode: ERROR_CODE.FAIL});
+        res.send({errorCode: ERROR_CODE.SUCCESS, data: users});
     });
 });
 module.exports = router;
