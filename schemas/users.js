@@ -17,7 +17,7 @@ function getSchema(gameId) {
             },
             channelPayment: {
                 type: Array,
-                default:utils.Utility.getDefaultSchema()
+                default: utils.Utility.getDefaultSchemaChannelPayment(gameId)
             },
         
             totalGame: {

@@ -42,10 +42,11 @@ Utility.checkStatusOfferLive = function (gameId) {
     });
 };
 
-Utility.getDefaultSchema = function() {
+Utility.getDefaultSchemaChannelPayment= function(gameId) {
+    gameId = gameId === undefined? "p13": gameId;
     var schema = [];
-    for(var i in CHANNEL_PAYMENT) {
-        schema[CHANNEL_PAYMENT[i]] = {
+    for(var i in CHANNEL_PAYMENT[gameId]) {
+        schema[CHANNEL_PAYMENT[gameId][i]] = {
             channel: i +' ',
             cost: 0,
             number: 0
