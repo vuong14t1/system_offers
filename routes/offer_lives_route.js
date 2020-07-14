@@ -51,9 +51,10 @@ router.post('/create', async function (req, res, next) {
     var body = {
         idObject: req.body.idObject,
         idOffer: req.body.idOffer,
-        timeStart: req.body.timeStart,
-        timeFinish: req.timeFinish
+        timeStart: utils.Utility.convertTimeClientToTimeServer(req.body.timeStart),
+        timeFinish: utils.Utility.convertTimeClientToTimeServer(req.timeFinish)
     };
+    
     console.log("id object" + body.idObject);
     //TODO kiem tra dieu kien object do da duoc live offer hay chua
     OfferLives.getModel(gameId).create({
@@ -127,6 +128,13 @@ router.post('/edit', function (req, res, next) {
         idOfferLive: req.body.idOfferLive,
         dataModify: req.body.dataModify
     };
+    if(body.dataModify.timeStart) {
+        body.dataModify.timeStart = utils.Utility.convertTimeClientToTimeServer(body.dataModify.timeStart);
+    }
+    if(body.dataModify.timeFinish) {
+        body.dataModify.timeFinish = utils.Utility.convertTimeClientToTimeServer(body.dataModify.timeFinish);
+    }
+    
     OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}, function (err, offerLive) {
         if(err) {
             res.send({

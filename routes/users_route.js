@@ -5,6 +5,7 @@ var GroupObjects = require('../models/group_objects');
 var GroupOffers = require('../models/group_offers');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
+var utils = require('../methods/utils');
 router.get('/user_login', function (req, res, next) {
     var gameId = req.query.gameId;
     console.log("post user login " + gameId);
@@ -12,8 +13,10 @@ router.get('/user_login', function (req, res, next) {
         userId: req.query.userId,
         timeCreateAccount: req.query.timeCreateAccount,
         lastTimeOnline: req.query.lastTimeOnline,
-        channelGame: req.query.channelGame
+        channelGame: req.query.channelGame,
+        timeServer: req.query.timeServer
     };
+    utils.Utility.setCurrentServerTime(body.timeServer);
     Users.getModel(gameId).findOne({userId: body.userId}, function(error, user){
         if(error) return next(error);
         if(user != null) {        
@@ -55,8 +58,10 @@ router.get('/stats_game', function (req, res, next) {
     var body = {
         userId: req.query.userId,
         totalGame: req.query.totalGame,
-        channelGame: req.query.channelGame
+        channelGame: req.query.channelGame,
+        timeServer: req.query.timeServer
     };
+    utils.Utility.setCurrentServerTime(timeServer);
     Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.totalGame = body.totalGame;
@@ -87,8 +92,10 @@ router.get('/lastPayment', function(req, res, next){
     var body = {
         userId: req.query.userId,
         lastPaidPack: req.query.lastPaidPack,
-        channelPayment: req.query.channelPayment
+        channelPayment: req.query.channelPayment,
+        timeServer: req.query.timeServer
     };
+    utils.Utility.setCurrentServerTime(timeServer);
     Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;

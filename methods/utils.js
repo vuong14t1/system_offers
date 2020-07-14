@@ -4,17 +4,29 @@ var CHANNEL_PAYMENT = require('../const/channel_const');
 var Utility = {
 };
 Utility.setCurrentServerTime = function (time) {
+    if(time === undefined) {
+        console.log("set current time server null");
+        time = Math.round(Date.now() / 1000);
+    }
     if(Utility.getCurrentTime.offsetClientVsServer == undefined) {
         Utility.getCurrentTime.offsetClientVsServer = 0;
     }
     Utility.getCurrentTime.offsetClientVsServer = Math.round(Date.now() / 1000) - time;
 };
 
+//lay thoi gian server hien tai
 Utility.getCurrentTime = function () {
     if(Utility.getCurrentTime.offsetClientVsServer == undefined) {
         Utility.getCurrentTime.offsetClientVsServer = 0;
     }
     return Math.round(Date.now() / 1000) - Utility.getCurrentTime.offsetClientVsServer;
+};
+
+Utility.getOffetClientVsServer = function () {
+    if(Utility.getCurrentTime.offsetClientVsServer == undefined) {
+        return 0;
+    }
+    return Utility.getCurrentTime.offsetClientVsServer;
 };
 
 //kiem tra xem cac offer het han hay chua de giai phong user khoi rang buoc
@@ -41,7 +53,7 @@ Utility.checkStatusOfferLive = function (gameId) {
         }
     });
 };
-
+//tao default schema channel payment, su dung khi tao schema users
 Utility.getDefaultSchemaChannelPayment= function(gameId) {
     gameId = gameId === undefined? "p13": gameId;
     var schema = [];
@@ -53,5 +65,9 @@ Utility.getDefaultSchemaChannelPayment= function(gameId) {
         };
     }
     return schema;
+}
+//lay thoi gian server tu thoi gian client
+Utility.convertTimeClientToTimeServer = function (timeClient) {
+    return timeClient + Utility.getOffetClientVsServer();
 }
 exports.Utility = Utility;

@@ -73,10 +73,10 @@ router.post('/create', function (req, res, next) {
 	};
 	console.log("create " + JSON.stringify(body), gameId);
     var channel = CHANNEL_PAYMENT[body.channelPayment + ''];
-    var timeMinAge = Date.now() - body.age.from;
-    var timeMaxAge = Date.now() - body.age.to;
-    var timeMinOnline = Date.now() - body.timeLastOnline.from;
-	var timeMaxOnline = Date.now() - body.timeLastOnline.to;
+    var timeMinAge = utils.Utility.getCurrentTime() - body.age.from;
+    var timeMaxAge = utils.Utility.getCurrentTime() - body.age.to;
+    var timeMinOnline = utils.Utility.getCurrentTime() - body.timeLastOnline.from;
+	var timeMaxOnline = utils.Utility.getCurrentTime() - body.timeLastOnline.to;
     Users.getModel(gameId).find({})
     .where('groupObject').equals(null)
     .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
@@ -199,10 +199,10 @@ router.post('/edit', async function (req, res, next) {
 
         console.log("data group " + JSON.stringify(groupObject));
         var channel = CHANNEL_PAYMENT[groupObject.channelPayment + ''];
-        var timeMinAge = Date.now() - groupObject.age.from;
-        var timeMaxAge = Date.now() - groupObject.age.to;
-        var timeMinOnline = Date.now() - groupObject.timeLastOnline.from;
-        var timeMaxOnline = Date.now() - groupObject.timeLastOnline.to;
+        var timeMinAge = utils.Utility.getCurrentTime() - groupObject.age.from;
+        var timeMaxAge = utils.Utility.getCurrentTime() - groupObject.age.to;
+        var timeMinOnline = utils.Utility.getCurrentTime() - groupObject.timeLastOnline.from;
+        var timeMaxOnline = utils.Utility.getCurrentTime() - groupObject.timeLastOnline.to;
         
         var usersAfters = await Users.getModel(gameId).find({})
         .where('groupObject').exists(false)
