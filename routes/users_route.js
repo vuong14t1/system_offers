@@ -61,7 +61,7 @@ router.get('/stats_game', function (req, res, next) {
         channelGame: req.query.channelGame,
         timeServer: req.query.timeServer
     };
-    utils.Utility.setCurrentServerTime(timeServer);
+    utils.Utility.setCurrentServerTime(body.timeServer);
     Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.totalGame = body.totalGame;
