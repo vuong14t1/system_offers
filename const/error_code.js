@@ -6,6 +6,7 @@ var ERROR_CODE = {
     NOT_PERMISSION: 4,
     NOT_LOGIN: 5,
     NOT_FOUND: 6,
-    NOT_FOUND_GAME_ID: 7
+    NOT_FOUND_GAME_ID: 7,
+    EXIST: 8    
 };
 module.exports = ERROR_CODE;

@@ -51,22 +51,30 @@ router.post('/create', async function (req, res, next) {
     var body = {
         idObject: req.body.idObject,
         idOffer: req.body.idOffer,
-        timeStart: req.body.timeStart,
-        timeFinish: req.timeFinish
+        timeStart: utils.Utility.convertTimeClientToTimeServer(req.body.timeStart),
+        timeFinish: utils.Utility.convertTimeClientToTimeServer(req.body.timeFinish)
     };
+    //check moi user chi co 1 offer
+    var offerLive = await OfferLives.getModel(gameId).findOne({groupObject: body.idObject, groupOffer: body.idOffer}, function (err, offerLive) {
+
+    });
+    if(offerLive) {
+        console.log("da ton tai offer live " + body.idObject + " | " + body.idOffer);
+        return res.send({errorCode: ERROR_CODE.EXIST});
+    }
     console.log("id object" + body.idObject);
     //TODO kiem tra dieu kien object do da duoc live offer hay chua
-    OfferLives.getModel(gameId).create({
+    await OfferLives.getModel(gameId).create({
         groupOffer: body.idOffer,
         groupObject: body.idObject,
         timeStart: body.timeStart,
         timeFinish: body.timeFinish
-    }, function (error, raw) {
+    }, async function (error, raw) {
         if(error) {
             res.send({errorCode: ERROR_CODE.FAIL});
             return;
         }
-        GroupObjects.getModel(gameId).findById(body.idObject, function (error1, groupO) {
+        await GroupObjects.getModel(gameId).findById(body.idObject, function (error1, groupO) {
             if(groupO) {
                 groupO.offerLive = raw._id;
                 groupO.save();
@@ -82,7 +90,7 @@ router.post('/create', async function (req, res, next) {
             }
         });
     
-        res.send({errorCode: ERROR_CODE.SUCCESS});
+        res.send({errorCode: ERROR_CODE.SUCCESS, data: raw});
     });
 
 });
@@ -127,6 +135,13 @@ router.post('/edit', function (req, res, next) {
         idOfferLive: req.body.idOfferLive,
         dataModify: req.body.dataModify
     };
+    if(body.dataModify.timeStart) {
+        body.dataModify.timeStart = utils.Utility.convertTimeClientToTimeServer(body.dataModify.timeStart);
+    }
+    if(body.dataModify.timeFinish) {
+        body.dataModify.timeFinish = utils.Utility.convertTimeClientToTimeServer(body.dataModify.timeFinish);
+    }
+
     OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}, function (err, offerLive) {
         if(err) {
             res.send({
