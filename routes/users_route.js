@@ -147,54 +147,63 @@ router.get('/get_offer', async function (req, res, next){
         return;
     }
     console.log("abc " + JSON.stringify(user));
-    if(user != null) {
-        if(user.isModifiedOffer) {
-            if(user.groupObject != null) {
-                GroupObjects.getModel(gameId).findOne({_id: user.groupObject}).populate("offerLive").exec(async function (err, groupObject) {
-                    console.log("get offer " + JSON.stringify(groupObject.offerLive));
-                    if(groupObject != null && groupObject.offerLive != null) {
-                        var idOffer = groupObject.offerLive.groupOffer;
-                        if(idOffer != null) {
-                            await GroupOffers.getModel(gameId).findOne({_id: idOffer}, async function (err, groupOffer) {
-                                if(err) {
+    try{
+        if(user != null) {
+            if(user.isModifiedOffer) {
+                if(user.groupObject != null) {
+                    GroupObjects.getModel(gameId).findOne({_id: user.groupObject}).populate("offerLive").exec(async function (err, groupObject) {
+                        console.log("get offer " + JSON.stringify(groupObject.offerLive));
+                        if(groupObject != null && groupObject.offerLive != null) {
+                            var idOffer = groupObject.offerLive.groupOffer;
+                            if(idOffer != null) {
+                                await GroupOffers.getModel(gameId).findOne({_id: idOffer}, async function (err, groupOffer) {
+                                    if(err) {
+                                        res.send({
+                                            errorCode: ERROR_CODE.FAIL
+                                        });
+                                        return;
+                                    }
                                     res.send({
-                                        errorCode: ERROR_CODE.FAIL
+                                        "errorCode": ERROR_CODE.SUCCESS,
+                                        "nameOffer": groupOffer.nameOffer,
+                                        "durationLive": groupOffer.durationLive,
+                                        "durationCountDown": groupOffer.durationCountDown,
+                                        "description": groupOffer.description,
+                                        "type": groupOffer.type,
+                                        "value": groupOffer.value,
+                                        "originalCost": groupOffer.originalCost,
+                                        "promotionCost": groupOffer.promotionCost,
+                                        "timeStart": groupObject.offerLive.timeStart,
+                                        "timeFinish": groupObject.offerLive.timeFinish
                                     });
-                                    return;
-                                }
-                                res.send({
-                                    "errorCode": ERROR_CODE.SUCCESS,
-                                    "nameOffer": groupOffer.nameOffer,
-                                    "durationLive": groupOffer.durationLive,
-                                    "durationCountDown": groupOffer.durationCountDown,
-                                    "description": groupOffer.description,
-                                    "type": groupOffer.type,
-                                    "value": groupOffer.value,
-                                    "originalCost": groupOffer.originalCost,
-                                    "promotionCost": groupOffer.promotionCost,
-                                    "timeStart": groupObject.offerLive.timeStart,
-                                    "timeFinish": groupObject.offerLive.timeFinish
+                                    user.isModifiedOffer = false;
+                                    await user.save();
                                 });
-                                user.isModifiedOffer = false;
-                                await user.save();
-                            });
-                        }else{
-                            res.send({
-                                errorCode: ERROR_CODE.EMPTY
-                            });
+                            }else{
+                                res.send({
+                                    errorCode: ERROR_CODE.EMPTY
+                                });
+                            }
                         }
-                    }
-                });
+                    });
+                }else{
+                    res.send({
+                        errorCode: ERROR_CODE.EMPTY
+                    });
+                }
             }else{
                 res.send({
-                    errorCode: ERROR_CODE.EMPTY
+                    errorCode: ERROR_CODE.NOT_CHANGE
                 });
             }
-        }else{
-            res.send({
-                errorCode: ERROR_CODE.NOT_CHANGE
-            });
         }
+    }catch(err){
+        console.log(err);
+        res.send({
+            errorCode: ERROR_CODE.FAIL
+        });
+        return;
     }
+    
 });
 module.exports = router;

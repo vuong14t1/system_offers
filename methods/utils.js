@@ -31,7 +31,7 @@ TimeUtility.getCurrentTime = function (gameId) {
     if(TimeUtility.getCurrentTime.offsetClientVsServer[gameId] == undefined) {
         TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = 0;
     }
-    return Math.round(Date.now() / 1000) - Utility.getCurrentTime.offsetClientVsServer[gameId];
+    return Math.round(Date.now() / 1000) - TimeUtility.getCurrentTime.offsetClientVsServer[gameId];
 };
 
 TimeUtility.getOffetClientVsServer = function (gameId) {
@@ -45,23 +45,22 @@ TimeUtility.getOffetClientVsServer = function (gameId) {
 };
 
 //kiem tra xem cac offer het han hay chua de giai phong user khoi rang buoc
-TimeUtility.checkStatusOfferLive = function (gameId) {
-    GroupObjects.getModel(gameId).find({}).populate("offerLive").exec(function (err, groupObjects) {
+TimeUtility.checkStatusOfferLive = async function (gameId) {
+    await GroupObjects.getModel(gameId).find({}).where("offerLive").ne(null).populate("offerLive").exec(async function (err, groupObjects) {
         if(err) {
-            console.log('GroupObjects check status offer live error');
+            console.log('GroupObjects check status offer live error' + err);
             return;
         };
-        for(var i in groupObjects) {
-            var groupObject = groupObjects[i];
-            if(groupObject.offerLive && Utility.getCurrentTime() >= groupObject.offerLive.timeFinish) {
-                Users.getModel(gameId).find({groupObject: groupObject._id}, function (err, users) {
+        for await (let group of groupObjects) {
+            if(group.offerLive && TimeUtility.getCurrentTime() >= group.offerLive.timeFinish) {
+                await Users.getModel(gameId).find({groupObject: group._id}, async function (err, users) {
                     if(err) {
                         console.log('users check status offer live error');
                         return;
                     }
                     for(var i in users) {
                         users[i].groupObject = null;
-                        users[i].save();
+                        await users[i].save();
                     }
                 });
             }

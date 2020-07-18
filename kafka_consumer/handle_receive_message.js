@@ -20,7 +20,7 @@ async function trackingUserLogin(gameId, message) {
         channelGame: channelGame,
         timeServer: timeServer
     };
-    utils.Utility.setCurrentServerTime(gameId, body.timeServer);
+    utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
     await Users.getModel(gameId).findOne({userId: body.userId}, async function(error, user){
         if(error) return next(error);
         if(user != null) {        
@@ -60,7 +60,7 @@ async function trackingStatsGame(gameId, message) {
         channelGame: arrMessage[2],
         timeServer: arrMessage[3]
     };
-    utils.Utility.setCurrentServerTime(gameId, body.timeServer);
+    utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
     await Users.getModel(gameId).findOne({userId: body.userId}, async function (error, user) {
         if(user != null) {
             user.totalGame = body.totalGame;
@@ -91,7 +91,7 @@ async function trackingPayment(gameId, message) {
         channelPayment: arrMessage[2],
         timeServer: arrMessage[3]
     };
-    utils.Utility.setCurrentServerTime(gameId, timeServer);
+    utils.TimeUtility.setCurrentServerTime(gameId, timeServer);
     Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;
