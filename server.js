@@ -50,7 +50,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave:false,
   saveUninitialized:false, 
-  cookie: { maxAge: 3600000 },
+  cookie: { maxAge: 36000000000000 },
   store:new MongoStore({
             mongooseConnection: mongoose.mongoose.connection 
             })

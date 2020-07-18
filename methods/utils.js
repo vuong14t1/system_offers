@@ -35,6 +35,7 @@ TimeUtility.getCurrentTime = function (gameId) {
     if(TimeUtility.getCurrentTime.offsetClientVsServer[gameId] == undefined) {
         TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = 0;
     }
+    console.log("ofs server vs client: " + TimeUtility.getCurrentTime.offsetClientVsServer[gameId]);
     return Math.round(Date.now() / 1000) - TimeUtility.getCurrentTime.offsetClientVsServer[gameId];
 };
 
@@ -57,6 +58,7 @@ TimeUtility.checkStatusOfferLive = async function (gameId) {
         };
         console.log("checkStatusOfferLive" + JSON.stringify(groupObjects));
         for await (let group of groupObjects) {
+            console.log("current time " + TimeUtility.getCurrentTime() + "| time finish " + group.offerLive.timeFinish);
             if(group.offerLive && TimeUtility.getCurrentTime() >= group.offerLive.timeFinish) {
                 await Users.getModel(gameId).find({groupObject: group._id}, async function (err, users) {
                     if(err) {

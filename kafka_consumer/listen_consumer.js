@@ -4,11 +4,11 @@ var Consumer = kafka.Consumer;
 var handleReceiveMessage = require("./handle_receive_message");
 var consumer = new Consumer(client, [
     {
-        topic: "p13_action_1",
+        topic: "p13_action_2",
         partition: 0
     }
 ],{
-    autoCommit: false
+    autoCommit: true
 });
 consumer.on('message', async function (message) {
     console.log("==================== " + JSON.stringify(message));
