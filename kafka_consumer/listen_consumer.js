@@ -4,7 +4,7 @@ var Consumer = kafka.Consumer;
 var handleReceiveMessage = require("./handle_receive_message");
 var consumer = new Consumer(client, [
     {
-        topic: "p13_action",
+        topic: "p13_action_1",
         partition: 0
     }
 ],{
