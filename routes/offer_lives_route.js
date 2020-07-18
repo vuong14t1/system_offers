@@ -9,12 +9,15 @@ const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
-    if(!req.session.loggedIn) {
-        res.send({
-            errorCode: ERROR_CODE.NOT_LOGIN
-        });
-        return;
+    if(req.path != "/offer_lives/tracking_show") {
+        if(!req.session.loggedIn) {
+            res.send({
+                errorCode: ERROR_CODE.NOT_LOGIN
+            });
+            return;
+        }
     }
+
     next()
 })
 
@@ -32,7 +35,7 @@ router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
     utils.TimeUtility.checkStatusOfferLive(gameId);
-    OfferLives.getModel(gameId).find({}, function (err, offer_lives) {
+    OfferLives.getModel(gameId).find({}).populate("groupOffer").exec(function (err, offer_lives) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -162,6 +165,33 @@ router.post('/edit', function (req, res, next) {
             errorCode: ERROR_CODE.SUCCESS,
             data: offerLive
         });
+    });
+});
+
+router.get("/tracking_show", async function (req, res, next) {
+    var gameId = req.query.gameId;
+    var idOfferLive = req.query.idOfferLive;
+    if(gameId == null || idOfferLive == null) {
+        res.send({
+            errorCode: ERROR_CODE.FAIL
+        });
+        return;
+    }
+    await OfferLives.getModel(gameId).findOne({_id: idOfferLive}, function (err, offerLive) {
+        if(err) {
+            console.log("tracking_show error: " + err);
+            res.send({
+                errorCode: ERROR_CODE.FAIL
+            });
+            return;
+        }
+        if(offerLive) {
+            offerLive.totalShow += 1;
+            offerLive.save();
+            res.send({
+                errorCode: ERROR_CODE.SUCCESS
+            });
+        }
     });
 });
 module.exports = router;

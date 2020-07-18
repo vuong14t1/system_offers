@@ -1,5 +1,16 @@
 {
     "server": "localhost:9092",
     "enable": true,
-    "topic": ["p13-system_offer"]
+    "topic": [
+        {
+            "topic": "p13_action_2",
+            "partition": 0
+        }
+    ],
+    "action": {
+        "action1": "user_login",
+        "action2": "stats_game",
+        "action3": "user_payment",
+        "action4": "bought_offer"
+    }
 }

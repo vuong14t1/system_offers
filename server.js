@@ -12,7 +12,7 @@ var mongoose = require('./mongoose');
 const cors = require('cors');
 var seedAccount = require("./seed_db/seed_accounts");
 var Accounts = require("./models/accounts");
-var listenConsumer = require("./kafka_consumer/listen_consumer");
+require("./kafka_consumer/listen_consumer");
 var utils = require('./methods/utils');
 utils.SchemaUtility.loadAllSchema();
 
@@ -47,7 +47,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'system_offer',
   resave:false,
   saveUninitialized:false, 
   cookie: { maxAge: 36000000000000 },
@@ -57,22 +57,21 @@ app.use(session({
 }));
 
 app.use(function(req, res, next){
-  console.log("===== " + JSON.stringify(req.session));
+  console.log("===== " + JSON.stringify(req.path));
   var gameId = req.query.gameId;
   if(gameId == null) return res.send({
     errorCode: ERROR_CODE.NOT_FOUND_GAME_ID
   });
   if(req.session.loggedIn){
-        res.locals.authenticated = true;
-        // Accounts.findById(req.session.loggedIn, function(err, doc){
-        //     if(err) return next(err);
-        //     res.locals.me = doc;
-        //     next();
-		// });
+    res.locals.authenticated = true;
+    Accounts.getModel(gameId).findById(req.session.loggedIn, function(err, doc){
+        if(err) return next(err);
+        res.locals.me = doc;
+    });
 		next();
   } else {
-        res.locals.authenticated = false;
-        next();
+    res.locals.authenticated = false;
+    next();
   }
 });
 
