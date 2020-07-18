@@ -12,6 +12,7 @@ var mongoose = require('./mongoose');
 const cors = require('cors');
 var seedAccount = require("./seed_db/seed_accounts");
 var Accounts = require("./models/accounts");
+var listenConsumer = require("./kafka_consumer/listen_consumer");
 
 var app = express();
 app.use(cors({

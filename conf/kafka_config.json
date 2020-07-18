@@ -1,0 +1,5 @@
+{
+    "server": "localhost:9092",
+    "enable": true,
+    "topic": ["p13-system_offer"]
+}
