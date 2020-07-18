@@ -1,36 +1,51 @@
 var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
 var CHANNEL_PAYMENT = require('../const/channel_const');
-var Utility = {
+var TimeUtility = {
 };
-Utility.setCurrentServerTime = function (time) {
+var SchemaUtility = {};
+TimeUtility.setCurrentServerTime = function (gameId, time) {
+    gameId = gameId === undefined? "p13": gameId;
     if(time === undefined) {
         console.log("set current time server null");
         time = Math.round(Date.now() / 1000);
     }
-    if(Utility.getCurrentTime.offsetClientVsServer == undefined) {
-        Utility.getCurrentTime.offsetClientVsServer = 0;
+    if(TimeUtility.getCurrentTime.offsetClientVsServer == undefined) {
+        TimeUtility.getCurrentTime.offsetClientVsServer = {};
     }
-    Utility.getCurrentTime.offsetClientVsServer = Math.round(Date.now() / 1000) - time;
+    if(TimeUtility.getCurrentTime.offsetClientVsServer[gameId] == undefined) {
+        TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = 0;
+    }
+    if(TimeUtility.getCurrentTime.offsetClientVsServer === undefined) {
+        TimeUtility.getCurrentTime.offsetClientVsServer = {};
+    }
+    TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = Math.round(Date.now() / 1000) - time;
 };
 
 //lay thoi gian server hien tai
-Utility.getCurrentTime = function () {
-    if(Utility.getCurrentTime.offsetClientVsServer == undefined) {
-        Utility.getCurrentTime.offsetClientVsServer = 0;
+TimeUtility.getCurrentTime = function (gameId) {
+    gameId = gameId === undefined? "p13": gameId;
+    if(TimeUtility.getCurrentTime.offsetClientVsServer == undefined) {
+        TimeUtility.getCurrentTime.offsetClientVsServer = {};
     }
-    return Math.round(Date.now() / 1000) - Utility.getCurrentTime.offsetClientVsServer;
+    if(TimeUtility.getCurrentTime.offsetClientVsServer[gameId] == undefined) {
+        TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = 0;
+    }
+    return Math.round(Date.now() / 1000) - Utility.getCurrentTime.offsetClientVsServer[gameId];
 };
 
-Utility.getOffetClientVsServer = function () {
-    if(Utility.getCurrentTime.offsetClientVsServer == undefined) {
+TimeUtility.getOffetClientVsServer = function (gameId) {
+    if(TimeUtility.getCurrentTime.offsetClientVsServer == undefined) {
+        TimeUtility.getCurrentTime.offsetClientVsServer = {};
+    }
+    if(TimeUtility.getCurrentTime.offsetClientVsServer[gameId] == undefined) {
         return 0;
     }
-    return Utility.getCurrentTime.offsetClientVsServer;
+    return TimeUtility.getCurrentTime.offsetClientVsServer[gameId];
 };
 
 //kiem tra xem cac offer het han hay chua de giai phong user khoi rang buoc
-Utility.checkStatusOfferLive = function (gameId) {
+TimeUtility.checkStatusOfferLive = function (gameId) {
     GroupObjects.getModel(gameId).find({}).populate("offerLive").exec(function (err, groupObjects) {
         if(err) {
             console.log('GroupObjects check status offer live error');
@@ -54,7 +69,7 @@ Utility.checkStatusOfferLive = function (gameId) {
     });
 };
 //tao default schema channel payment, su dung khi tao schema users
-Utility.getDefaultSchemaChannelPayment= function(gameId) {
+SchemaUtility.getDefaultSchemaChannelPayment= function(gameId) {
     gameId = gameId === undefined? "p13": gameId;
     var schema = [];
     for(var i in CHANNEL_PAYMENT[gameId]) {
@@ -67,7 +82,8 @@ Utility.getDefaultSchemaChannelPayment= function(gameId) {
     return schema;
 }
 //lay thoi gian server tu thoi gian client
-Utility.convertTimeClientToTimeServer = function (timeClient) {
-    return timeClient + Utility.getOffetClientVsServer();
+TimeUtility.convertTimeClientToTimeServer = function (gameId, timeClient) {
+    return timeClient + TimeUtility.getOffetClientVsServer(gameId);
 }
-exports.Utility = Utility;
+exports.TimeUtility = TimeUtility;
+exports.SchemaUtility = SchemaUtility;

@@ -6,7 +6,7 @@ var GroupOffers = require('../models/group_offers');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var utils = require('../methods/utils');
-router.get('/user_login', function (req, res, next) {
+router.get('/user_login', async function (req, res, next) {
     var gameId = req.query.gameId;
     console.log("post user login " + gameId);
     var body = {
@@ -16,8 +16,8 @@ router.get('/user_login', function (req, res, next) {
         channelGame: req.query.channelGame,
         timeServer: req.query.timeServer
     };
-    utils.Utility.setCurrentServerTime(body.timeServer);
-    Users.getModel(gameId).findOne({userId: body.userId}, function(error, user){
+    utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
+    await Users.getModel(gameId).findOne({userId: body.userId}, async function(error, user){
         if(error) return next(error);
         if(user != null) {        
             user.lastTimeOnline = body.lastTimeOnline;
@@ -28,12 +28,12 @@ router.get('/user_login', function (req, res, next) {
                     console.log('post update user login error');
                     res.send({erroCode: ERROR_CODE.FAIL});
                 }else{
-                    console.log('post update user login success: ' + JSON.stringify(user));
+                    console.log('user exist' + JSON.stringify(user));
                     res.send({erroCode: ERROR_CODE.SUCCESS});
                 }
             });
         }else{
-            Users.getModel(gameId).create({
+            await Users.getModel(gameId).create({
                 userId: body.userId,
                 timeCreateAccount: body.timeCreateAccount,
                 lastTimeOnline: body.lastTimeOnline,
@@ -43,7 +43,6 @@ router.get('/user_login', function (req, res, next) {
                     console.log('post user login error');
                     res.send({erroCode: ERROR_CODE.FAIL});
                 }else{
-                    console.log('post user login success: ' + JSON.stringify(user));
                     res.send({erroCode: ERROR_CODE.SUCCESS});
                 }
             });
@@ -53,7 +52,7 @@ router.get('/user_login', function (req, res, next) {
     
 });
 
-router.get('/stats_game', function (req, res, next) {
+router.get('/stats_game', async function (req, res, next) {
     var gameId = req.query.gameId;
     var body = {
         userId: req.query.userId,
@@ -61,8 +60,8 @@ router.get('/stats_game', function (req, res, next) {
         channelGame: req.query.channelGame,
         timeServer: req.query.timeServer
     };
-    utils.Utility.setCurrentServerTime(body.timeServer);
-    Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
+    utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
+    await Users.getModel(gameId).findOne({userId: body.userId}, async function (error, user) {
         if(user != null) {
             user.totalGame = body.totalGame;
             user.channelGame = body.channelGame;
@@ -74,7 +73,7 @@ router.get('/stats_game', function (req, res, next) {
                 }
             });
         }else{
-            Users.getModel(gameId).create({userId: body.userId, totalGame: body.totalGame, channelGame: body.channelGame}, function(error, user) {
+            await Users.getModel(gameId).create({userId: body.userId, totalGame: body.totalGame, channelGame: body.channelGame}, function(error, user) {
                 if(error) {
                     console.log('post user login error');
                     res.send({erroCode: ERROR_CODE.FAIL});
@@ -95,7 +94,7 @@ router.get('/lastPayment', function(req, res, next){
         channelPayment: req.query.channelPayment,
         timeServer: req.query.timeServer
     };
-    utils.Utility.setCurrentServerTime(timeServer);
+    utils.TimeUtility.setCurrentServerTime(gameId, timeServer);
     Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;
@@ -141,6 +140,12 @@ router.get('/get_offer', async function (req, res, next){
     var user = await Users.getModel(gameId).findOne({userId: body.userId}, function (err, user) {
 
     });
+    if(user == null) {
+        res.send({
+            errorCode: ERROR_CODE.NOT_CHANGE
+        });
+        return;
+    }
     console.log("abc " + JSON.stringify(user));
     if(user != null) {
         if(user.isModifiedOffer) {

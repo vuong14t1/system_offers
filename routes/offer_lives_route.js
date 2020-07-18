@@ -31,7 +31,7 @@ router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
 
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
-    utils.Utility.checkStatusOfferLive(gameId);
+    utils.TimeUtility.checkStatusOfferLive(gameId);
     OfferLives.getModel(gameId).find({}, function (err, offer_lives) {
         if(err) {
             res.send({
@@ -51,8 +51,8 @@ router.post('/create', async function (req, res, next) {
     var body = {
         idObject: req.body.idObject,
         idOffer: req.body.idOffer,
-        timeStart: utils.Utility.convertTimeClientToTimeServer(req.body.timeStart),
-        timeFinish: utils.Utility.convertTimeClientToTimeServer(req.body.timeFinish)
+        timeStart: utils.TimeUtility.convertTimeClientToTimeServer(gameId, req.body.timeStart),
+        timeFinish: utils.TimeUtility.convertTimeClientToTimeServer(gameId, req.body.timeFinish)
     };
     //check moi user chi co 1 offer
     var offerLive = await OfferLives.getModel(gameId).findOne({groupObject: body.idObject, groupOffer: body.idOffer}, function (err, offerLive) {
@@ -136,10 +136,10 @@ router.post('/edit', function (req, res, next) {
         dataModify: req.body.dataModify
     };
     if(body.dataModify.timeStart) {
-        body.dataModify.timeStart = utils.Utility.convertTimeClientToTimeServer(body.dataModify.timeStart);
+        body.dataModify.timeStart = utils.TimeUtility.convertTimeClientToTimeServer(gameId, body.dataModify.timeStart);
     }
     if(body.dataModify.timeFinish) {
-        body.dataModify.timeFinish = utils.Utility.convertTimeClientToTimeServer(body.dataModify.timeFinish);
+        body.dataModify.timeFinish = utils.TimeUtility.convertTimeClientToTimeServer(gameId, body.dataModify.timeFinish);
     }
 
     OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}, function (err, offerLive) {
