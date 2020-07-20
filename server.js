@@ -2,7 +2,7 @@ require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+// var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -12,12 +12,10 @@ var mongoose1 = require('./mongoose');
 const cors = require('cors');
 var seedAccount = require("./seed_db/seed_accounts");
 var Accounts = require("./models/accounts");
-var listenConsumer = require("./kafka_consumer/listen_consumer");
-require('./models/accounts');
-require('./models/group_objects');
-require('./models/group_offers');
-require('./models/offer_lives');
-
+require("./kafka_consumer/listen_consumer");
+var utils = require('./methods/utils');
+utils.SchemaUtility.loadAllSchema();
+const logger = require('./methods/winston');
 var app = express();
 app.use(cors({
 	credentials: true,
@@ -43,39 +41,38 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'system_offer',
   resave:false,
   saveUninitialized:false, 
-  cookie: { maxAge: 3600000 },
+  cookie: { maxAge: 36000000000000 },
   store:new MongoStore({
             mongooseConnection: mongoose1.mongoose.connection 
             })
 }));
 
 app.use(function(req, res, next){
-  console.log("===== " + JSON.stringify(req.session));
+  console.log("===== " + JSON.stringify(req.path));
   var gameId = req.query.gameId;
   if(gameId == null) return res.send({
     errorCode: ERROR_CODE.NOT_FOUND_GAME_ID
   });
   if(req.session.loggedIn){
-        res.locals.authenticated = true;
-        // Accounts.findById(req.session.loggedIn, function(err, doc){
-        //     if(err) return next(err);
-        //     res.locals.me = doc;
-        //     next();
-		// });
+    res.locals.authenticated = true;
+    Accounts.getModel(gameId).findById(req.session.loggedIn, function(err, doc){
+        if(err) return next(err);
+        res.locals.me = doc;
+    });
 		next();
   } else {
-        res.locals.authenticated = false;
-        next();
+    res.locals.authenticated = false;
+    next();
   }
 });
 

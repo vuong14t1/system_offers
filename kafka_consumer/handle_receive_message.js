@@ -1,18 +1,19 @@
 var Users = require('../models/users');
 var GroupObjects = require('../models/group_objects');
 var GroupOffers = require('../models/group_offers');
+var OfferLives = require('../models/offer_lives');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var utils = require('../methods/utils');
 
 async function trackingUserLogin(gameId, message) {
-    var arrMessage = message.split("|");
-    if(arrMessage.length != 5) return;
-    var userId = arrMessage[0];
-    var timeCreateAccount = arrMessage[1];
-    var lastTimeOnline = arrMessage[2];
-    var channelGame = arrMessage[3];
-    var timeServer = arrMessage[4];
+    var props = message.split("|");
+    if(props.length != 5) return;
+    var userId = props[0];
+    var timeCreateAccount = props[1];
+    var lastTimeOnline = props[2];
+    var channelGame = props[3];
+    var timeServer = props[4];
     var body = {
         userId: userId,
         timeCreateAccount: timeCreateAccount,
@@ -52,13 +53,13 @@ async function trackingUserLogin(gameId, message) {
 }
 
 async function trackingStatsGame(gameId, message) {
-    var arrMessage = message.split("|");
-    if(arrMessage.length != 4) return;
+    var props = message.split("|");
+    if(props.length != 4) return;
     var body = {
-        userId: arrMessage[0],
-        totalGame: arrMessage[1],
-        channelGame: arrMessage[2],
-        timeServer: arrMessage[3]
+        userId: props[0],
+        totalGame: props[1],
+        channelGame: props[2],
+        timeServer: props[3]
     };
     utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
     await Users.getModel(gameId).findOne({userId: body.userId}, async function (error, user) {
@@ -83,13 +84,13 @@ async function trackingStatsGame(gameId, message) {
 }
 
 async function trackingPayment(gameId, message) {
-    var arrMessage = message.split("|");
-    if(arrMessage.length != 4) return;
+    var props = message.split("|");
+    if(props.length != 4) return;
     var body = {
-        userId: arrMessage[0],
-        lastPaidPack: arrMessage[1],
-        channelPayment: arrMessage[2],
-        timeServer: arrMessage[3]
+        userId: props[0],
+        lastPaidPack: props[1],
+        channelPayment: props[2],
+        timeServer: props[3]
     };
     utils.TimeUtility.setCurrentServerTime(gameId, timeServer);
     Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
@@ -125,6 +126,25 @@ async function trackingPayment(gameId, message) {
     });
 }
 
+async function trackingBoughtOfferLive(gameId, message) {
+    var props = message.split('|');
+    var idOfferLive = props[0];
+    var body = {
+        ifOfferLive: idOfferLive
+    };
+    await OfferLives.getModel(gameId).findOne({_id: body.idOfferLive}, async function(err, offerLive){
+        if(err) {
+            console.log("trackingBoughtOfferLive err: " + err);
+            return;
+        }
+        if(offerLive) {
+            offerLive.totalBought += 1;
+            await offerLive.save();
+        }
+    });
+}
+
 module.exports.trackingUserLogin = trackingUserLogin;
 module.exports.trackingStatsGame = trackingStatsGame;
 module.exports.trackingPayment = trackingPayment;
+module.exports.trackingBoughtOfferLive = trackingBoughtOfferLive;

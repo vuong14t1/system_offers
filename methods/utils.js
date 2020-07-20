@@ -1,6 +1,10 @@
 var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
+var Accounts = require('../models/accounts');
+var GroupOffers = require('../models/group_offers');
+var OfferLives = require('../models/offer_lives');
 var CHANNEL_PAYMENT = require('../const/channel_const');
+var registerGameConf = require('../conf/register_games.json');
 var TimeUtility = {
 };
 var SchemaUtility = {};
@@ -31,6 +35,7 @@ TimeUtility.getCurrentTime = function (gameId) {
     if(TimeUtility.getCurrentTime.offsetClientVsServer[gameId] == undefined) {
         TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = 0;
     }
+    console.log("ofs server vs client: " + TimeUtility.getCurrentTime.offsetClientVsServer[gameId]);
     return Math.round(Date.now() / 1000) - TimeUtility.getCurrentTime.offsetClientVsServer[gameId];
 };
 
@@ -51,7 +56,9 @@ TimeUtility.checkStatusOfferLive = async function (gameId) {
             console.log('GroupObjects check status offer live error' + err);
             return;
         };
+        console.log("checkStatusOfferLive" + JSON.stringify(groupObjects));
         for await (let group of groupObjects) {
+            console.log("current time " + TimeUtility.getCurrentTime() + "| time finish " + group.offerLive.timeFinish);
             if(group.offerLive && TimeUtility.getCurrentTime() >= group.offerLive.timeFinish) {
                 await Users.getModel(gameId).find({groupObject: group._id}, async function (err, users) {
                     if(err) {
@@ -83,6 +90,16 @@ SchemaUtility.getDefaultSchemaChannelPayment= function(gameId) {
 //lay thoi gian server tu thoi gian client
 TimeUtility.convertTimeClientToTimeServer = function (gameId, timeClient) {
     return timeClient + TimeUtility.getOffetClientVsServer(gameId);
+}
+
+SchemaUtility.loadAllSchema = function () {
+    for(var i in registerGameConf ) {
+        Accounts.getModel(i);
+        Users.getModel(i);
+        GroupObjects.getModel(i);
+        GroupOffers.getModel(i);
+        OfferLives.getModel(i);
+    }
 }
 exports.TimeUtility = TimeUtility;
 exports.SchemaUtility = SchemaUtility;

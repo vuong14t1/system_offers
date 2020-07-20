@@ -3,6 +3,7 @@ var router = express.Router();
 var Users = require('../models/users');
 var GroupObjects = require('../models/group_objects');
 var GroupOffers = require('../models/group_offers');
+var OfferLives = require('../models/offer_lives');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var utils = require('../methods/utils');
@@ -179,6 +180,13 @@ router.get('/get_offer', async function (req, res, next){
                                     user.isModifiedOffer = false;
                                     await user.save();
                                 });
+                                //increase tracking total user received offer
+                                OfferLives.findOne({_id: groupObject.offerLive._id}, function (err, offerLive){
+                                    if(offerLive) {
+                                        offerLive.totalReceived += 1;
+                                        offerLive.save();
+                                    }
+                                })
                             }else{
                                 res.send({
                                     errorCode: ERROR_CODE.EMPTY

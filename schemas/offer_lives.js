@@ -34,6 +34,11 @@ function getSchema(gameId) {
             totalShow: {
                 type: Number,
                 default: 0
+            },
+            
+            totalReceived: {
+                type: Number,
+                default: 0
             }
         });
     }
