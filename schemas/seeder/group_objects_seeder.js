@@ -10,8 +10,8 @@ for(i=0; i < 15; i++){
             nameObject : faker.commerce.productName(),
             totalUser : faker.random.number(),
 			totalGame : {
-				from: faker.random.number(),
-				to: faker.random.number()
+				from: _.random(0, 10000),
+				to: _.random(10, 100000)
 			},
 		
 			// offerLive: {
@@ -22,17 +22,17 @@ for(i=0; i < 15; i++){
 			channelPayment: faker.commerce.productName(),
 		
 			totalCost: {
-				from: faker.random.number(),
-				to: faker.random.number()
+				from: _.random(0, 10000000),
+				to: _.random(from, 10000000),
 			},
 		
 			numberPay: {
-				from: faker.random.number(),
-				to: faker.random.number()
+				from: _.random(0, 20),
+				to: _.random(from, 100)
 			},
 		
 			lastPaidPack: {
-				from: faker.random.number(),
+				from: _.random(0, 10000000),
 				to: faker.random.number()
 			},
 		
@@ -67,6 +67,7 @@ seeder.connect('mongodb://localhost:27017/system_offers_1', function() {
   ]);
   seeder.clearModels([gameId + '_group_object'], function() {
     seeder.populateModels(data, function() {
+		console.log('aaa')
       seeder.disconnect();
     });
   });

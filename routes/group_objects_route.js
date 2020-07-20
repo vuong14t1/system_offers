@@ -8,6 +8,8 @@ var CHANNEL_PAYMENT = require('../const/channel_const');
 var utils = require('../methods/utils');
 const ROLE = require('../const/role_const');
 const { raw } = require('body-parser');
+require('../models/offer_lives');
+
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
 	console.log('Time 111: ', Date.now())
@@ -45,9 +47,9 @@ router.use('/create',function timeLog (req, res, next) {
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
     utils.TimeUtility.checkStatusOfferLive(gameId);
-    GroupObjects.getModel(gameId).find({}).populate("offerLive").exec(function (error, objects) {
+    GroupObjects.getModel(gameId).find({}).exec(function (error, objects) {
         if(error) {
-            console.log(error);
+            console.log("====", error);
             return next();
 		}
 		res.send({
@@ -71,16 +73,19 @@ router.post('/create', function (req, res, next) {
         timeLastOnline: req.body.timeLastOnline,
         channelGame: req.body.channelGame
 	};
-	console.log("create " + JSON.stringify(body), gameId);
-    var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
+	var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
+	console.log("create " , channel);
+
     var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.to;
     var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.from;
     var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - body.timeLastOnline.to;
     var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - body.timeLastOnline.from;
     console.log("current time " + utils.TimeUtility.getCurrentTime() + "|min age" + timeMinAge + "| max age " + timeMaxAge);
     console.log("current time " + utils.TimeUtility.getCurrentTime() + "|min online" + timeMinOnline + "| max online " + timeMaxOnline);
-    Users.getModel(gameId).find({})
-    .where('groupObject').equals(null)
+
+
+	Users.getModel(gameId).find({})
+    // .where('groupObject').equals(null)
     .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
     .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
     .where("channelPayment." + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)

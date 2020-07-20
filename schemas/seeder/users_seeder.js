@@ -7,11 +7,13 @@ const _ = require('lodash');
 const Users = require('../../models/users');
 const GroupObject = require('../../models/group_objects');
 var GAME = require('../../const/game_const');
+var utils = require('../../methods/utils');
+var CHANNEL_PAYMENT = require('../../const/channel_const')
 let gameId = GAME.P13_NAME;
 
 new Promise((resolve) => {
     mongoose.connect('mongodb://localhost:27017/system_offers_1', {
-        useMongoClient: true,
+        // useMongoClient: true,
         promiseLibrary: require('bluebird')
     });
     async.parallel([
@@ -33,24 +35,35 @@ new Promise((resolve) => {
             items.push(
 				{
 					userId: faker.random.number(),
-					groupObject: _.sample(results[0])._id,
+					// groupObject: _.sample(results[0])._id,
 					channelPayment: [
 						{
 							channel: "IAP",
-							cost: faker.random.number(),
-							number: faker.random.number()
+							cost: _.random(0, 1000000),
+							number: _.random(0, 20)
+						},
+						{
+							channel: "DCB",
+							cost: _.random(0, 1000000),
+							number: _.random(0, 20)
+						},
+						{
+							channel: "CARD",
+							cost: _.random(0, 1000000),
+							number: _.random(0, 20)
 						}
+
 					],
 				
-					totalGame: faker.random.number(),
+					totalGame: _.random(0, 100000),
 				
-					lastPaidPack: faker.random.number(),
+					lastPaidPack: _.random(0, 20),
 				
-					timeCreateAccount: faker.random.number(),
+					timeCreateAccount: utils.TimeUtility.getCurrentTime() - _.random(86400, 86400 * 20),
 				
-					lastTimeOnline: faker.random.number(),
+					lastTimeOnline: utils.TimeUtility.getCurrentTime() - _.random(86400, 86400 * 20),
 					isModifiedOffer: false,
-					channelGame: faker.random.number()
+					channelGame: _.random(1, 4)
 				}
 			)
         }
@@ -59,14 +72,15 @@ new Promise((resolve) => {
 }).then((items) => {
     seeder.connect('mongodb://localhost:27017/system_offers_1', function() {
         let data = [{
-			'model': gameId + '_users',
+			'model': gameId + '_user',
 			'documents': items
 		}]
         seeder.loadModels([
 			'models/users.js'  // load mongoose model 
         ]);
-        seeder.clearModels([gameId + '_users'], function() {
+        seeder.clearModels([gameId + '_user'], function() {
 			seeder.populateModels(data, function() {
+				console.log("done");
 			  seeder.disconnect();
 			});
 		  });

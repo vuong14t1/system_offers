@@ -8,11 +8,15 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-var mongoose = require('./mongoose');
+var mongoose1 = require('./mongoose');
 const cors = require('cors');
 var seedAccount = require("./seed_db/seed_accounts");
 var Accounts = require("./models/accounts");
 var listenConsumer = require("./kafka_consumer/listen_consumer");
+require('./models/accounts');
+require('./models/group_objects');
+require('./models/group_offers');
+require('./models/offer_lives');
 
 var app = express();
 app.use(cors({
@@ -30,7 +34,8 @@ var accounts_route = require('./routes/accounts_route');
 app.locals.moment = require('moment');
 app.locals.contains = contains;
 
-mongoose.getConnect();
+mongoose1.getConnect();
+// mongoose.pluralize(null);
 seedAccount.seedAccounts();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,7 +55,7 @@ app.use(session({
   saveUninitialized:false, 
   cookie: { maxAge: 3600000 },
   store:new MongoStore({
-            mongooseConnection: mongoose.mongoose.connection 
+            mongooseConnection: mongoose1.mongoose.connection 
             })
 }));
 

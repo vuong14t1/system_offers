@@ -11,7 +11,7 @@ if (process.env.SERVER_SOFTWARE == 'bae/3.0') {
     url ="mongodb://"+ username +":"+ password +"@"+ host +":"+ port +"/"+ database;  
 } else {
     host = 'localhost';
-    database = 'system_offers_3';
+    database = 'system_offers_1';
     port = 27017;
     url = "mongodb://" + host + ":" + port + "/" + database;
 }
