@@ -2,12 +2,13 @@ var kafka = require('kafka-node');
 var conf = require("../conf/kafka_config.json");
 var client = new kafka.KafkaClient({kafkaHost: conf.server});
 var Consumer = kafka.Consumer;
+var logger = require('../methods/winston');
 var handleReceiveMessage = require("./handle_receive_message");
 var consumer = new Consumer(client, conf.topic,{
     autoCommit: true
 });
 consumer.on('message', async function (message) {
-    console.log("receive message from kafka: " + JSON.stringify(message));
+    logger.info("receive message from kafka: " + JSON.stringify(message));
     if(message.key == null) {
         console.log("receive kafka key " + message.key);
         return;

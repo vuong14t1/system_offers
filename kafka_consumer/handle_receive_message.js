@@ -5,8 +5,10 @@ var OfferLives = require('../models/offer_lives');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var utils = require('../methods/utils');
+var logger = require('../methods/winston');
 
 async function trackingUserLogin(gameId, message) {
+    logger.info("tracking user login gameId: " + gameId + " | message:" + message);
     var props = message.split("|");
     if(props.length != 5) return;
     var userId = props[0];
@@ -53,6 +55,7 @@ async function trackingUserLogin(gameId, message) {
 }
 
 async function trackingStatsGame(gameId, message) {
+    logger.info("tracking stats game gameId: " + gameId + " | message:" + message);
     var props = message.split("|");
     if(props.length != 4) return;
     var body = {
@@ -84,6 +87,7 @@ async function trackingStatsGame(gameId, message) {
 }
 
 async function trackingPayment(gameId, message) {
+    logger.info("tracking payment game gameId: " + gameId + " | message:" + message);
     var props = message.split("|");
     if(props.length != 4) return;
     var body = {
@@ -127,6 +131,7 @@ async function trackingPayment(gameId, message) {
 }
 
 async function trackingBoughtOfferLive(gameId, message) {
+    logger.info("tracking bought gameId: " + gameId + " | message:" + message);
     var props = message.split('|');
     var idOfferLive = props[0];
     var body = {

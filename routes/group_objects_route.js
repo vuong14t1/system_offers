@@ -211,7 +211,7 @@ router.post('/edit', async function (req, res, next) {
         var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.to;
         var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.from;
         
-        var usersAfters = await Users.getModel(gameId).find({})
+        await Users.getModel(gameId).find({})
         .where('groupObject').exists(false)
         .where('totalGame').gte(groupObject.totalGame.from).lte(groupObject.totalGame.to)
         .where('channelGame').gte(groupObject.channelGame.from).lte(groupObject.channelGame.to)
@@ -220,21 +220,21 @@ router.post('/edit', async function (req, res, next) {
         .where('lastPaidPack').gte(groupObject.lastPaidPack.from).lte(groupObject.lastPaidPack.to)
         .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
         .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
-        .exec(function (err, raws) {
-
-        })
-        groupObject.totalUser = usersAfters.length;
-        await groupObject.save();
-        for await (let user of usersAfters) {
-            if(user) {
-                user.groupObject = groupObject._id;
-                user.save();
+        .exec(async function (err, usersAfters) {
+            groupObject.totalUser = usersAfters.length;
+            await groupObject.save();
+            for await (let user of usersAfters) {
+                if(user) {
+                    user.groupObject = groupObject._id;
+                    user.save();
+                }
             }
-        }
-        res.send({
-            errorCode: ERROR_CODE.SUCCESS,
-            data: groupObject
-        });
+            res.send({
+                errorCode: ERROR_CODE.SUCCESS,
+                data: groupObject
+            });
+        })
+        
     });
 });
 

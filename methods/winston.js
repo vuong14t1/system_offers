@@ -14,7 +14,7 @@ transport.on('rotate', function(oldFilename, newFilename) {
   // do something fun
 });
 
-module.exports = winston.createLogger({
+var logger = winston.createLogger({
   // format của log được kết hợp thông qua format.combine
   format: winston.format.combine(
     winston.format.splat(),
@@ -37,3 +37,10 @@ module.exports = winston.createLogger({
     transport
   ],
 })
+
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.simple()
+  }));
+}
+module.exports = logger;
