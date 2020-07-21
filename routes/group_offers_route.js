@@ -7,6 +7,7 @@ var Users = require('../models/users');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
+    console.log('Time: ', Date.now())
     if(!req.session.loggedIn) {
         res.send({
             errorCode: ERROR_CODE.NOT_LOGIN
@@ -17,6 +18,7 @@ router.use(function timeLog (req, res, next) {
 })
 
 router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
+    console.log('Time 111: ', Date.now())
     if(req.session.role == ROLE.VIEWER) {
         res.send({
             errorCode: ERROR_CODE.NOT_PERMISSION
@@ -146,7 +148,7 @@ router.post('/edit', function (req, res, next) {
 });
 
 router.get("/get_list_group_offer", function (req, res, next) {
-    var gameId = res.query.gameId;
+    var gameId = req.query.gameId;
     GroupOffers.getModel(gameId).find({}).exec(function (err, groupOffers) {
         if(err) {
             res.send({
@@ -158,10 +160,14 @@ router.get("/get_list_group_offer", function (req, res, next) {
         var raws = [];
         for(var i in groupOffers) {
             raws.push({
-                id: groupOffers[i],
+                id: groupOffers[i]._id,
                 nameOffer: groupOffers[i].nameOffer
             });
         }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: raws
+        })
     });
 });
 module.exports = router;
