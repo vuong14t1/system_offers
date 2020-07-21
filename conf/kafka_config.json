@@ -11,6 +11,6 @@
         "action1": "user_login",
         "action2": "stats_game",
         "action3": "user_payment",
-        "action4": "bought_offer"
+        "action4": "user_buy_offer"
     }
 }

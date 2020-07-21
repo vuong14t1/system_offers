@@ -166,6 +166,7 @@ router.get('/get_offer', async function (req, res, next){
                                     }
                                     res.send({
                                         "errorCode": ERROR_CODE.SUCCESS,
+                                        "idOfferLive": groupObject.offerLive._id,
                                         "nameOffer": groupOffer.nameOffer,
                                         "durationLive": groupOffer.durationLive,
                                         "durationCountDown": groupOffer.durationCountDown,
@@ -192,6 +193,10 @@ router.get('/get_offer', async function (req, res, next){
                                     errorCode: ERROR_CODE.EMPTY
                                 });
                             }
+                        }else{
+                            res.send({
+                                errorCode: ERROR_CODE.NOT_CHANGE
+                            });
                         }
                     });
                 }else{

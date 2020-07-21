@@ -24,7 +24,9 @@ function getConnect(){
 	          db:{native_parser:true},  
 	          server:{ poolSize:5, auto_reconnect:true },  
 	          user: username,  
-			  pass: password
+			  pass: password,
+			  useNewUrlParser: true,
+			  useUnifiedTopology: true
 	};  
 	mongoose.connect(url, opts);  
 	var dbcon = mongoose.connection;  

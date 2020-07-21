@@ -9,6 +9,16 @@
             "date": 1595240042722,
             "name": "logs\\system-offers-2020-07-20-17.log",
             "hash": "a3b4b3b64f7c0bd8191059d863a440b1"
+        },
+        {
+            "date": 1595296751444,
+            "name": "logs\\system-offers-2020-07-21-08.log",
+            "hash": "3b06a3d0128d3f6fac16e57ce905d97e"
+        },
+        {
+            "date": 1595296844229,
+            "name": "logs\\system-offers-2020-07-21-09.log",
+            "hash": "37e1d4d9e44e7f7dbb7a2e5e079f7ff2"
         }
     ]
 }
