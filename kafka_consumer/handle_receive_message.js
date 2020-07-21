@@ -133,9 +133,11 @@ async function trackingPayment(gameId, message) {
 async function trackingBoughtOfferLive(gameId, message) {
     logger.info("tracking bought gameId: " + gameId + " | message:" + message);
     var props = message.split('|');
-    var idOfferLive = props[0];
+    var userId = props[0];
+    var idOfferLive = props[1];
     var body = {
-        ifOfferLive: idOfferLive
+        userId: userId,
+        idOfferLive: idOfferLive
     };
     await OfferLives.getModel(gameId).findOne({_id: body.idOfferLive}, async function(err, offerLive){
         if(err) {

@@ -19,6 +19,11 @@
             "date": 1595296844229,
             "name": "logs\\system-offers-2020-07-21-09.log",
             "hash": "37e1d4d9e44e7f7dbb7a2e5e079f7ff2"
+        },
+        {
+            "date": 1595300407621,
+            "name": "logs\\system-offers-2020-07-21-10.log",
+            "hash": "6bba438daa4637afb32ca8ea7531c35e"
         }
     ]
 }

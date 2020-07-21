@@ -182,7 +182,7 @@ router.get('/get_offer', async function (req, res, next){
                                     await user.save();
                                 });
                                 //increase tracking total user received offer
-                                OfferLives.findOne({_id: groupObject.offerLive._id}, function (err, offerLive){
+                                OfferLives.getModel(gameId).findOne({_id: groupObject.offerLive._id}, function (err, offerLive){
                                     if(offerLive) {
                                         offerLive.totalReceived += 1;
                                         offerLive.save();
