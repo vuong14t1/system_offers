@@ -2,6 +2,7 @@ var ROLE = require("../const/role_const");
 var Accounts = require("../models/accounts");
 var md5 = require('md5');
 var conf_games = require('../conf/register_games.json')
+//seed account from config register game
 async function seedAccounts () {
     for(var i in conf_games){
         var gameId = i;
@@ -12,7 +13,7 @@ async function seedAccounts () {
                 if(account == null) {
                  await Accounts.getModel(gameId).create(user, function (err, raw) {
                         if(raw) {
-                            console.log("seed account " + JSON.stringify(raw));
+                            console.log("seed account success: " + JSON.stringify(raw));
                         }
                     });
                 }

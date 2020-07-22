@@ -270,7 +270,7 @@ router.get('/list_user', function (req, res, next) {
     var gameId = req.query.gameId;
     var body = {
         idGroupObject: req.body.idGroupObject,
-        indexPage: req.body.indexPage
+        indexPage: parseInt(req.body.indexPage)
     };
     if(body.indexPage == null) {
         body.indexPage = 0;

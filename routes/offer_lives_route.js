@@ -52,8 +52,8 @@ router.post('/create', async function (req, res, next) {
     var body = {
         idObject: req.body.idObject,
         idOffer: req.body.idOffer,
-        timeStart: utils.TimeUtility.convertTimeClientToTimeServer(gameId, req.body.timeStart),
-        timeFinish: utils.TimeUtility.convertTimeClientToTimeServer(gameId, req.body.timeFinish)
+        timeStart: utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(req.body.timeStart)),
+        timeFinish: utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(req.body.timeFinish))
     };
     //check moi user chi co 1 offer
     var offerLive = await OfferLives.getModel(gameId).findOne({groupObject: body.idObject, groupOffer: body.idOffer}, function (err, offerLive) {
@@ -137,10 +137,10 @@ router.post('/edit', function (req, res, next) {
         dataModify: req.body.dataModify
     };
     if(body.dataModify.timeStart) {
-        body.dataModify.timeStart = utils.TimeUtility.convertTimeClientToTimeServer(gameId, body.dataModify.timeStart);
+        body.dataModify.timeStart = utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(body.dataModify.timeStart));
     }
     if(body.dataModify.timeFinish) {
-        body.dataModify.timeFinish = utils.TimeUtility.convertTimeClientToTimeServer(gameId, body.dataModify.timeFinish);
+        body.dataModify.timeFinish = utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(body.dataModify.timeFinish));
     }
 
     OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}, function (err, offerLive) {

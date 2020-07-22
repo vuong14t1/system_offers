@@ -45,13 +45,13 @@ router.post('/create', function (req, res, next) {
     var gameId = req.query.gameId;
     var body = {
         nameOffer: req.body.nameOffer,
-        durationLive: req.body.durationLive,
-        durationCountDown: req.body.durationCountDown,
+        durationLive: parseInt(req.body.durationLive),
+        durationCountDown: parseInt(req.body.durationCountDown),
         description: req.body.description,
-        type: req.body.type,
-        value: req.body.value,
-        originalCost: req.body.originalCost,
-        promotionCost: req.body.promotionCost
+        type: parseInt(req.body.type),
+        value: parseInt(req.body.value),
+        originalCost: parseInt(req.body.originalCost),
+        promotionCost: parseInt(req.body.promotionCost)
     };
     GroupOffers.getModel(gameId).create({
         nameOffer: body.nameOffer,

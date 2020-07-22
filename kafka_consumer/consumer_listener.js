@@ -10,7 +10,7 @@ var consumer = new Consumer(client, conf.topic,{
 consumer.on('message', async function (message) {
 
     if(message.key == null) {
-        console.log("receive kafka key " + message.key);
+        logger.getLogger().info("receive message with key null" + JSON.stringify(message));
         return;
     }
     var arrKey = message.key.split("|");
@@ -36,6 +36,6 @@ consumer.on('message', async function (message) {
     }
 })
 consumer.on('error', function (err) {
-    console.log("kafka log error:  " + err);
+    logger.getLogger().info("consumer kafka error: " + JSON.stringify(err));
 });
 module.exports = this;
