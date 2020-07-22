@@ -295,7 +295,7 @@ router.get('/get_list_group_object', function (req, res, next) {
         console.log("get_list_group_object" + JSON.stringify(groupObjects));
         var raws = [];
         for(var i in groupObjects) {
-            raw.push({
+            raws.push({
                 id: groupObjects[i]._id,
                 nameObject: groupObjects[i].nameObject
             });
