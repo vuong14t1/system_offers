@@ -143,7 +143,7 @@ router.post('/edit', function (req, res, next) {
         body.dataModify.timeFinish = utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(body.dataModify.timeFinish));
     }
 
-    OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}, function (err, offerLive) {
+    OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}).populate("groupObject").populate("groupOffer").exec(function (err, offerLive) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -152,7 +152,7 @@ router.post('/edit', function (req, res, next) {
         }
         //notify to all users of group object
         Users.getModel(gameId).find({
-            groupObject: offerLive.groupObject
+            groupObject: offerLive.groupObject._id
         }, function (err, users) {
             for(var i in users) {
                 users[i].isModifiedOffer = true;
