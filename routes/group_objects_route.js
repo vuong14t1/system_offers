@@ -92,8 +92,8 @@ router.post('/create', function (req, res, next) {
     .where('lastPaidPack').gte(body.lastPaidPack.from).lte(body.lastPaidPack.to)
     .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
     .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
-    .exec(async function(error, users){
-        console.log('============ res ' + JSON.stringify(users));
+    .exec(function(error, users){
+        // console.log('============ res ' + JSON.stringify(users));
         if(users.length <= 0) {
             res.send({errorCode: ERROR_CODE.EMPTY});
             return;
@@ -132,7 +132,7 @@ router.post('/create', function (req, res, next) {
                 from: body.channelGame.from,
                 to: body.channelGame.to
             }
-        }, async function (error, groupObject) {
+        }, function (error, groupObject) {
             if(error) {
                 // console.log("create group object fail");
                 res.send({errorCode: ERROR_CODE.FAIL});
@@ -140,7 +140,7 @@ router.post('/create', function (req, res, next) {
                 // console.log("create group object success");
                 for(var i in users) {
                     users[i].groupObject = groupObject._id;
-                    await users[i].save(function (error, data) {
+                    users[i].save(function (error, data) {
                         if(error) {
                             // console.log("update user in group object fail!");
                         }else{
@@ -247,11 +247,11 @@ router.post('/delete', async function (req, res, next) {
     var users = await Users.getModel(gameId).find({groupObject: body.idGroupObject}, async function(err, users){
         
     });
-    for await (let user of users) {
+    for (let user of users) {
         if(user) {
             user.groupObject = null;
             user.isModified = true;
-            await user.save();
+            user.save();
         }
     }
     await GroupObjects.getModel(gameId).findByIdAndRemove(body.idGroupObject, function (err, raw) {
