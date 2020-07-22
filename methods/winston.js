@@ -9,8 +9,8 @@ function getLogger(gameId) {
       filename: 'system-offers-%DATE%.log',
       datePattern: 'YYYY-MM-DD-HH',
       zippedArchive: true,
-      maxSize: '60m',
-      maxFiles: '14d',
+      maxSize: '120m',
+      maxFiles: '15d',
       dirname: "./logs/" + gameId
     });
     

@@ -6,5 +6,5 @@ function getModel(gameId) {
 }
 module.exports.getModel = getModel;
 if(CHEAT.CHEAT_SEED){
-module.exports = getModel("p13");
+    module.exports = getModel("p13");
 }

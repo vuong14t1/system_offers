@@ -9,6 +9,7 @@ var logger = require('./winston');
 var TimeUtility = {
 };
 var SchemaUtility = {};
+//dong bo thoi gian voi server tung game
 TimeUtility.setCurrentServerTime = function (gameId, time) {
     logger.getLogger(gameId).info("set current time server " + time);
     gameId = gameId === undefined? "p13": gameId;
@@ -93,7 +94,7 @@ SchemaUtility.getDefaultSchemaChannelPayment= function(gameId) {
 TimeUtility.convertTimeClientToTimeServer = function (gameId, timeClient) {
     return timeClient + TimeUtility.getOffetClientVsServer(gameId);
 }
-
+//load tat cac schema cua game
 SchemaUtility.loadAllSchema = function () {
     for(var i in registerGameConf ) {
         Accounts.getModel(i);
@@ -103,7 +104,7 @@ SchemaUtility.loadAllSchema = function () {
         OfferLives.getModel(i);
     }
 }
-
+//kiem tra gameId ra duoc dang ki config o file register game hay chua?
 SchemaUtility.isRegisteredGame = function (gameId) {
     return registerGameConf[gameId] !== undefined;
 }
