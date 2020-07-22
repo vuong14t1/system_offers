@@ -160,7 +160,7 @@ router.get("/get_list_group_offer", function (req, res, next) {
         var raws = [];
         for(var i in groupOffers) {
             raws.push({
-                id: groupOffers[i]._id,
+                _id: groupOffers[i]._id,
                 nameOffer: groupOffers[i].nameOffer
             });
         }

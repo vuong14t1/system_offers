@@ -283,9 +283,10 @@ router.get('/list_user', function (req, res, next) {
     });
 });
 
-router.get('/get_list_group_object', async function (req, res, next) {
+router.get('/get_list_group_object',async function (req, res, next) {
     var gameId = req.query.gameId;
     await GroupObjects.getModel(gameId).find({}).where("offerLive").equals(null).exec(async function (err, groupObjects) {
+        console.log("get_list_group_object ", groupObjects);
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL,
@@ -293,10 +294,11 @@ router.get('/get_list_group_object', async function (req, res, next) {
             });
             return;
         };
+        console.log("get_list_group_object" + JSON.stringify(groupObjects));
         var raws = [];
         for(var i in groupObjects) {
             raws.push({
-                id: groupObjects[i]._id,
+                _id: groupObjects[i]._id,
                 nameObject: groupObjects[i].nameObject
             });
         }
