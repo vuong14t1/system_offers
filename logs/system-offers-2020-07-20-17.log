@@ -1,4 +1,0 @@
-[2020-07-20 17:34:46] [[32minfo[39m] receive message from kafka: {"topic":"p13_action_2","value":"106219757|1595241286|1595241286|-1|1595241286","offset":5,"partition":0,"highWaterOffset":6,"key":"p13|user_login"}
-[2020-07-20 17:34:46] [[32minfo[39m] tracking user login gameId: p13 | message:106219757|1595241286|1595241286|-1|1595241286
-[2020-07-20 17:38:02] [[32minfo[39m] receive message from kafka: {"topic":"p13_action_2","value":"106219758|1595241482|1595241482|-1|1595241482","offset":6,"partition":0,"highWaterOffset":7,"key":"p13|user_login"}
-[2020-07-20 17:38:02] [[32minfo[39m] tracking user login gameId: p13 | message:106219758|1595241482|1595241482|-1|1595241482

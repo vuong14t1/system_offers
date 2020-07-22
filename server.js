@@ -12,10 +12,9 @@ var mongoose1 = require('./mongoose');
 const cors = require('cors');
 var seedAccount = require("./seed_db/seed_accounts");
 var Accounts = require("./models/accounts");
-require("./kafka_consumer/listen_consumer");
+require("./kafka_consumer/consumer_listener");
 var utils = require('./methods/utils');
 utils.SchemaUtility.loadAllSchema();
-const logger = require('./methods/winston');
 var app = express();
 app.use(cors({
 	credentials: true,

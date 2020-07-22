@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "host": "localhost",
+        "database": "system_offers_1",
+        "port": 27017
+    },
+    "private": {
+        "host": "localhost",
+        "database": "system_offers_1",
+        "port": 27017,
+        "user_name":"",
+        "password": ""
+    },
+    "live": {
+        "host": "localhost",
+        "database": "system_offers_1",
+        "port": 27017
+    }
+}

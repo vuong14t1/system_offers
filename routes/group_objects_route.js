@@ -282,7 +282,7 @@ router.get('/list_user', function (req, res, next) {
     });
 });
 
-router.get('/get_list_group_object', function (req, res, next) {
+router.get('/get_list_group_object', async function (req, res, next) {
     var gameId = req.query.gameId;
     await GroupObjects.getModel(gameId).find({}).where("offerLive").equals(null).exec(async function (err, groupObjects) {
         if(err) {

@@ -1,0 +1,2 @@
+[2020-07-22 10:41:11] [[32minfo[39m] receive message from kafka: {"topic":"p13_action_2","value":"106219778|1595389271|1595389271|-1|1595389271","offset":33,"partition":0,"highWaterOffset":34,"key":"p13|user_login"}
+[2020-07-22 10:41:11] [[32minfo[39m] tracking user login gameId: p13 | message:106219778|1595389271|1595389271|-1|1595389271
