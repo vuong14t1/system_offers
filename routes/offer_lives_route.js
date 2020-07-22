@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ERROR_CODE = require('../const/error_code');
 var OfferLives = require('../models/offer_lives');
+var GroupOffers = require('../models/group_offers');
 var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
 var utils = require('../methods/utils');
@@ -75,7 +76,7 @@ router.post('/create', async function (req, res, next) {
             res.send({errorCode: ERROR_CODE.FAIL});
             return;
         }
-        await GroupObjects.getModel(gameId).findById(body.idObject, function (error1, groupO) {
+        var groupObject = await GroupObjects.getModel(gameId).findById(body.idObject, function (error1, groupO) {
             if(groupO) {
                 groupO.offerLive = raw._id;
                 groupO.save();
@@ -90,7 +91,12 @@ router.post('/create', async function (req, res, next) {
                 });
             }
         });
-    
+
+        var groupOffer = await GroupOffers.getModel(gameId).findById(body.idOffer, function (error2, groupOffer) {
+
+        });
+        raw.groupOffer = groupOffer;
+        raw.groupObject = groupObject;
         res.send({errorCode: ERROR_CODE.SUCCESS, data: raw});
     });
 
