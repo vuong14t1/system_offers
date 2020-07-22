@@ -9,10 +9,11 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose1 = require('./mongoose');
-const cors = require('cors');
-var seedAccount = require("./seed_db/seed_accounts");
-var Accounts = require("./models/accounts");
 require("./kafka_consumer/consumer_listener");
+const cors = require('cors');
+var logger = require('./methods/winston');
+var seed_accounts = require("./seed_db/seed_accounts");
+var Accounts = require("./models/accounts");
 var utils = require('./methods/utils');
 utils.SchemaUtility.loadAllSchema();
 var app = express();
@@ -33,7 +34,7 @@ app.locals.contains = contains;
 
 mongoose1.getConnect();
 // mongoose.pluralize(null);
-seedAccount.seedAccounts();
+seed_accounts.seedAccounts();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -57,11 +58,13 @@ app.use(session({
 }));
 
 app.use(function(req, res, next){
-  console.log("===== " + JSON.stringify(req.path));
   var gameId = req.query.gameId;
-  if(gameId == null) return res.send({
-    errorCode: ERROR_CODE.NOT_FOUND_GAME_ID
-  });
+  if(gameId == null || !utils.SchemaUtility.isRegisteredGame(gameId)) {
+    logger.getLogger().info("gameId " + gameId + " not registerd in service.");
+      return res.send({
+        errorCode: ERROR_CODE.NOT_FOUND_GAME_ID
+      });
+  }
   if(req.session.loggedIn){
     res.locals.authenticated = true;
     Accounts.getModel(gameId).findById(req.session.loggedIn, function(err, doc){

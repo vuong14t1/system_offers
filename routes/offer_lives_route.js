@@ -8,7 +8,6 @@ var utils = require('../methods/utils');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now() + req.path);
     if(req.path != "/tracking_show") {
         if(!req.session.loggedIn) {
             res.send({
@@ -22,7 +21,6 @@ router.use(function timeLog (req, res, next) {
 })
 
 router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
-    console.log('Time 111: ', Date.now())
     if(req.session.role == ROLE.VIEWER) {
         res.send({
             errorCode: ERROR_CODE.NOT_PERMISSION
@@ -35,7 +33,7 @@ router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
     utils.TimeUtility.checkStatusOfferLive(gameId);
-    OfferLives.getModel(gameId).find({}).populate("groupOffer").exec(function (err, offer_lives) {
+    OfferLives.getModel(gameId).find({}).populate("groupOffer").populate("groupObject").exec(function (err, offer_lives) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL

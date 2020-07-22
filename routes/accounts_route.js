@@ -5,7 +5,6 @@ var Accounts = require("../models/accounts");
 var md5 = require('md5');
 const ROLE = require('../const/role_const');
 router.use(['/delete', '/edit'],function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
     if(!req.session.loggedIn) {
         res.send({
             errorCode: ERROR_CODE.NOT_LOGIN
@@ -22,7 +21,6 @@ router.use(['/delete', '/edit'],function timeLog (req, res, next) {
 })
 
 router.use('/list',function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
     if(!req.session.loggedIn) {
         res.send({
             errorCode: ERROR_CODE.NOT_LOGIN

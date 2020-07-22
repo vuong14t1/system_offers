@@ -5,10 +5,12 @@ var GroupOffers = require('../models/group_offers');
 var OfferLives = require('../models/offer_lives');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var registerGameConf = require('../conf/register_games.json');
+var logger = require('./winston');
 var TimeUtility = {
 };
 var SchemaUtility = {};
 TimeUtility.setCurrentServerTime = function (gameId, time) {
+    logger.getLogger(gameId).info("set current time server " + time);
     gameId = gameId === undefined? "p13": gameId;
     if(time === undefined) {
         console.log("set current time server null");
@@ -35,7 +37,7 @@ TimeUtility.getCurrentTime = function (gameId) {
     if(TimeUtility.getCurrentTime.offsetClientVsServer[gameId] == undefined) {
         TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = 0;
     }
-    console.log("ofs server vs client: " + TimeUtility.getCurrentTime.offsetClientVsServer[gameId]);
+    logger.getLogger(gameId).info("offset time client vs server" + TimeUtility.getCurrentTime.offsetClientVsServer[gameId]);
     return Math.round(Date.now() / 1000) - TimeUtility.getCurrentTime.offsetClientVsServer[gameId];
 };
 
@@ -53,12 +55,12 @@ TimeUtility.getOffetClientVsServer = function (gameId) {
 TimeUtility.checkStatusOfferLive = async function (gameId) {
     await GroupObjects.getModel(gameId).find({}).where("offerLive").ne(null).populate("offerLive").exec(async function (err, groupObjects) {
         if(err) {
-            console.log('GroupObjects check status offer live error' + err);
+            logger.getLogger(gameId).info('GroupObjects check status offer live error' + err);
             return;
         };
-        console.log("checkStatusOfferLive" + JSON.stringify(groupObjects));
+        logger.getLogger(gameId).info('checkStatusOfferLive' + JSON.stringify(groupObjects));
         for await (let group of groupObjects) {
-            console.log("current time " + TimeUtility.getCurrentTime() + "| time finish " + group.offerLive.timeFinish);
+            logger.getLogger(gameId).info("check status offer " + JSON.stringify(group) +"current time " + TimeUtility.getCurrentTime() + "| time finish " + group.offerLive.timeFinish);
             if(group.offerLive && TimeUtility.getCurrentTime() >= group.offerLive.timeFinish) {
                 await Users.getModel(gameId).find({groupObject: group._id}, async function (err, users) {
                     if(err) {
@@ -100,6 +102,10 @@ SchemaUtility.loadAllSchema = function () {
         GroupOffers.getModel(i);
         OfferLives.getModel(i);
     }
+}
+
+SchemaUtility.isRegisteredGame = function (gameId) {
+    return registerGameConf[gameId] !== undefined;
 }
 exports.TimeUtility = TimeUtility;
 exports.SchemaUtility = SchemaUtility;

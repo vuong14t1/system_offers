@@ -7,7 +7,6 @@ var Users = require('../models/users');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
     if(!req.session.loggedIn) {
         res.send({
             errorCode: ERROR_CODE.NOT_LOGIN
@@ -18,7 +17,6 @@ router.use(function timeLog (req, res, next) {
 })
 
 router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
-    console.log('Time 111: ', Date.now())
     if(req.session.role == ROLE.VIEWER) {
         res.send({
             errorCode: ERROR_CODE.NOT_PERMISSION

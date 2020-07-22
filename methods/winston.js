@@ -1,5 +1,6 @@
 const winston = require('winston');
 require('winston-daily-rotate-file');
+
 var globalLogger = {};
 function getLogger(gameId) {
   gameId =  gameId === undefined? "common": gameId;
@@ -41,7 +42,7 @@ function getLogger(gameId) {
       ],
     })
     
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.MODE_BUILD == 'dev') {
       logger.add(new winston.transports.Console({
         format: winston.format.simple()
       }));

@@ -292,7 +292,6 @@ router.get('/get_list_group_object', async function (req, res, next) {
             });
             return;
         };
-        console.log("get_list_group_object" + JSON.stringify(groupObjects));
         var raws = [];
         for(var i in groupObjects) {
             raws.push({
