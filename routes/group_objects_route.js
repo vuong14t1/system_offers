@@ -47,7 +47,7 @@ router.use('/create',function timeLog (req, res, next) {
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
     utils.TimeUtility.checkStatusOfferLive(gameId);
-    GroupObjects.getModel(gameId).find({}).exec(function (error, objects) {
+    GroupObjects.getModel(gameId).find({}).populate("offerLive").exec(function (error, objects) {
         if(error) {
             console.log("====", error);
             return next();
@@ -72,10 +72,9 @@ router.post('/create', function (req, res, next) {
         age: req.body.age,
         timeLastOnline: req.body.timeLastOnline,
         channelGame: req.body.channelGame
-	};
+    };
+    console.log("body ==== ", body);
 	var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
-	console.log("create " , channel);
-
     var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.to;
     var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.from;
     var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - body.timeLastOnline.to;
@@ -85,7 +84,7 @@ router.post('/create', function (req, res, next) {
 
 
 	Users.getModel(gameId).find({})
-    // .where('groupObject').equals(null)
+    .where('groupObject').equals(null)
     .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
     .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
     .where("channelPayment." + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
@@ -96,7 +95,7 @@ router.post('/create', function (req, res, next) {
     .exec(async function(error, users){
         console.log('============ res ' + JSON.stringify(users));
         if(users.length <= 0) {
-            res.send({erroCode: ERROR_CODE.EMPTY});
+            res.send({errorCode: ERROR_CODE.EMPTY});
             return;
         }
         GroupObjects.getModel(gameId).create({
@@ -135,17 +134,17 @@ router.post('/create', function (req, res, next) {
             }
         }, async function (error, groupObject) {
             if(error) {
-                console.log("create group object fail");
+                // console.log("create group object fail");
                 res.send({errorCode: ERROR_CODE.FAIL});
             }else{
-                console.log("create group object success");
+                // console.log("create group object success");
                 for(var i in users) {
                     users[i].groupObject = groupObject._id;
                     await users[i].save(function (error, data) {
                         if(error) {
-                            console.log("update user in group object fail!");
+                            // console.log("update user in group object fail!");
                         }else{
-                            console.log("update user in group object success!");
+                            // console.log("update user in group object success!");
                         }
                     });
                 }
@@ -221,8 +220,10 @@ router.post('/edit', async function (req, res, next) {
         .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
         .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
         .exec(async function (err, usersAfters) {
+            console.log("usersAfters ===", usersAfters);
             groupObject.totalUser = usersAfters.length;
             await groupObject.save();
+            console.log("groupObject.totalUser == ", groupObject.totalUser);
             for await (let user of usersAfters) {
                 if(user) {
                     user.groupObject = groupObject._id;
