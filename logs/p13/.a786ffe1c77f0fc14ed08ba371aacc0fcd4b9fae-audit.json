@@ -1,0 +1,19 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 15
+    },
+    "auditLog": "logs\\p13\\.a786ffe1c77f0fc14ed08ba371aacc0fcd4b9fae-audit.json",
+    "files": [
+        {
+            "date": 1595402894067,
+            "name": "logs\\p13\\system-offers-2020-07-22-14.log",
+            "hash": "501c56788e2144d5460944c67133f90a"
+        },
+        {
+            "date": 1595406414688,
+            "name": "logs\\p13\\system-offers-2020-07-22-15.log",
+            "hash": "425934381f2179aa6829c11a82049842"
+        }
+    ]
+}

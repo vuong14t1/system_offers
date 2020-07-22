@@ -61,7 +61,7 @@ router.get('/list', function (req, res, next) {
     
 });
 
-router.post('/create', function (req, res, next) {
+router.post('/create', async function (req, res, next) {
     var gameId = req.query.gameId;
     var body = {
         totalGame: req.body.totalGame,
@@ -73,7 +73,6 @@ router.post('/create', function (req, res, next) {
         timeLastOnline: req.body.timeLastOnline,
         channelGame: req.body.channelGame
     };
-    console.log("body ==== ", body);
 	var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
     var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.to;
     var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.from;
@@ -81,81 +80,74 @@ router.post('/create', function (req, res, next) {
     var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - body.timeLastOnline.from;
     console.log("current time " + utils.TimeUtility.getCurrentTime() + "|min age" + timeMinAge + "| max age " + timeMaxAge);
     console.log("current time " + utils.TimeUtility.getCurrentTime() + "|min online" + timeMinOnline + "| max online " + timeMaxOnline);
-
-
-	Users.getModel(gameId).find({})
-    .where('groupObject').equals(null)
-    .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
-    .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
-    .where("channelPayment." + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
-    .where("channelPayment." + channel + ".number").gte(body.numberPay.from).lte(body.numberPay.to)
-    .where('lastPaidPack').gte(body.lastPaidPack.from).lte(body.lastPaidPack.to)
-    .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
-    .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
-    .exec(function(error, users){
-        // console.log('============ res ' + JSON.stringify(users));
-        if(users.length <= 0) {
-            res.send({errorCode: ERROR_CODE.EMPTY});
-            return;
-        }
-        GroupObjects.getModel(gameId).create({
-            totalUser: users.length,
-            totalGame: {
-                from: body.totalGame.from,
-                to: body.totalGame.to
-            },
-            channelPayment: body.channelPayment,
-            totalCost: {
-                from: body.totalCost.from,
-                to: body.totalCost.to
+    var groupObject = await GroupObjects.getModel(gameId).create({
+        totalUser: 0,
+        totalGame: {
+            from: body.totalGame.from,
+            to: body.totalGame.to
+        },
+        channelPayment: body.channelPayment,
+        totalCost: {
+            from: body.totalCost.from,
+            to: body.totalCost.to
 ,
-            },
-            numberPay: {
-                from: body.numberPay.from,
-                to: body.numberPay.to
-            },
-            lastPaidPack: {
-                from: body.lastPaidPack.from,
-                to: body.lastPaidPack.to
-            },
+        },
+        numberPay: {
+            from: body.numberPay.from,
+            to: body.numberPay.to
+        },
+        lastPaidPack: {
+            from: body.lastPaidPack.from,
+            to: body.lastPaidPack.to
+        },
 
-            age: {
-                from: body.age.from,
-                to: body.age.to
-            },
-            timeLastOnline: {
-                from: body.timeLastOnline.from,
-                to: body.timeLastOnline.to
-            },
+        age: {
+            from: body.age.from,
+            to: body.age.to
+        },
+        timeLastOnline: {
+            from: body.timeLastOnline.from,
+            to: body.timeLastOnline.to
+        },
 
-            channelGame: {
-                from: body.channelGame.from,
-                to: body.channelGame.to
-            }
-        }, function (error, groupObject) {
-            if(error) {
-                // console.log("create group object fail");
-                res.send({errorCode: ERROR_CODE.FAIL});
-            }else{
-                // console.log("create group object success");
-                for(var i in users) {
-                    users[i].groupObject = groupObject._id;
-                    users[i].save(function (error, data) {
-                        if(error) {
-                            // console.log("update user in group object fail!");
-                        }else{
-                            // console.log("update user in group object success!");
-                        }
+        channelGame: {
+            from: body.channelGame.from,
+            to: body.channelGame.to
+        }
+    }, function (error, groupObject) {
+        if(error) {
+            res.send({errorCode: ERROR_CODE.FAIL});
+        }else{
+            Users.getModel(gameId).updateMany({}, {groupObject: groupObject._id}, {new: true}, async function(err, raws){
+                console.log("====================== 1 " + err);
+                console.log('============ 2 ' + JSON.stringify(raws));
+                if(raws.ok == 1) {
+                    groupObject.totalUser = raws.n;
+                    await groupObject.save();
+                    console.log("vao day di ne");
+                    res.send({
+                        errorCode: ERROR_CODE.SUCCESS,
+                        data: groupObject,
+                        dataUser: []
+                    }); 
+                }else{
+                    res.send({
+                        errorCode: ERROR_CODE.FAIL
                     });
                 }
-                res.send({
-                    errorCode: ERROR_CODE.SUCCESS,
-                    data: groupObject,
-                    dataUser: users
-                });
-            }
-        });
+                
+            })
+            // .where('groupObject').equals(null)
+            .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
+            .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
+            .where("channelPayment." + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
+            .where("channelPayment." + channel + ".number").gte(body.numberPay.from).lte(body.numberPay.to)
+            .where('lastPaidPack').gte(body.lastPaidPack.from).lte(body.lastPaidPack.to)
+            .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
+            .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
+        }
     });
+    
 });
 
 router.post('/set_name', function (req, res, next) {
@@ -193,15 +185,9 @@ router.post('/edit', async function (req, res, next) {
             res.send({errorCode: ERROR_CODE.NOT_FOUND});
             return;
         }
-        var users = await Users.getModel(gameId).find({groupObject: body.idGroupObject}, async function(err, users){
+        await Users.getModel(gameId).updateMany({groupObject: body.idGroupObject}, {groupObject: null}, async function(err, users){
         
         });
-        for await (let user of users) {
-            if(user) {
-                user.groupObject = null;
-                await user.save();
-            }
-        }
 
         console.log("data group " + JSON.stringify(groupObject));
         var channel = CHANNEL_PAYMENT[groupObject.channelPayment + ''];
@@ -210,7 +196,7 @@ router.post('/edit', async function (req, res, next) {
         var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.to;
         var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.from;
         
-        await Users.getModel(gameId).find({})
+        await Users.getModel(gameId).updateMany({}, {groupObject: groupObject._id})
         .where('groupObject').exists(false)
         .where('totalGame').gte(groupObject.totalGame.from).lte(groupObject.totalGame.to)
         .where('channelGame').gte(groupObject.channelGame.from).lte(groupObject.channelGame.to)
@@ -219,21 +205,22 @@ router.post('/edit', async function (req, res, next) {
         .where('lastPaidPack').gte(groupObject.lastPaidPack.from).lte(groupObject.lastPaidPack.to)
         .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
         .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
-        .exec(async function (err, usersAfters) {
-            console.log("usersAfters ===", usersAfters);
-            groupObject.totalUser = usersAfters.length;
-            await groupObject.save();
-            console.log("groupObject.totalUser == ", groupObject.totalUser);
-            for await (let user of usersAfters) {
-                if(user) {
-                    user.groupObject = groupObject._id;
-                    user.save();
-                }
+        .exec(async function (err, raws) {
+            if(raws.ok == 1) {
+                console.log("usersAfters ===", usersAfters);
+                groupObject.totalUser = raws.n;
+                await groupObject.save();
+                console.log("groupObject.totalUser == ", groupObject.totalUser);
+                res.send({
+                    errorCode: ERROR_CODE.SUCCESS,
+                    data: groupObject
+                });
+            }else{
+                res.send({
+                    errorCode: ERROR_CODE.FAIL
+                });
             }
-            res.send({
-                errorCode: ERROR_CODE.SUCCESS,
-                data: groupObject
-            });
+            
         })
         
     });
@@ -244,24 +231,17 @@ router.post('/delete', async function (req, res, next) {
     var body = {
         idGroupObject: req.body.idGroupObject
     };
-    var users = await Users.getModel(gameId).find({groupObject: body.idGroupObject}, async function(err, users){
+    await Users.getModel(gameId).updateMany({groupObject: body.idGroupObject}, {groupObject: null, isModified: true}, async function(err, users){
         
     });
-    for (let user of users) {
-        if(user) {
-            user.groupObject = null;
-            user.isModified = true;
-            user.save();
-        }
-    }
     await GroupObjects.getModel(gameId).findByIdAndRemove(body.idGroupObject, function (err, raw) {
         
     });
-    await OfferLives.getModel(gameId).find({groupObject: body.idGroupObject}, function (err, raws) {
+    /* await OfferLives.getModel(gameId).find({groupObject: body.idGroupObject}, function (err, raws) {
         for(var i in raws) {
             raws[i].groupObject = null;
         }
-    });
+    }); */
     res.send({
         erroCode: ERROR_CODE.SUCCESS
     });

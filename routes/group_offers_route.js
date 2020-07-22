@@ -95,14 +95,8 @@ router.post('/delete', async function (req, res, next) {
                 console.log('ref offer lives ' + JSON.stringify(offerLives));
                 for await(let offerLive of offerLives) {
                     //notify to user
-                    await Users.getModel(gameId).find({groupObject: offerLive.groupObject}, function (err, users) {
-                        console.log('ref offer users ' + JSON.stringify(users));
-                        for(var i in users) {
-                            if(users[i]) {
-                                users[i].isModifiedOffer = true;
-                                users[i].save();
-                            }
-                        }
+                    await Users.getModel(gameId).updateMany({groupObject: offerLive.groupObject}, {isModifiedOffer: true}, function (err, users) {
+                        
                     });
                     //delete ref to group offer
                     offerLives.groupOffer = null;
@@ -137,9 +131,8 @@ router.post('/edit', function (req, res, next) {
             OfferLives.getModel(gameId).find({groupOffer: raw._id}, function (err, offerLives) {
                 for(var i in offerLives) {
                     //notify to user
-                    Users.find({groupObject: offerLives[i].groupObject}, function (err, user) {
-                        user.isModifiedOffer = true;
-                        user.save();
+                    Users.findOneAndUpdate({groupObject: offerLives[i].groupObject}, {isModifiedOffer: true}, {new: true}, function (err, user) {
+                        
                     });
                 }
             });
