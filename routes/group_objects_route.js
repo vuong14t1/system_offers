@@ -63,6 +63,7 @@ router.get('/list', function (req, res, next) {
 
 router.post('/create', async function (req, res, next) {
     var gameId = req.query.gameId;
+    console.log("create ==== ", gameId);
     var body = {
         totalGame: req.body.totalGame,
         channelPayment: req.body.channelPayment,
@@ -249,17 +250,20 @@ router.post('/delete', async function (req, res, next) {
 
 router.get('/list_user', function (req, res, next) {
     var gameId = req.query.gameId;
-    var body = {
-        idGroupObject: req.body.idGroupObject,
-        indexPage: parseInt(req.body.indexPage)
-    };
-    if(body.indexPage == null) {
-        body.indexPage = 0;
+    var idGroupObject = req.query.idGroupObject;
+    var indexPage = req.query.indexPage;
+    if(indexPage == null) {
+        indexPage = 0;
     }
     var numberOfPage = 10;
-    Users.getModel(gameId).find({groupObject: body.idGroupObject}).skip(body.indexPage * numberOfPage).exec(function (err, users) {
+    console.log("numberOfPage ", numberOfPage , "indexPage ", indexPage);
+    Users.getModel(gameId).find({groupObject: idGroupObject}).skip(indexPage * numberOfPage).limit(numberOfPage).exec(function (err, users) {
         if(err) return res.send({errorCode: ERROR_CODE.FAIL});
-        res.send({errorCode: ERROR_CODE.SUCCESS, data: users});
+        if(users.length > 0){
+            res.send({errorCode: ERROR_CODE.SUCCESS, data: users});
+        }else{
+            res.send({errorCode: ERROR_CODE.EMPTY});
+        }
     });
 });
 
