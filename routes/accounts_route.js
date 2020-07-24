@@ -95,7 +95,7 @@ router.post('/edit', function (req, res, next) {
         id: req.body.id,
         dataModify: req.body.dataModify
     };
-    Accounts.getModel(gameId).findByIdAndUpdate(body.id, dataModify, {new: true}, function(err, account) {
+    Accounts.getModel(gameId).findByIdAndUpdate(body.id, body.dataModify, {new: true}, function(err, account) {
         if(err) {
             return res.send({errorCode: ERROR_CODE.FAIL});
         }
@@ -113,6 +113,17 @@ router.post('/add', function(req, res, next) {
         password: req.body.password,
         role: req.body.role
     };
-    Accounts.getModel(gameId).findOne({email: body.email});;
+    Accounts.getModel(gameId).findOneAndUpdate({email: body.email}, body, {upsert: true, new: true, runValidators: true}, function(err, acc){
+        if(err) {
+            return res.send({errorCode: ERROR_CODE.FAIL});
+        }
+        if(acc == null){
+            return res.send({errorCode: ERROR_CODE.NOT_FOUND});
+        }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: acc
+        })
+    });;
 });
 module.exports = router;
