@@ -14,6 +14,26 @@
             "date": 1595406414688,
             "name": "logs\\p13\\system-offers-2020-07-22-15.log",
             "hash": "425934381f2179aa6829c11a82049842"
+        },
+        {
+            "date": 1595836573057,
+            "name": "logs\\p13\\system-offers-2020-07-27-14.log",
+            "hash": "e1886904ba49c3b99605022f639a0919"
+        },
+        {
+            "date": 1595837090859,
+            "name": "logs\\p13\\system-offers-2020-07-27-15.log",
+            "hash": "b7ad4ca2797b8993ddd7744bae3db90c"
+        },
+        {
+            "date": 1595840409797,
+            "name": "logs\\p13\\system-offers-2020-07-27-16.log",
+            "hash": "f76dca044a0a3b55915465c221303b3f"
+        },
+        {
+            "date": 1595845077461,
+            "name": "logs\\p13\\system-offers-2020-07-27-17.log",
+            "hash": "6088e344cd88cfca3eba1b843137d12b"
         }
     ]
 }

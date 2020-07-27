@@ -15,6 +15,11 @@ function getSchema(gameId) {
                 ref: gameId + '_group_object',
                 default: null
             },
+
+            isExpired: {
+                type: Boolean,
+                default: false
+            },
         
             timeStart: {
                 type: Number,

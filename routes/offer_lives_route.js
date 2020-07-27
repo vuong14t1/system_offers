@@ -81,13 +81,10 @@ router.post('/create', async function (req, res, next) {
                 groupO.offerLive = raw._id;
                 groupO.save();
                 //notify to all users of group object
-                Users.getModel(gameId).find({
+                Users.getModel(gameId).updateMany({
                     groupObject: groupO._id
-                }, function (err, users) {
-                    for(var i in users) {
-                        users[i].isModifiedOffer = true;
-                        users[i].save();
-                    }
+                }, {isModifiedOffer: true}, {new: true}, function (err, users) {
+                    
                 });
             }
         });
@@ -118,13 +115,10 @@ router.post('/delete', function (req, res, next) {
                     groupO.offerLive = null;
                     groupO.save();
                     //notify to all users of group object
-                    Users.getModel(gameId).find({
+                    Users.getModel(gameId).updateMany({
                         groupObject: groupO._id
-                    }, function (err, users) {
-                        for(var i in users) {
-                            users[i].isModifiedOffer = true;
-                            users[i].save();
-                        }
+                    }, {isModifiedOffer: true}, {new: true}, function (err, users) {
+                        
                     });
                 }
             });
@@ -148,7 +142,10 @@ router.post('/edit', function (req, res, next) {
     if(body.dataModify.timeFinish) {
         body.dataModify.timeFinish = utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(body.dataModify.timeFinish));
     }
-
+    body.dataModify.isExpired = false;
+    if(utils.TimeUtility.getCurrentTime() > body.dataModify.timeFinish) {
+        body.dataModify.isExpired = true;
+    }
     OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}).populate("groupObject").populate("groupOffer").exec(function (err, offerLive) {
         if(err) {
             res.send({
@@ -157,13 +154,10 @@ router.post('/edit', function (req, res, next) {
             return;
         }
         //notify to all users of group object
-        Users.getModel(gameId).find({
+        Users.getModel(gameId).updateMany({
             groupObject: offerLive.groupObject._id
-        }, function (err, users) {
-            for(var i in users) {
-                users[i].isModifiedOffer = true;
-                users[i].save();
-            }
+        }, {isModifiedOffer: true}, {new: true}, function (err, users) {
+            
         });
         res.send({
             errorCode: ERROR_CODE.SUCCESS,

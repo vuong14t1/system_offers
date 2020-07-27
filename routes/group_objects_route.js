@@ -138,7 +138,7 @@ router.post('/create', async function (req, res, next) {
                 }
                 
             })
-            // .where('groupObject').equals(null)
+            .where('groupObject').equals(null)
             .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
             .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
             .where("channelPayment." + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
@@ -269,7 +269,7 @@ router.get('/list_user', function (req, res, next) {
 
 router.get('/get_list_group_object',async function (req, res, next) {
     var gameId = req.query.gameId;
-    await GroupObjects.getModel(gameId).find({}).where("offerLive").equals(null).exec(async function (err, groupObjects) {
+    await GroupObjects.getModel(gameId).find({}).where("totalUser").gt(0).where("offerLive").equals(null).exec(async function (err, groupObjects) {
         console.log("get_list_group_object ", groupObjects);
         if(err) {
             res.send({

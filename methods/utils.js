@@ -38,7 +38,7 @@ TimeUtility.getCurrentTime = function (gameId) {
     if(TimeUtility.getCurrentTime.offsetClientVsServer[gameId] == undefined) {
         TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = 0;
     }
-    logger.getLogger(gameId).info("offset time client vs server" + TimeUtility.getCurrentTime.offsetClientVsServer[gameId]);
+    logger.getLogger(gameId).info("offset time client vs server: " + TimeUtility.getCurrentTime.offsetClientVsServer[gameId]);
     return Math.round(Date.now() / 1000) - TimeUtility.getCurrentTime.offsetClientVsServer[gameId];
 };
 
@@ -61,17 +61,15 @@ TimeUtility.checkStatusOfferLive = async function (gameId) {
         };
         logger.getLogger(gameId).info('checkStatusOfferLive' + JSON.stringify(groupObjects));
         for await (let group of groupObjects) {
-            logger.getLogger(gameId).info("check status offer " + JSON.stringify(group) +"current time " + TimeUtility.getCurrentTime() + "| time finish " + group.offerLive.timeFinish);
+            if(group.offerLive.isExpired) {
+                continue;
+            }
+            logger.getLogger(gameId).info("check status offer " + JSON.stringify(group._id) +"current time " + TimeUtility.getCurrentTime() + "| time finish " + group.offerLive.timeFinish);
             if(group.offerLive && TimeUtility.getCurrentTime() >= group.offerLive.timeFinish) {
-                await Users.getModel(gameId).find({groupObject: group._id}, async function (err, users) {
-                    if(err) {
-                        console.log('users check status offer live error');
-                        return;
-                    }
-                    for(var i in users) {
-                        users[i].groupObject = null;
-                        await users[i].save();
-                    }
+                group.offerLive.isExpired = true;
+                group.offerLive.save();
+                logger.getLogger(gameId).info("This offer is experied!");
+                await Users.getModel(gameId).updateMany({groupObject: group._id}, {groupObject: null}, {new: true}, function (err, users) {
                 });
             }
         }

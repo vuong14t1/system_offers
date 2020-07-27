@@ -12,7 +12,7 @@ var CHANNEL_PAYMENT = require('../../const/channel_const')
 let gameId = GAME.P13_NAME;
 
 var datas = [];
-for(var i = 0; i < 10000; i++){
+for(var i = 0; i < 100; i++){
 	let user = {
 		userId: faker.random.number(),
 		// groupObject: _.sample(results[0])._id,
