@@ -34,6 +34,16 @@
             "date": 1595845074466,
             "name": "logs\\common\\system-offers-2020-07-27-17.log",
             "hash": "e0e5918ec67125a40c64a6768325e775"
+        },
+        {
+            "date": 1595848141509,
+            "name": "logs\\common\\system-offers-2020-07-27-18.log",
+            "hash": "5659ec9534604089b9fc0ca656ea9e5e"
+        },
+        {
+            "date": 1595854913068,
+            "name": "logs\\common\\system-offers-2020-07-27-20.log",
+            "hash": "c1d411243322935762024578a99eb5c8"
         }
     ]
 }

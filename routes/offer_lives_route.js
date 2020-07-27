@@ -35,6 +35,7 @@ router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
     utils.TimeUtility.checkStatusOfferLive(gameId);
     OfferLives.getModel(gameId).find({}).populate("groupOffer").populate("groupObject").exec(function (err, offer_lives) {
+        console.log("===== luist " + JSON.stringify(offer_lives));
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -56,6 +57,16 @@ router.post('/create', async function (req, res, next) {
         timeStart: utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(req.body.timeStart)),
         timeFinish: utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(req.body.timeFinish))
     };
+    if(body.idObject == null || body.idOffer == null) {
+        return res.send({
+            errorCode: ERROR_CODE.FAIL
+        });
+    }
+    if(body.timeFinish == null || body.timeStart == null || body.timeFinish <= body.timeStart) {
+        return res.send({
+            errorCode: ERROR_CODE.FAIL
+        });
+    }
     //check moi user chi co 1 offer
     var offerLive = await OfferLives.getModel(gameId).findOne({groupObject: body.idObject, groupOffer: body.idOffer}, function (err, offerLive) {
 
@@ -104,6 +115,11 @@ router.post('/delete', function (req, res, next) {
     var body = {
         idOfferLive: req.body.idOfferLive
     };
+    if(body.idOfferLive == null) {
+        return res.send({
+            errorCode: ERROR_CODE.FAIL
+        });
+    }
     OfferLives.getModel(gameId).findByIdAndRemove(body.idOfferLive, function (err) {
         if(err) {
             res.send({
@@ -141,6 +157,11 @@ router.post('/edit', function (req, res, next) {
     }
     if(body.dataModify.timeFinish) {
         body.dataModify.timeFinish = utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(body.dataModify.timeFinish));
+    }
+    if(body.dataModify.timeFinish <= body.dataModify.timeStart) {
+        return res.send({
+            errorCode: ERROR_CODE.FAIL
+        });
     }
     body.dataModify.isExpired = false;
     if(utils.TimeUtility.getCurrentTime() > body.dataModify.timeFinish) {
