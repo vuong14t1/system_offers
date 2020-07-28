@@ -4,6 +4,7 @@ var ERROR_CODE = require('../const/error_code');
 var Accounts = require("../models/accounts");
 var md5 = require('md5');
 const ROLE = require('../const/role_const');
+const e = require('express');
 router.use(['/delete', '/edit'],function timeLog (req, res, next) {
     if(!req.session.loggedIn) {
         res.send({
@@ -39,8 +40,10 @@ router.post("/login", function (req, res, next) {
     Accounts.getModel(gameId).findOne({email: body.email, password: body.password}, function (err, account) {
         if(account) {
             if(err) {
+
                 return next(err);
             }
+            
             if(!account) {
                 res.send({
                     errorCode: ERROR_CODE.FAIL
@@ -53,6 +56,10 @@ router.post("/login", function (req, res, next) {
             res.send({
                 errorCode: ERROR_CODE.SUCCESS,
                 data: account
+            });
+        }else{
+            res.send({
+                errorCode: ERROR_CODE.FAIL
             });
         }
     });
@@ -110,7 +117,7 @@ router.post('/add', function(req, res, next) {
     var gameId = req.query.gameId;
     var body = {
         email: req.body.email,
-        password: req.body.password,
+        password: md5(req.body.password),
         role: req.body.role
     };
     Accounts.getModel(gameId).findOneAndUpdate({email: body.email}, body, {upsert: true, new: true, runValidators: true}, function(err, acc){
