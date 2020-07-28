@@ -72,7 +72,8 @@ router.post('/create', async function (req, res, next) {
         lastPaidPack: req.body.lastPaidPack,
         age: req.body.age,
         timeLastOnline: req.body.timeLastOnline,
-        channelGame: req.body.channelGame
+        channelGame: req.body.channelGame,
+        nameObject: req.body.nameObject
     };
 	var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
     var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.to;
@@ -114,7 +115,10 @@ router.post('/create', async function (req, res, next) {
         channelGame: {
             from: body.channelGame.from,
             to: body.channelGame.to
-        }
+        },
+
+        nameObject: body.nameObject
+
     }, function (error, groupObject) {
         if(error) {
             res.send({errorCode: ERROR_CODE.FAIL});

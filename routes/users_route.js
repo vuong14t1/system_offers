@@ -219,4 +219,41 @@ router.get('/get_offer', async function (req, res, next){
     }
     
 });
+
+router.get('/search_info_user', function (req, res, next){
+    var gameId = req.query.gameId;
+    var body = {
+        userId: req.query.userId
+    };
+    Users.getModel(gameId).findOne({userId: body.user}, function (err, raw) {
+        if(err) {
+            return res.send({
+                errorCode: ERROR_CODE.FAIL
+            });
+        }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: raw
+        });
+    });
+});
+
+router.get('/search_offer_user', function (req, res, next){
+    var gameId = req.query.gameId;
+    var body = {
+        userId: req.query.userId
+    };
+    Users.getModel(gameId).findOne({userId: body.user}, function (err, raw) {
+        if(err) {
+            return res.send({
+                errorCode: ERROR_CODE.FAIL
+            });
+        }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: raw
+        });
+    });
+});
+
 module.exports = router;

@@ -79,6 +79,11 @@
             "date": 1595924156970,
             "name": "logs\\p13\\system-offers-2020-07-28-15.log",
             "hash": "ffc1c18c3bc6c13e4b7ffa3c34a19b14"
+        },
+        {
+            "date": 1595927333107,
+            "name": "logs\\p13\\system-offers-2020-07-28-16.log",
+            "hash": "c469eae639894e8064a1ebf1d6d20d03"
         }
     ]
 }
