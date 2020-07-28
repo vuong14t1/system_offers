@@ -146,7 +146,7 @@ router.post('/delete', function (req, res, next) {
     });
 });
 
-router.post('/edit', function (req, res, next) {
+router.post('/edit', async function (req, res, next) {
     var gameId = req.query.gameId;
     var body = {
         idOfferLive: req.body.idOfferLive,
@@ -167,7 +167,12 @@ router.post('/edit', function (req, res, next) {
     if(utils.TimeUtility.getCurrentTime() > body.dataModify.timeFinish) {
         body.dataModify.isExpired = true;
     }
-    OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}).populate("groupObject").populate("groupOffer").exec(function (err, offerLive) {
+    console.log("edit offer live " + JSON.stringify(body));
+    //xoa group cu
+    await GroupObjects.getModel(gameId).findOneAndUpdate({offerLive: body.idOfferLive}, {offerLive: null}, {new: true}, function (err, raws) {
+        console.log("xoas group cu " + JSON.stringify(raws));
+    });
+    await OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}).populate("groupObject").populate("groupOffer").exec(function (err, offerLive) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -180,6 +185,13 @@ router.post('/edit', function (req, res, next) {
         }, {isModifiedOffer: true}, {new: true}, function (err, users) {
             
         });
+        //cap nhat group moi
+        if(body.dataModify.groupObject) {
+            GroupObjects.getModel(gameId).findOneAndUpdate({_id: body.dataModify.groupObject}, {offerLive: offerLive._id}, {new: true}, function (err, raw) {
+                console.log("cap nhat group moi " + JSON.stringify(raw));
+            });
+        }
+        
         res.send({
             errorCode: ERROR_CODE.SUCCESS,
             data: offerLive

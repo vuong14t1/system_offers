@@ -238,11 +238,9 @@ router.post('/delete', async function (req, res, next) {
     await GroupObjects.getModel(gameId).findByIdAndRemove(body.idGroupObject, function (err, raw) {
         
     });
-    /* await OfferLives.getModel(gameId).find({groupObject: body.idGroupObject}, function (err, raws) {
-        for(var i in raws) {
-            raws[i].groupObject = null;
-        }
-    }); */
+    await OfferLives.getModel(gameId).updateMany({groupObject: body.idGroupObject}, {groupObject: null}, {new: true}, function (err, raws) {
+        
+    });
     res.send({
         erroCode: ERROR_CODE.SUCCESS
     });

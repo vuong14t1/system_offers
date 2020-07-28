@@ -43,7 +43,7 @@ consumer.on('message', async function (message) {
 })
 consumer.on('error', function (err) {
     logger.getLogger().info("consumer kafka error: " + JSON.stringify(err));
-    doReconnect();
+    // doReconnect();
 });
 function doReconnect() {
     intervalReconnect && clearInterval(intervalReconnect);
