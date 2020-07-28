@@ -7,8 +7,14 @@ var handleReceiveMessage = require("./handle_receive_message");
 var consumer = new Consumer(client, conf.topic,{
     autoCommit: true
 });
-consumer.on('message', async function (message) {
 
+var intervalReconnect = -1;
+var durationReconnect = 3000;
+consumer.on('ready', function () {
+    logger.getLogger().info("ready to kafka");
+});
+consumer.on('message', async function (message) {
+    intervalReconnect && clearInterval(intervalReconnect);
     if(message.key == null) {
         logger.getLogger().info("receive message with key null" + JSON.stringify(message));
         return;
@@ -37,5 +43,18 @@ consumer.on('message', async function (message) {
 })
 consumer.on('error', function (err) {
     logger.getLogger().info("consumer kafka error: " + JSON.stringify(err));
+    doReconnect();
 });
+function doReconnect() {
+    intervalReconnect && clearInterval(intervalReconnect);
+    intervalReconnect = setInterval(function () {
+        consumer.close();
+        client.close();
+        logger.getLogger().info("reconnecting to kafka....");
+        client = new kafka.KafkaClient({kafkaHost: conf.server});
+        consumer = new Consumer(client, conf.topic,{
+            autoCommit: true
+        });
+    }, durationReconnect);
+}
 module.exports = this;

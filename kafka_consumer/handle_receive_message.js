@@ -139,6 +139,10 @@ async function trackingBoughtOfferLive(gameId, message) {
         userId: userId,
         idOfferLive: idOfferLive
     };
+    //sau khi mua xong thi xoa ref toi  group object
+    Users.getModel(gameId).findOneAndUpdate({userId: userId}, {groupObject: null}, {new: true}, function (err, raw) {
+
+    });
     await OfferLives.getModel(gameId).findOne({_id: body.idOfferLive}, async function(err, offerLive){
         if(err) {
             console.log("trackingBoughtOfferLive err: " + err);
