@@ -222,7 +222,7 @@ router.post('/edit', async function (req, res, next) {
         .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
         .exec(async function (err, raws) {
             if(raws.ok == 1) {
-                console.log("usersAfters ===", usersAfters);
+                // console.log("usersAfters ===", usersAfters);
                 groupObject.totalUser = raws.nModified;
                 await groupObject.save();
                 console.log("groupObject.totalUser == ", groupObject.totalUser);
@@ -256,7 +256,7 @@ router.post('/delete', async function (req, res, next) {
         
     });
     res.send({
-        erroCode: ERROR_CODE.SUCCESS
+        errorCode: ERROR_CODE.SUCCESS
     });
 });
 
