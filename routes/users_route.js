@@ -151,9 +151,13 @@ router.get('/get_offer', async function (req, res, next){
     try{
         if(user != null) {
             if(user.isModifiedOffer) {
+                user.isModifiedOffer = false;
+                await user.save();
+                //TH user khong nam trong group nao ca
                 if(user.groupObject != null) {
                     GroupObjects.getModel(gameId).findOne({_id: user.groupObject}).populate("offerLive").exec(async function (err, groupObject) {
                         console.log("get offer " + JSON.stringify(groupObject.offerLive));
+                        //TH user offer live bi xoa
                         if(groupObject != null && groupObject.offerLive != null) {
                             var idOffer = groupObject.offerLive.groupOffer;
                             if(idOffer != null) {
@@ -178,8 +182,7 @@ router.get('/get_offer', async function (req, res, next){
                                         "timeStart": groupObject.offerLive.timeStart,
                                         "timeFinish": groupObject.offerLive.timeFinish
                                     });
-                                    user.isModifiedOffer = false;
-                                    await user.save();
+                            
                                 });
                                 //increase tracking total user received offer
                                 OfferLives.getModel(gameId).findOne({_id: groupObject.offerLive._id}, function (err, offerLive){
@@ -195,7 +198,7 @@ router.get('/get_offer', async function (req, res, next){
                             }
                         }else{
                             res.send({
-                                errorCode: ERROR_CODE.NOT_CHANGE
+                                errorCode: ERROR_CODE.EMPTY
                             });
                         }
                     });

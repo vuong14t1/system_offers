@@ -131,7 +131,7 @@ router.post('/edit', function (req, res, next) {
             OfferLives.getModel(gameId).find({groupOffer: raw._id}, function (err, offerLives) {
                 for(var i in offerLives) {
                     //notify to user
-                    Users.findOneAndUpdate({groupObject: offerLives[i].groupObject}, {isModifiedOffer: true}, {new: true}, function (err, user) {
+                    Users.getModel(gameId).updateMany({groupObject: offerLives[i].groupObject}, {isModifiedOffer: true}, {new: true}, function (err, user) {
                         
                     });
                 }
