@@ -22,6 +22,16 @@ router.use(function timeLog (req, res, next) {
     next()
 })
 
+router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
+    if(req.session.role == ROLE.VIEWER) {
+        res.send({
+            errorCode: ERROR_CODE.NOT_PERMISSION
+        });
+        return;
+    }
+    next()
+})
+
 router.use('/set_name',function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
     if(req.session.role == ROLE.VIEWER) {
