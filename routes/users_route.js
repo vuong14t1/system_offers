@@ -238,12 +238,12 @@ router.get('/search_info_user', function (req, res, next){
     });
 });
 
-router.get('/search_offer_user', function (req, res, next){
+router.get('/search_user', function (req, res, next){
     var gameId = req.query.gameId;
     var body = {
         userId: req.query.userId
     };
-    Users.getModel(gameId).findOne({userId: body.user}, function (err, raw) {
+    Users.getModel(gameId).findOne({userId: body.userId}, function (err, raw) {
         if(err) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -256,4 +256,22 @@ router.get('/search_offer_user', function (req, res, next){
     });
 });
 
+router.get("/search_user_by_group", function (req, res, next) {
+    var gameId = req.query.gameId;
+    var body = {
+        userId: req.query.userId,
+        groupObject: req.query.groupObject
+    };
+    Users.getModel(gameId).findOne({userId: body.userId, groupObject: body.groupObject}, function (err, raw) {
+        if(err) {
+            return res.send({
+                errorCode: ERROR_CODE.FAIL
+            });
+        }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: raw
+        });
+    });
+});
 module.exports = router;

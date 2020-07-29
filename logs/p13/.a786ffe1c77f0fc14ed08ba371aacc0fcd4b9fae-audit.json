@@ -84,6 +84,21 @@
             "date": 1595927333107,
             "name": "logs\\p13\\system-offers-2020-07-28-16.log",
             "hash": "c469eae639894e8064a1ebf1d6d20d03"
+        },
+        {
+            "date": 1595931555947,
+            "name": "logs\\p13\\system-offers-2020-07-28-17.log",
+            "hash": "a3330d44547b4e093bef885ba28d1c0a"
+        },
+        {
+            "date": 1595935216457,
+            "name": "logs\\p13\\system-offers-2020-07-28-18.log",
+            "hash": "4a04896c95dbc95a74f342cab10e9cf2"
+        },
+        {
+            "date": 1595942270149,
+            "name": "logs\\p13\\system-offers-2020-07-28-20.log",
+            "hash": "c44987e8ac83824a4aa316d2015800ea"
         }
     ]
 }
