@@ -1,0 +1,7 @@
+[2020-07-29 13:40:03] [[32minfo[39m] consumer kafka error: {"message":"Request timed out after 30000ms"}
+[2020-07-29 13:48:05] [[32minfo[39m] Connecting to mongodb://localhost:27017/system_offers_1
+[2020-07-29 13:48:06] [[32minfo[39m] connect mongoose db success.
+[2020-07-29 13:48:36] [[32minfo[39m] consumer kafka error: {"message":"Request timed out after 30000ms"}
+[2020-07-29 13:50:57] [[32minfo[39m] Connecting to mongodb://localhost:27017/system_offers_1
+[2020-07-29 13:50:57] [[32minfo[39m] connect mongoose db success.
+[2020-07-29 13:51:27] [[32minfo[39m] consumer kafka error: {"message":"Request timed out after 30000ms"}

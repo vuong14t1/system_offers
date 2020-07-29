@@ -4,6 +4,7 @@ var ERROR_CODE = require('../const/error_code');
 var GroupOffers = require('../models/group_offers');
 var OfferLives = require('../models/offer_lives');
 var Users = require('../models/users');
+var logger = require('../methods/winston');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -47,7 +48,6 @@ router.post('/create', function (req, res, next) {
     var gameId = req.query.gameId;
     var body = {
         nameOffer: req.body.nameOffer,
-        durationLive: parseInt(req.body.durationLive),
         durationCountDown: parseInt(req.body.durationCountDown),
         description: req.body.description,
         type: parseInt(req.body.type),
@@ -57,7 +57,6 @@ router.post('/create', function (req, res, next) {
     };
     GroupOffers.getModel(gameId).create({
         nameOffer: body.nameOffer,
-        durationLive: body.durationLive,
         durationCountDown: body.durationCountDown,
         description: body.description,
         type: body.type,
@@ -66,6 +65,7 @@ router.post('/create', function (req, res, next) {
         promotionCost: body.promotionCost
     }, function (error, offer) {
         if(error) {
+            logger.getLogger(gameId).info("create offer error " + error);
             res.send({
                 errorCode: ERROR_CODE.FAIL
             });

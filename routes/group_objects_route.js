@@ -205,14 +205,14 @@ router.post('/edit', async function (req, res, next) {
         });
 
         console.log("data group " + JSON.stringify(groupObject));
-        var channel = CHANNEL_PAYMENT[groupObject.channelPayment + ''];
+        var channel = CHANNEL_PAYMENT[gameId][groupObject.channelPayment + ''];
         var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - groupObject.age.to;
         var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - groupObject.age.from;
         var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.to;
         var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.from;
         
         await Users.getModel(gameId).updateMany({}, {groupObject: groupObject._id})
-        .where('groupObject').exists(false)
+        .where('groupObject').equals(null)
         .where('totalGame').gte(groupObject.totalGame.from).lte(groupObject.totalGame.to)
         .where('channelGame').gte(groupObject.channelGame.from).lte(groupObject.channelGame.to)
         .where("channelPayment." + channel + ".cost").gte(groupObject.totalCost.from).lte(groupObject.totalCost.to)

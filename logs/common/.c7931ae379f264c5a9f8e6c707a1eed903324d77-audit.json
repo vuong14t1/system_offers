@@ -84,6 +84,26 @@
             "date": 1595948759933,
             "name": "logs\\common\\system-offers-2020-07-28-22.log",
             "hash": "96c262c11d02f618e98ba2ffeaa45ada"
+        },
+        {
+            "date": 1595988762147,
+            "name": "logs\\common\\system-offers-2020-07-29-09.log",
+            "hash": "0346b20f06eec428537dcf712feab8d8"
+        },
+        {
+            "date": 1595996519445,
+            "name": "logs\\common\\system-offers-2020-07-29-11.log",
+            "hash": "b95ce33c5ce61b98a50ebcab941141ba"
+        },
+        {
+            "date": 1596004803520,
+            "name": "logs\\common\\system-offers-2020-07-29-13.log",
+            "hash": "3cde3d7b3f759c88619d1d32bf2bf292"
+        },
+        {
+            "date": 1596007337788,
+            "name": "logs\\common\\system-offers-2020-07-29-14.log",
+            "hash": "ee6bc9d26ce494f5864a8447a7d5ee64"
         }
     ]
 }
