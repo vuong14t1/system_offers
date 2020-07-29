@@ -172,7 +172,6 @@ router.get('/get_offer', async function (req, res, next){
                                         "errorCode": ERROR_CODE.SUCCESS,
                                         "idOfferLive": groupObject.offerLive._id,
                                         "nameOffer": groupOffer.nameOffer,
-                                        "durationLive": groupOffer.durationLive,
                                         "durationCountDown": groupOffer.durationCountDown,
                                         "description": groupOffer.description,
                                         "type": groupOffer.type,
@@ -208,9 +207,16 @@ router.get('/get_offer', async function (req, res, next){
                     });
                 }
             }else{
-                res.send({
-                    errorCode: ERROR_CODE.NOT_CHANGE
-                });
+                //TH group da bi xoa
+                if(user.groupObject == null) {
+                    res.send({
+                        errorCode: ERROR_CODE.EMPTY
+                    });
+                }else{
+                    res.send({
+                        errorCode: ERROR_CODE.NOT_CHANGE
+                    });
+                }
             }
         }
     }catch(err){

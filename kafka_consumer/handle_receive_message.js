@@ -24,19 +24,11 @@ async function trackingUserLogin(gameId, message) {
         timeServer: timeServer
     };
     utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
-    await Users.getModel(gameId).findOne({userId: body.userId}, async function(error, user){
+    await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {lastTimeOnline: body.lastTimeOnline, timeCreateAccount: body.timeCreateAccount, channelGame: body.channelGame}, {new: true}, async function(error, user){
         if(error) return next(error);
+        console.log("update === " + JSON.stringify(user));
         if(user != null) {        
-            user.lastTimeOnline = body.lastTimeOnline;
-            user.timeCreateAccount = body.timeCreateAccount;
-            user.channelGame = body.channelGame;
-            user.save(function (error, user) {
-                if(error) {
-                    console.log('post update user login error');
-                }else{
-                    console.log('user exist' + JSON.stringify(user));
-                }
-            });
+            
         }else{
             await Users.getModel(gameId).create({
                 userId: body.userId,
@@ -65,17 +57,11 @@ async function trackingStatsGame(gameId, message) {
         timeServer: props[3]
     };
     utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
-    await Users.getModel(gameId).findOne({userId: body.userId}, async function (error, user) {
+    await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {totalGame: body.totalGame, channelGame: body.channelGame}, {new: true}, function (error, user) {
         if(user != null) {
-            user.totalGame = body.totalGame;
-            user.channelGame = body.channelGame;
-            user.save(function (error, user) {
-                if(error) {
-                }else{
-                }
-            });
+            
         }else{
-            await Users.getModel(gameId).create({userId: body.userId, totalGame: body.totalGame, channelGame: body.channelGame}, function(error, user) {
+            Users.getModel(gameId).create({userId: body.userId, totalGame: body.totalGame, channelGame: body.channelGame}, function(error, user) {
                 if(error) {
                     console.log('post user login error');
                 }else{
@@ -97,10 +83,10 @@ async function trackingPayment(gameId, message) {
         timeServer: props[3]
     };
     utils.TimeUtility.setCurrentServerTime(gameId, timeServer);
-    Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
+    Users.getModel(gam  eId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;
-            var channel = CHANNEL_PAYMENT[body.channelPayment + ''];
+            var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
             if(user.channelPayment[channel] != null) {
                 user.channelPayment[channel].cost += body.lastPaidPack;
                 user.channelPayment[channel].number += 1;
@@ -116,14 +102,6 @@ async function trackingPayment(gameId, message) {
                 console.log('==== ' + error);
                 if(error) {
                 }else{
-                }
-            });
-        }else{
-            Users.getModel(gameId).create({userId: body.userId, lastPaidPack: body.lastPaidPack, channelPayment: [{channel: body.channelPayment, cost: body.lastPaidPack}]}, function(error, user) {
-                if(error) {
-                    console.log('post user login error');
-                }else{
-                    console.log('post user login success: ' + JSON.stringify(user));
                 }
             });
         }
