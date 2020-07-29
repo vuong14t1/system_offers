@@ -66,14 +66,13 @@ router.get('/list', function (req, res, next) {
 			errorCode: ERROR_CODE.SUCCESS,
             data: objects
         });
-        console.log("list object " + JSON.stringify(objects));
     });
     
 });
 
 router.post('/create', async function (req, res, next) {
     var gameId = req.query.gameId;
-    console.log("create ==== ", gameId);
+    console.log("create ==== current time ====", utils.TimeUtility.getCurrentTime(gameId));
     var body = {
         totalGame: req.body.totalGame,
         channelPayment: req.body.channelPayment,
@@ -127,7 +126,9 @@ router.post('/create', async function (req, res, next) {
             to: body.channelGame.to
         },
 
-        nameObject: body.nameObject
+        nameObject: body.nameObject,
+        
+        createAt: utils.TimeUtility.getCurrentTime(gameId)
 
     }, function (error, groupObject) {
         if(error) {

@@ -1,0 +1,415 @@
+[2020-07-29 21:33:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:33:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:33:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:33:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:33:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:33:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:01] [[32minfo[39m] receive message from kafka: {"topic":"p13_action_2","value":"106219753|1596033241|1596033241|1|1596033241","offset":68,"partition":0,"highWaterOffset":69,"key":"p13|user_login"}
+[2020-07-29 21:34:01] [[32minfo[39m] tracking user login gameId: p13 | message:106219753|1596033241|1596033241|1|1596033241
+[2020-07-29 21:34:01] [[32minfo[39m] set current time server 1596033241
+[2020-07-29 21:34:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:06] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596205099,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:34:06] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:06] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033247| time finish 1596289742
+[2020-07-29 21:34:06] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:06] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:06] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033247| time finish 1596289861
+[2020-07-29 21:34:06] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:20] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596205099,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:34:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:20] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033261| time finish 1596289742
+[2020-07-29 21:34:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:20] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033261| time finish 1596289861
+[2020-07-29 21:34:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:22] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596205099,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:34:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:22] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033262| time finish 1596289742
+[2020-07-29 21:34:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:22] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033262| time finish 1596289861
+[2020-07-29 21:34:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:22] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596205099,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:34:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:22] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033262| time finish 1596289742
+[2020-07-29 21:34:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:22] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033262| time finish 1596289861
+[2020-07-29 21:34:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:24] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596205099,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:34:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:24] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033265| time finish 1596289742
+[2020-07-29 21:34:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:24] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033265| time finish 1596289861
+[2020-07-29 21:34:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:25] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596205099,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:34:25] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:25] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033266| time finish 1596289742
+[2020-07-29 21:34:25] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:25] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:25] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033266| time finish 1596289861
+[2020-07-29 21:34:25] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:35] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596205099,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:34:35] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:35] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033275| time finish 1596289742
+[2020-07-29 21:34:35] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:35] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:35] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033275| time finish 1596289861
+[2020-07-29 21:34:35] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:40] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596205099,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596205099,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:34:40] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:40] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033281| time finish 1596289742
+[2020-07-29 21:34:40] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:40] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:34:40] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033281| time finish 1596289861
+[2020-07-29 21:34:40] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:35:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:35:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:35:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:35:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:35:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:35:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:36] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033504,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033504,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033504,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033504,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:38:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:36] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596033516| time finish 1596289742
+[2020-07-29 21:38:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:36] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596033516| time finish 1596289861
+[2020-07-29 21:38:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:47] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:47] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:47] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:47] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:47] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:47] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:47] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:51] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:55] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:55] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:55] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:55] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:55] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:55] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:38:55] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:39:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:39:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:39:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:39:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:39:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:39:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:39:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:37] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:37] [[32minfo[39m] NaN
+[2020-07-29 21:40:37] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:37] [[32minfo[39m] NaN
+[2020-07-29 21:40:37] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:37] [[32minfo[39m] NaN
+[2020-07-29 21:40:37] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:37] [[32minfo[39m] NaN
+[2020-07-29 21:40:37] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:37] [[32minfo[39m] NaN
+[2020-07-29 21:40:42] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:43] [[32minfo[39m] NaN
+[2020-07-29 21:40:43] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:43] [[32minfo[39m] NaN
+[2020-07-29 21:40:43] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:43] [[32minfo[39m] NaN
+[2020-07-29 21:40:43] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:43] [[32minfo[39m] NaN
+[2020-07-29 21:40:43] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:43] [[32minfo[39m] NaN
+[2020-07-29 21:40:43] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:43] [[32minfo[39m] NaN
+[2020-07-29 21:40:43] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:40:43] [[32minfo[39m] NaN
+[2020-07-29 21:41:18] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:18] [[32minfo[39m] NaN
+[2020-07-29 21:41:18] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:18] [[32minfo[39m] NaN
+[2020-07-29 21:41:18] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:18] [[32minfo[39m] NaN
+[2020-07-29 21:41:18] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:18] [[32minfo[39m] NaN
+[2020-07-29 21:41:18] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:18] [[32minfo[39m] NaN
+[2020-07-29 21:41:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:20] [[32minfo[39m] NaN
+[2020-07-29 21:41:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:20] [[32minfo[39m] NaN
+[2020-07-29 21:41:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:20] [[32minfo[39m] NaN
+[2020-07-29 21:41:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:20] [[32minfo[39m] NaN
+[2020-07-29 21:41:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:20] [[32minfo[39m] NaN
+[2020-07-29 21:41:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:20] [[32minfo[39m] NaN
+[2020-07-29 21:41:20] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:20] [[32minfo[39m] NaN
+[2020-07-29 21:41:41] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:41] [[32minfo[39m] current time ===1596033702
+[2020-07-29 21:41:41] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:41] [[32minfo[39m] current time ===1596033702
+[2020-07-29 21:41:41] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:41] [[32minfo[39m] current time ===1596033702
+[2020-07-29 21:41:41] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:41] [[32minfo[39m] current time ===1596033702
+[2020-07-29 21:41:41] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:41] [[32minfo[39m] current time ===1596033702
+[2020-07-29 21:41:44] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:44] [[32minfo[39m] current time ===1596033704
+[2020-07-29 21:41:44] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:44] [[32minfo[39m] current time ===1596033704
+[2020-07-29 21:41:44] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:44] [[32minfo[39m] current time ===1596033704
+[2020-07-29 21:41:44] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:44] [[32minfo[39m] current time ===1596033704
+[2020-07-29 21:41:44] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:44] [[32minfo[39m] current time ===1596033704
+[2020-07-29 21:41:44] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:44] [[32minfo[39m] current time ===1596033704
+[2020-07-29 21:41:44] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:41:44] [[32minfo[39m] current time ===1596033704
+[2020-07-29 21:42:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:42:03] [[32minfo[39m] current time ===1596033723
+[2020-07-29 21:42:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:42:03] [[32minfo[39m] current time ===1596033723
+[2020-07-29 21:42:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:42:03] [[32minfo[39m] current time ===1596033723
+[2020-07-29 21:42:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:42:03] [[32minfo[39m] current time ===1596033723
+[2020-07-29 21:42:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:42:03] [[32minfo[39m] current time ===1596033723
+[2020-07-29 21:42:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:42:03] [[32minfo[39m] current time ===1596033723
+[2020-07-29 21:42:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:42:03] [[32minfo[39m] current time ===1596033723
+[2020-07-29 21:43:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:36] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:39] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:39] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:39] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:39] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:39] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:39] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:39] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:39] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:43:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:54] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:45:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:11] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:11] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:11] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:11] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:11] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:11] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:11] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:11] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:24] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:43] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:50] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:57] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:46:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:57] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034018| time finish 1596289742
+[2020-07-29 21:46:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:57] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034018| time finish 1596289861
+[2020-07-29 21:46:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:57] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:46:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:57] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034018| time finish 1596289742
+[2020-07-29 21:46:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:46:57] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034018| time finish 1596289861
+[2020-07-29 21:46:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:47:05] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:03] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:51:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:03] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034263| time finish 1596289742
+[2020-07-29 21:51:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:03] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034263| time finish 1596289861
+[2020-07-29 21:51:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:03] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034263| time finish 1596120420
+[2020-07-29 21:51:03] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:07] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:51:07] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:07] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034268| time finish 1596289742
+[2020-07-29 21:51:07] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:07] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:07] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034268| time finish 1596289861
+[2020-07-29 21:51:07] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:07] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:07] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034268| time finish 1596120420
+[2020-07-29 21:51:07] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034282| time finish 1596289742
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034282| time finish 1596289861
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034282| time finish 1596120420
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034282| time finish 1596289742
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034282| time finish 1596289861
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:21] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034282| time finish 1596120420
+[2020-07-29 21:51:21] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:27] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:51:27] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:27] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034287| time finish 1596289742
+[2020-07-29 21:51:27] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:27] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:27] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034287| time finish 1596289861
+[2020-07-29 21:51:27] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:27] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:27] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034287| time finish 1596120420
+[2020-07-29 21:51:27] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:28] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:33] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:33] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:33] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:33] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:33] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:33] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:33] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:33] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:50] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:51:50] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:50] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034310| time finish 1596289742
+[2020-07-29 21:51:50] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:50] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:50] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034310| time finish 1596289861
+[2020-07-29 21:51:50] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:50] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:51:50] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034310| time finish 1596120420
+[2020-07-29 21:51:50] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:57:57] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:57:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:57:57] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034677| time finish 1596289742
+[2020-07-29 21:57:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:57:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:57:57] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034677| time finish 1596289861
+[2020-07-29 21:57:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:57:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:57:57] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034677| time finish 1596120420
+[2020-07-29 21:57:57] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:02] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:02] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:02] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:02] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:02] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:02] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:02] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:02] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:09] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:58:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:09] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034690| time finish 1596289742
+[2020-07-29 21:58:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:09] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034690| time finish 1596289861
+[2020-07-29 21:58:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:09] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034690| time finish 1596120420
+[2020-07-29 21:58:09] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:16] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:22] [[32minfo[39m] checkStatusOfferLive[{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 1","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f241df4683b9d343cb07fab","isExpired":false,"timeStart":1596203342,"timeFinish":1596289742,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f24216a3164850fc4e07530","__v":0},"totalUser":8,"createAt":1596033955,"_id":"5f241df4683b9d343cb07fab","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"testing 2","offerLive":{"groupOffer":"5f212419efcfe129385e101c","groupObject":"5f2421d13164850fc4e07531","isExpired":false,"timeStart":1596203461,"timeFinish":1596289861,"totalBought":1,"totalShow":1,"totalReceived":1,"createAt":1596033955,"_id":"5f2421eb3164850fc4e07532","__v":0},"totalUser":1,"createAt":1596033955,"_id":"5f2421d13164850fc4e07531","channelPayment":"IAP","__v":0},{"totalGame":{"from":0,"to":100},"totalCost":{"from":0,"to":1000},"numberPay":{"from":0,"to":10},"lastPaidPack":{"from":0,"to":100},"age":{"from":0,"to":7464960000},"timeLastOnline":{"from":0,"to":7464960000},"channelGame":{"from":1,"to":3},"nameObject":"default","offerLive":{"groupOffer":"5f1fa416c175a812f8392848","groupObject":"5f2428343b8ae61fd49fb331","isExpired":false,"timeStart":1596033960,"timeFinish":1596120420,"totalBought":0,"totalShow":0,"totalReceived":0,"createAt":1596034026,"_id":"5f218be988d6a52a74a49e87","__v":0},"totalUser":1,"createAt":1596205099,"_id":"5f2428343b8ae61fd49fb331","channelPayment":"IAP","__v":0}]
+[2020-07-29 21:58:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:22] [[32minfo[39m] check status offer "5f241df4683b9d343cb07fab"current time 1596034703| time finish 1596289742
+[2020-07-29 21:58:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:22] [[32minfo[39m] check status offer "5f2421d13164850fc4e07531"current time 1596034703| time finish 1596289861
+[2020-07-29 21:58:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:22] [[32minfo[39m] offset time client vs server: 0
+[2020-07-29 21:58:22] [[32minfo[39m] check status offer "5f2428343b8ae61fd49fb331"current time 1596034703| time finish 1596120420
+[2020-07-29 21:58:22] [[32minfo[39m] offset time client vs server: 0

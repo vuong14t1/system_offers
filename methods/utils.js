@@ -39,7 +39,7 @@ TimeUtility.getCurrentTime = function (gameId) {
         TimeUtility.getCurrentTime.offsetClientVsServer[gameId] = 0;
     }
     logger.getLogger(gameId).info("offset time client vs server: " + TimeUtility.getCurrentTime.offsetClientVsServer[gameId]);
-    return Math.round(Date.now() / 1000) - TimeUtility.getCurrentTime.offsetClientVsServer[gameId];
+    return (Math.round(Date.now() / 1000) - TimeUtility.getCurrentTime.offsetClientVsServer[gameId]);
 };
 
 TimeUtility.getOffetClientVsServer = function (gameId) {

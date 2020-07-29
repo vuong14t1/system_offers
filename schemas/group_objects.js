@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var utils = require("../methods/utils");
 var schemaGroupObject = {};
 function getSchema(gameId) {
     if(schemaGroupObject[gameId] == null) {
@@ -55,7 +56,11 @@ function getSchema(gameId) {
             channelGame: {
                 from: Number,
                 to: Number
-            }
+            },
+            createAt: {
+                type: Number,
+                default: utils.TimeUtility.getCurrentTime(gameId)
+            },
         
         });
     }

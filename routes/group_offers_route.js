@@ -6,6 +6,7 @@ var OfferLives = require('../models/offer_lives');
 var Users = require('../models/users');
 var logger = require('../methods/winston');
 const ROLE = require('../const/role_const');
+var utils = require('../methods/utils');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
@@ -62,7 +63,8 @@ router.post('/create', function (req, res, next) {
         type: body.type,
         value: body.value,
         originalCost: body.originalCost,
-        promotionCost: body.promotionCost
+        promotionCost: body.promotionCost,
+        createAt: utils.TimeUtility.getCurrentTime(gameId)
     }, function (error, offer) {
         if(error) {
             logger.getLogger(gameId).info("create offer error " + error);

@@ -80,7 +80,8 @@ router.post('/create', async function (req, res, next) {
         groupOffer: body.idOffer,
         groupObject: body.idObject,
         timeStart: body.timeStart,
-        timeFinish: body.timeFinish
+        timeFinish: body.timeFinish,
+        createAt: utils.TimeUtility.getCurrentTime(gameId)
     }, async function (error, raw) {
         if(error) {
             res.send({errorCode: ERROR_CODE.FAIL});

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var utils = require("../methods/utils");
 var schemaOfferLives = {};
 function getSchema(gameId) {
     if(schemaOfferLives[gameId] == null) {
@@ -23,12 +24,12 @@ function getSchema(gameId) {
         
             timeStart: {
                 type: Number,
-                default: Date.now()
+                default: utils.TimeUtility.getCurrentTime(gameId)
             },
         
             timeFinish: {
                 type: Number,
-                default: Date.now()
+                default: utils.TimeUtility.getCurrentTime(gameId)
             },
         
             totalBought: {
@@ -44,7 +45,12 @@ function getSchema(gameId) {
             totalReceived: {
                 type: Number,
                 default: 0
-            }
+            },
+
+            createAt: {
+                type: Number,
+                default: utils.TimeUtility.getCurrentTime(gameId)
+            },
         });
     }
     return schemaOfferLives[gameId];
