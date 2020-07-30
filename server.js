@@ -19,7 +19,7 @@ utils.SchemaUtility.loadAllSchema();
 var app = express();
 app.use(cors({
 	credentials: true,
-	origin: "http://localhost:6969"
+	origin: "http://localhost:8081"
   }));
 
 var contains = require('./methods/array_contains');
