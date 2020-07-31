@@ -1,0 +1,1 @@
+[2020-07-31 10:00:10] [[32minfo[39m] consumer kafka error: {"errno":"ECONNREFUSED","code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":9092}

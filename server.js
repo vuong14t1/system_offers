@@ -21,6 +21,7 @@ app.use(cors({
 	credentials: true,
 	origin: process.env.MODE_BUILD == "dev" ? process.env.API_CLIENT_DEV: process.env.API_CLIENT_RELEASE
   }));
+  console.log('============================== ' + (process.env.MODE_BUILD == "dev" ? process.env.API_CLIENT_DEV: process.env.API_CLIENT_RELEASE));
 
 var contains = require('./methods/array_contains');
 var users_route = require('./routes/users_route');

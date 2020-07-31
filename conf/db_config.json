@@ -5,11 +5,10 @@
         "port": 27017
     },
     "private": {
-        "host": "localhost",
+        "host": "mongodb+srv://@username:@password>@cluster0.craff.mongodb.net/@database>?retryWrites=true&w=majority",
         "database": "system_offers_1",
-        "port": 27017,
-        "user_name":"",
-        "password": ""
+        "user_name":"vuongpq2",
+        "password": "vuongkute"
     },
     "live": {
         "host": "localhost",
