@@ -19,7 +19,7 @@ utils.SchemaUtility.loadAllSchema();
 var app = express();
 app.use(cors({
 	credentials: true,
-	origin: "http://localhost:6969"
+	origin: process.env.MODE_BUILD == "dev" ? process.env.API_CLIENT_DEV: process.env.API_CLIENT_RELEASE
   }));
 
 var contains = require('./methods/array_contains');
@@ -124,7 +124,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '18080');
+var port = normalizePort(process.env.PORT || '10060');
 app.set('port', port);
 
 /**
