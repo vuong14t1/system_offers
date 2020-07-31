@@ -83,7 +83,7 @@ async function trackingPayment(gameId, message) {
         timeServer: props[3]
     };
     utils.TimeUtility.setCurrentServerTime(gameId, timeServer);
-    Users.getModel(gam  eId).findOne({userId: body.userId}, function (error, user) {
+    Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;
             var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];

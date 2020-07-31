@@ -160,6 +160,7 @@ router.get('/get_offer', async function (req, res, next){
                         //TH user offer live bi xoa
                         if(groupObject != null && groupObject.offerLive != null) {
                             var idOffer = groupObject.offerLive.groupOffer;
+                            console.log("id offer " + idOffer);
                             if(idOffer != null) {
                                 await GroupOffers.getModel(gameId).findOne({_id: idOffer}, async function (err, groupOffer) {
                                     if(err) {

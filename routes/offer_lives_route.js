@@ -35,7 +35,6 @@ router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
     utils.TimeUtility.checkStatusOfferLive(gameId);
     OfferLives.getModel(gameId).find({}).populate("groupOffer").populate("groupObject").exec(function (err, offer_lives) {
-        console.log("===== luist " + JSON.stringify(offer_lives));
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -223,6 +222,22 @@ router.get("/tracking_show", async function (req, res, next) {
                 errorCode: ERROR_CODE.SUCCESS
             });
         }
+    });
+});
+
+router.get('/show_detail', function (req, res, next) {
+    var gameId = req.query.gameId;
+    var idOfferLive = req.query.idOfferLive;
+    OfferLives.getModel(gameId).findOne({_id: idOfferLive}).populate("groupOffer").populate("groupObject").exec(function (err, raw) {
+        if(err) {
+            return res.send({
+                errorCode: ERROR_CODE.FAIL
+            });
+        }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: raw
+        });
     });
 });
 module.exports = router;
