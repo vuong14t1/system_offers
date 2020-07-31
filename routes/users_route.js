@@ -235,7 +235,7 @@ router.get('/search_info_user', function (req, res, next){
     var body = {
         userId: req.query.userId
     };
-    Users.getModel(gameId).findOne({userId: body.user}, function (err, raw) {
+    Users.getModel(gameId).findOne({userId: body.userId}, function (err, raw) {
         if(err) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL
