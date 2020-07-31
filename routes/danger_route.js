@@ -21,6 +21,10 @@ router.get('/delete_all_users', function (req, res, next) {
             });
         }
     });
+
+    GroupObjects.getModel(gameId).updateMany({totalCurrentUser: 0}, function(err, raw) {
+        
+    })
 });
 
 router.get('/delete_all_group_object', function (req, res, next) { 

@@ -19,6 +19,11 @@ function getSchema(gameId) {
                 type: Number,
                 default: 0
             },
+
+            totalCurrentUser: {
+                type: Number,
+                default: 0
+            },
             totalGame: {
                 from: Number,
                 to: Number
