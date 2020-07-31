@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo -n "Stopping Service"
+ps -ef | grep node
+
+pm2 delete so_back_end
+
+echo -n "[DONE]"

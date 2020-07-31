@@ -8,15 +8,16 @@ if(process.env.MODE_BUILD == null) {
 var conf = db_config[process.env.MODE_BUILD];
 var host, port, username, password, database, url;
 if (process.env.MODE_BUILD != 'dev') {
-    host = conf['host'];
+	host = conf['host'];
+	port = conf['port'];
     username = conf['user_name'],  
     password = conf['password'],  
     database = conf['database'];
-    url = host.replace("@username", username).replace("@password", password).replace("@database", database);  
+    url = "mongodb://" + host + ":" + port + "/" + database;
 } else {
     host = conf['host'];
     database = conf['database'];
-    port = conf['port'];
+	port = conf['port'];
     url = "mongodb://" + host + ":" + port + "/" + database;
 }
 logger.getLogger().info("Connecting to " + url);  

@@ -134,7 +134,7 @@ router.post('/create', async function (req, res, next) {
         if(error) {
             res.send({errorCode: ERROR_CODE.FAIL});
         }else{
-            Users.getModel(gameId).updateMany({}, {groupObject: groupObject._id}, {new: true}, async function(err, raws){
+            Users.getModel(gameId).updateMany({}, {groupObject: groupObject._id, isModifiedOffer: true}, {new: true}, async function(err, raws){
                 console.log("====================== 1 " + err);
                 console.log('============ 2 ' + JSON.stringify(raws));
                 if(raws.ok == 1) {
@@ -201,7 +201,7 @@ router.post('/edit', async function (req, res, next) {
             res.send({errorCode: ERROR_CODE.NOT_FOUND});
             return;
         }
-        await Users.getModel(gameId).updateMany({groupObject: body.idGroupObject}, {groupObject: null}, async function(err, users){
+        await Users.getModel(gameId).updateMany({groupObject: body.idGroupObject, isModifiedOffer: true}, {groupObject: null}, async function(err, users){
         
         });
 

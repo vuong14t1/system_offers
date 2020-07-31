@@ -230,7 +230,7 @@ router.get('/get_offer', async function (req, res, next){
     
 });
 
-router.get('/search_info_user', function (req, res, next){
+router.get('/search_detail_user', function (req, res, next){
     var gameId = req.query.gameId;
     var body = {
         userId: req.query.userId
@@ -241,10 +241,19 @@ router.get('/search_info_user', function (req, res, next){
                 errorCode: ERROR_CODE.FAIL
             });
         }
-        res.send({
-            errorCode: ERROR_CODE.SUCCESS,
-            data: raw
-        });
+        if(raw.groupObject != null) {
+            OfferLives.getModel(gameId).findOne({groupObject: raw.groupObject}).populate('groupObject').populate('groupOffer').exec(function (err, raw) {
+                return res.send({
+                    errorCode: ERROR_CODE.SUCCESS,
+                    data: raw
+                }); 
+            });
+        }else{
+            return res.send({
+                errorCode: ERROR_CODE.SUCCESS,
+                data: null
+            }); 
+        }
     });
 });
 

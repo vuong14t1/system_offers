@@ -1,0 +1,4 @@
+#!/bin/bash
+
+npm install
+pm2 start server.js --name so_back_end --merge-logs --log-date-format="YYYY-MM-DD HH:mm Z" -o logs/output.log -e logs/error.log
