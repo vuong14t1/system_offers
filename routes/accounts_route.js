@@ -102,6 +102,10 @@ router.post('/edit', function (req, res, next) {
         id: req.body.id,
         dataModify: req.body.dataModify
     };
+
+    if(body.dataModify.password != null){
+        body.dataModify.password = md5(body.dataModify.password);
+    } 
     Accounts.getModel(gameId).findByIdAndUpdate(body.id, body.dataModify, {new: true}, function(err, account) {
         if(err) {
             return res.send({errorCode: ERROR_CODE.FAIL});
