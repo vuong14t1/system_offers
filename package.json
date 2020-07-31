@@ -1,7 +1,7 @@
 {
-  "name": "bae-Blog-nodejs",
+  "name": "system_offer",
   "version": "1.0.0",
-  "author": "luoran",
+  "author": "vuongpq2",
   "description": "The first bae nodejs app!",
   "scripts": {
     "start": "node server.js",

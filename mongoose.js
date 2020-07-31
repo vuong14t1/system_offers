@@ -7,7 +7,7 @@ if(process.env.MODE_BUILD == null) {
 }
 var conf = db_config[process.env.MODE_BUILD];
 var host, port, username, password, database, url;
-if (process.env.MODE_BUILD == 'dev') {
+if (process.env.MODE_BUILD != 'dev') {
     host = conf['host'];
     username = conf['user_name'],  
     password = conf['password'],  

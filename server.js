@@ -29,6 +29,7 @@ var group_objects_route = require('./routes/group_objects_route');
 var group_offers_route = require('./routes/group_offers_route');
 var offer_lives_route = require('./routes/offer_lives_route');
 var accounts_route = require('./routes/accounts_route');
+var danger_route = require('./routes/danger_route');
 
 app.locals.moment = require('moment');
 app.locals.contains = contains;
@@ -85,13 +86,14 @@ app.use('/group_objects', group_objects_route);
 app.use('/group_offers', group_offers_route);
 app.use('/offer_lives', offer_lives_route);
 app.use('/accounts_route', accounts_route);
+app.use('/danger_route', danger_route);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
 // error handlers
 
