@@ -1,16 +1,71 @@
 {
-    "server": "localhost:9092",
-    "enable": true,
-    "topic": [
-        {
-            "topic": "p13_action_2",
-            "partition": 0
+    "dev":{
+        "server": "localhost:9092",
+        "enable": true,
+        "topic": [
+            {
+                "topic": "p13_action_2",
+                "partition": 0
+            }
+        ],
+        "createTopic": [
+            {
+                "topic": "p13_action_2",
+                "partitions": 1,
+                "replicationFactor": 1
+            }
+        ],
+        "action": {
+            "action1": "user_login",
+            "action2": "stats_game",
+            "action3": "user_payment",
+            "action4": "user_buy_offer"
         }
-    ],
-    "action": {
-        "action1": "user_login",
-        "action2": "stats_game",
-        "action3": "user_payment",
-        "action4": "user_buy_offer"
+    },
+    "private":{
+        "server": "10.40.40.90:9092",
+        "enable": true,
+        "topic": [
+            {
+                "topic": "p13_action_2",
+                "partition": 0
+            }
+        ],
+        "createTopic": [
+            {
+                "topic": "p13_action_2",
+                "partitions": 1,
+                "replicationFactor": 1
+            }
+        ],
+        "action": {
+            "action1": "user_login",
+            "action2": "stats_game",
+            "action3": "user_payment",
+            "action4": "user_buy_offer"
+        }
+    },
+    "live":{
+        "server": "localhost:9092",
+        "enable": true,
+        "topic": [
+            {
+                "topic": "p13_action_2",
+                "partition": 0
+            }
+        ],
+        "createTopic": [
+            {
+                "topic": "p13_action_2",
+                "partitions": 1,
+                "replicationFactor": 1
+            }
+        ],
+        "action": {
+            "action1": "user_login",
+            "action2": "stats_game",
+            "action3": "user_payment",
+            "action4": "user_buy_offer"
+        }
     }
 }
