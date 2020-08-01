@@ -242,10 +242,10 @@ router.get('/search_detail_user', function (req, res, next){
             });
         }
         if(raw.groupObject != null) {
-            OfferLives.getModel(gameId).findOne({groupObject: raw.groupObject}).populate('groupObject').populate('groupOffer').exec(function (err, raw) {
+            OfferLives.getModel(gameId).findOne({groupObject: raw.groupObject}).populate('groupObject').populate('groupOffer').exec(function (err, raw1) {
                 return res.send({
                     errorCode: ERROR_CODE.SUCCESS,
-                    data: raw
+                    data: raw1
                 }); 
             });
         }else{
