@@ -262,16 +262,17 @@ router.get('/search_user', function (req, res, next){
     var body = {
         userId: req.query.userId
     };
-    Users.getModel(gameId).findOne({userId: body.userId}, function (err, raw) {
+    Users.getModel(gameId).findOne({userId: body.userId})..populate('groupObject').populate('groupOffer').exec(function (err, data) {
         if(err) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL
             });
+        
         }
-        res.send({
+        return res.send({
             errorCode: ERROR_CODE.SUCCESS,
-            data: raw
-        });
+            data: data
+        }); 
     });
 });
 
