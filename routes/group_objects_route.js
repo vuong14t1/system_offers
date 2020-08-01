@@ -139,7 +139,7 @@ router.post('/create', async function (req, res, next) {
                 console.log('============ 2 ' + JSON.stringify(raws));
                 if(raws.ok == 1) {
                     groupObject.totalUser = raws.nModified;
-                    groupObject.totalCurrentUser = raw.nModified;
+                    groupObject.totalCurrentUser = raws.nModified;
                     await groupObject.save();
                     console.log("vao day di ne");
                     res.send({
@@ -226,7 +226,7 @@ router.post('/edit', async function (req, res, next) {
             if(raws.ok == 1) {
                 // console.log("usersAfters ===", usersAfters);
                 groupObject.totalUser = raws.nModified;
-                groupObject.totalCurrentUser = raw.nModified;
+                groupObject.totalCurrentUser = raws.nModified;
                 await groupObject.save();
                 console.log("groupObject.totalUser == ", groupObject.totalUser);
                 res.send({
