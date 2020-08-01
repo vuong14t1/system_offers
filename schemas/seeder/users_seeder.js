@@ -39,9 +39,9 @@ for(var i = 0; i < 100; i++){
 	
 		lastPaidPack: _.random(0, 20),
 	
-		timeCreateAccount: utils.TimeUtility.getCurrentTime() - _.random(86400, 86400 * 300),
+		timeCreateAccount: utils.TimeUtility.getCurrentTime(gameId) - _.random(86400, 86400 * 300),
 	
-		lastTimeOnline: utils.TimeUtility.getCurrentTime() - _.random(86400, 86400 * 20),
+		lastTimeOnline: utils.TimeUtility.getCurrentTime(gameId) - _.random(86400, 86400 * 20),
 		isModifiedOffer: false,
 		channelGame: _.random(1, 4)
 		}

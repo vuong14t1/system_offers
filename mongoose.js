@@ -20,7 +20,7 @@ if (process.env.MODE_BUILD != 'dev') {
 	port = conf['port'];
     url = "mongodb://" + host + ":" + port + "/" + database;
 }
-logger.getLogger().info("Connecting to " + url);  
+logger.getLogger().info("Connecting to " + url + "user nmae " + username + "| pass " + password);  
 var recon = true;  
 function getConnect(){  
 	var opts ={  
