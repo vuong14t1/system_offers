@@ -5,54 +5,59 @@ var Consumer = kafka.Consumer;
 var logger = require('../methods/winston');
 var handleReceiveMessage = require("./handle_receive_message");
 var consumer
-client.createTopics(conf.createTopic, (error, result) => {
-    // result is an array of any errors if a given topic could not be created
-    if(error) {
-        logger.getLogger().info("create topic error " + error);
-    }else{
-        logger.getLogger().info("create topic success " + JSON.stringify(result));
-        consumer = new Consumer(client, conf.topic,{
-            autoCommit: true
-        });
-        var intervalReconnect = -1;
-        var durationReconnect = 3000;
-        consumer.on('ready', function () {
-            logger.getLogger().info("ready to kafka");
-        });
-        consumer.on('message', async function (message) {
-            intervalReconnect && clearInterval(intervalReconnect);
-            if(message.key == null) {
-                logger.getLogger().info("receive message with key null" + JSON.stringify(message));
-                return;
-            }
-            var arrKey = message.key.split("|");
-            var gameId = arrKey[0];
-            logger.getLogger(gameId).info("receive message from kafka: " + JSON.stringify(message));
-            var action = arrKey[1];
-            switch(action){
-                case conf.action.action1:
-                    handleReceiveMessage.trackingUserLogin(gameId, message.value);
-                break;
-                case conf.action.action2:
-                    handleReceiveMessage.trackingStatsGame(gameId, message.value);
-                break;
-                case conf.action.action3:
-                    handleReceiveMessage.trackingPayment(gameId, message.value);
-                break;
-                case conf.action.action4:
-                    handleReceiveMessage.trackingBoughtOfferLive(gameId, message.value);
-                break;
-                default:
-                    console.log("receive from kafka action " + action);
-                break;
-            }
-        })
-        consumer.on('error', function (err) {
-            logger.getLogger().info("consumer kafka error: " + JSON.stringify(err));
-            // doReconnect();
-        });
-    }
-});
+try{
+    client.createTopics(conf.createTopic, (error, result) => {
+        // result is an array of any errors if a given topic could not be created
+        if(error) {
+            logger.getLogger().info("create topic error " + error);
+        }else{
+            logger.getLogger().info("create topic success " + JSON.stringify(result));
+            consumer = new Consumer(client, conf.topic,{
+                autoCommit: true
+            });
+            var intervalReconnect = -1;
+            var durationReconnect = 3000;
+            consumer.on('ready', function () {
+                logger.getLogger().info("ready to kafka");
+            });
+            consumer.on('message', async function (message) {
+                intervalReconnect && clearInterval(intervalReconnect);
+                if(message.key == null) {
+                    logger.getLogger().info("receive message with key null" + JSON.stringify(message));
+                    return;
+                }
+                var arrKey = message.key.split("|");
+                var gameId = arrKey[0];
+                logger.getLogger(gameId).info("receive message from kafka: " + JSON.stringify(message));
+                var action = arrKey[1];
+                switch(action){
+                    case conf.action.action1:
+                        handleReceiveMessage.trackingUserLogin(gameId, message.value);
+                    break;
+                    case conf.action.action2:
+                        handleReceiveMessage.trackingStatsGame(gameId, message.value);
+                    break;
+                    case conf.action.action3:
+                        handleReceiveMessage.trackingPayment(gameId, message.value);
+                    break;
+                    case conf.action.action4:
+                        handleReceiveMessage.trackingBoughtOfferLive(gameId, message.value);
+                    break;
+                    default:
+                        console.log("receive from kafka action " + action);
+                    break;
+                }
+            })
+            consumer.on('error', function (err) {
+                logger.getLogger().info("consumer kafka error: " + JSON.stringify(err));
+                // doReconnect();
+            });
+        }
+    });
+}catch(err) {
+    logger.getLogger(gameId).info("Create topic kafka error: " + err);
+}
+
 
 
 function doReconnect() {

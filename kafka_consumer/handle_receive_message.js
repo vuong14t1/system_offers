@@ -78,31 +78,22 @@ async function trackingPayment(gameId, message) {
     if(props.length != 4) return;
     var body = {
         userId: props[0],
-        lastPaidPack: props[1],
+        lastPaidPack: parseInt(props[1]),
         channelPayment: props[2],
         timeServer: props[3]
     };
-    utils.TimeUtility.setCurrentServerTime(gameId, timeServer);
-    Users.getModel(gameId).findOne({userId: body.userId}, function (error, user) {
+    utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
+    Users.getModel(gameId).findOne({userId: body.userId}, async function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;
+            console.log("before tracking payment " + JSON.stringify(user));
             var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
             if(user.channelPayment[channel] != null) {
                 user.channelPayment[channel].cost += body.lastPaidPack;
                 user.channelPayment[channel].number += 1;
-            }else{
-                user.channelPayment.splice(channel, 1, {
-                    channel: body.channelPayment,
-                    cost: body.lastPaidPack,
-                    number: 1
-                });
             }
-            console.log('after save ' + JSON.stringify(user));
-            user.save(function (error, user) {
-                console.log('==== ' + error);
-                if(error) {
-                }else{
-                }
+            Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {lastPaidPack: user.lastPaidPack, channelPayment: user.channelPayment}, {new: true}, function () {
+
             });
         }
     });
