@@ -7,7 +7,7 @@
     "private": {
         "host": "10.40.40.90",
         "port": 27017,
-        "database": "system_offers_1",
+        "database": "?",
         "user_name":"admin",
         "password": "5zGvbKdnUGLHsXc6"
     },

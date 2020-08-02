@@ -10,23 +10,24 @@ var logger = require('../methods/winston');
 async function trackingUserLogin(gameId, message) {
     logger.getLogger(gameId).info("tracking user login gameId: " + gameId + " | message:" + message);
     var props = message.split("|");
-    if(props.length != 5) return;
     var userId = props[0];
     var timeCreateAccount = props[1];
     var lastTimeOnline = props[2];
     var channelGame = props[3];
-    var timeServer = props[4];
+    var totalGame = props[4];
+    var timeServer = props[5];
     var body = {
         userId: userId,
         timeCreateAccount: timeCreateAccount,
         lastTimeOnline: lastTimeOnline,
         channelGame: channelGame,
+        totalGame: totalGame,
         timeServer: timeServer
     };
     utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
-    await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {lastTimeOnline: body.lastTimeOnline, timeCreateAccount: body.timeCreateAccount, channelGame: body.channelGame}, {new: true}, async function(error, user){
+    await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {lastTimeOnline: body.lastTimeOnline, timeCreateAccount: body.timeCreateAccount, channelGame: body.channelGame, totalGame: body.totalGame}, {new: true}, async function(error, user){
         if(error) return next(error);
-        console.log("update === " + JSON.stringify(user));
+        logger.getLogger(gameId).info("update usser login === " + JSON.stringify(user));
         if(user != null) {        
             
         }else{
@@ -34,11 +35,13 @@ async function trackingUserLogin(gameId, message) {
                 userId: body.userId,
                 timeCreateAccount: body.timeCreateAccount,
                 lastTimeOnline: body.lastTimeOnline,
-                channelGame: body.channelGame
-            }, function (error, user) {
+                channelGame: body.channelGame,
+                totalGame: body.totalGame
+            }, function (error, user1) {
                 if(error) {
                     console.log('post user login error');
                 }else{
+                    logger.getLogger(gameId).info("create usser login === " + JSON.stringify(user1));
                 }
             });
         }
@@ -49,7 +52,6 @@ async function trackingUserLogin(gameId, message) {
 async function trackingStatsGame(gameId, message) {
     logger.getLogger(gameId).info("tracking stats game gameId: " + gameId + " | message:" + message);
     var props = message.split("|");
-    if(props.length != 4) return;
     var body = {
         userId: props[0],
         totalGame: props[1],
@@ -75,7 +77,6 @@ async function trackingStatsGame(gameId, message) {
 async function trackingPayment(gameId, message) {
     logger.getLogger(gameId).info("tracking payment game gameId: " + gameId + " | message:" + message);
     var props = message.split("|");
-    if(props.length != 4) return;
     var body = {
         userId: props[0],
         lastPaidPack: parseInt(props[1]),
@@ -121,6 +122,12 @@ async function trackingBoughtOfferLive(gameId, message) {
             offerLive.totalBought += 1;
             await offerLive.save();
         }
+        GroupObjects.getModel(gameId).findOne({_id: offerLive.groupObject}, function (err, raw) {
+            if(raw) {
+                raw.totalCurrentUser -=1;
+                raw.save();
+            }
+        })  
     });
 }
 

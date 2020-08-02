@@ -53,8 +53,8 @@ router.post('/create', async function (req, res, next) {
     var body = {
         idObject: req.body.idObject,
         idOffer: req.body.idOffer,
-        timeStart: utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(req.body.timeStart)),
-        timeFinish: utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(req.body.timeFinish))
+        timeStart: req.body.timeStart,
+        timeFinish: req.body.timeFinish
     };
     if(body.idObject == null || body.idOffer == null) {
         return res.send({
@@ -152,12 +152,7 @@ router.post('/edit', async function (req, res, next) {
         idOfferLive: req.body.idOfferLive,
         dataModify: req.body.dataModify
     };
-    if(body.dataModify.timeStart) {
-        body.dataModify.timeStart = utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(body.dataModify.timeStart));
-    }
-    if(body.dataModify.timeFinish) {
-        body.dataModify.timeFinish = utils.TimeUtility.convertTimeClientToTimeServer(gameId, parseInt(body.dataModify.timeFinish));
-    }
+    
     if(body.dataModify.timeFinish <= body.dataModify.timeStart) {
         return res.send({
             errorCode: ERROR_CODE.FAIL

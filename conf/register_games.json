@@ -10,6 +10,11 @@
                 "email": "duyenxinhdep",
                 "password": "123456@p13",
                 "role": 0
+            },
+            {
+                "email": "admin",
+                "password": "123456@p13",
+                "role": 0
             }
         ]
     }
