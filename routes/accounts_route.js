@@ -37,7 +37,7 @@ router.post("/login", function (req, res, next) {
         email: req.body.email,
         password: md5(req.body.password)
     };
-    Accounts.getModel(gameId).findOne({email: body.email, password: body.password}, function (err, account) {
+    Accounts.getModel(gameId).findOne({email: body.email, password: body.password}).exec(function (err, account) {
         if(account) {
             if(err) {
 
@@ -76,7 +76,7 @@ router.get("/logout", function (req, res, next) {
 
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
-    Accounts.getModel(gameId).find({}, function (err, accounts) {
+    Accounts.getModel(gameId).find({}).exec(function (err, accounts) {
         res.send({
             errorCode: ERROR_CODE.SUCCESS,
             data: accounts
@@ -89,7 +89,7 @@ router.post('/delete', function (req, res, next) {
     var body = {
         idAccount: req.body.idAccount
     };
-    Accounts.getModel(gameId).findByIdAndRemove(body.idAccount, function (err) {
+    Accounts.getModel(gameId).findByIdAndRemove(body.idAccount).exec(function (err) {
         res.send({
             errorCode: ERROR_CODE.SUCCESS
         });
@@ -106,7 +106,7 @@ router.post('/edit', function (req, res, next) {
     if(body.dataModify.password != null){
         body.dataModify.password = md5(body.dataModify.password);
     } 
-    Accounts.getModel(gameId).findByIdAndUpdate(body.id, body.dataModify, {new: true}, function(err, account) {
+    Accounts.getModel(gameId).findByIdAndUpdate(body.id, body.dataModify, {new: true}).exec(function(err, account) {
         if(err) {
             return res.send({errorCode: ERROR_CODE.FAIL});
         }
@@ -124,7 +124,7 @@ router.post('/add', function(req, res, next) {
         password: md5(req.body.password),
         role: req.body.role
     };
-    Accounts.getModel(gameId).findOneAndUpdate({email: body.email}, body, {upsert: true, new: true, runValidators: true}, function(err, acc){
+    Accounts.getModel(gameId).findOneAndUpdate({email: body.email}, body, {upsert: true, new: true, runValidators: true}).exec(function(err, acc){
         if(err) {
             return res.send({errorCode: ERROR_CODE.FAIL});
         }
@@ -135,6 +135,6 @@ router.post('/add', function(req, res, next) {
             errorCode: ERROR_CODE.SUCCESS,
             data: acc
         })
-    });;
+    });
 });
 module.exports = router;

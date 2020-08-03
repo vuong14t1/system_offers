@@ -11,7 +11,7 @@ router.get('/delete_all_users', function (req, res, next) {
     if(process.env.MODE_BUILD == "live") {
         return res.send("No permission!");
     }
-    Users.getModel(gameId).deleteMany({}, function (err, response) {
+    Users.getModel(gameId).deleteMany({}).exec(function (err, response) {
         if(err) {
             logger.getLogger(gameId).info("Account: " + req.session.email + " deleted all collection of users fail!");
         }else{
@@ -22,7 +22,7 @@ router.get('/delete_all_users', function (req, res, next) {
         }
     });
 
-    GroupObjects.getModel(gameId).updateMany({totalCurrentUser: 0}, function(err, raw) {
+    GroupObjects.getModel(gameId).updateMany({},{totalCurrentUser: 0}).exec(function(err, raw) {
         
     })
 });
@@ -32,7 +32,7 @@ router.get('/delete_all_group_object', function (req, res, next) {
     if(process.env.MODE_BUILD == "live") {
         return res.send("No permission!");
     }
-    GroupObjects.getModel(gameId).deleteMany({}, function (err, response) {
+    GroupObjects.getModel(gameId).deleteMany({}).exec(function (err, response) {
         if(err) {
             logger.getLogger(gameId).info("Account: " + req.session.email + " deleted all collection of GroupObjects fail!");
         }else{
@@ -49,7 +49,7 @@ router.get('/delete_all_group_offer', function (req, res, next) {
     if(process.env.MODE_BUILD == "live") {
         return res.send("No permission!");
     }
-    GroupOffers.getModel(gameId).deleteMany({}, function (err, response) {
+    GroupOffers.getModel(gameId).deleteMany({}).exec(function (err, response) {
         if(err) {
             logger.getLogger(gameId).info("Account: " + req.session.email + " deleted all collection of GroupOffers fail!");
         }else{
@@ -67,7 +67,7 @@ router.get('/delete_all_offer_live', function (req, res, next) {
     if(process.env.MODE_BUILD == "live") {
         return res.send("No permission!");
     }
-    OfferLives.getModel(gameId).deleteMany({}, function (err, response) {
+    OfferLives.getModel(gameId).deleteMany({}).exec(function (err, response) {
         if(err) {
             logger.getLogger(gameId).info("Account: " + req.session.email + " deleted all collection of OfferLives fail!");
         }else{

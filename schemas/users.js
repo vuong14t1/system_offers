@@ -11,9 +11,8 @@ function getSchema(gameId) {
                 require: true
             },
             groupObject: {
-                type: Schema.Types.ObjectId,
-                ref: gameId + '_group_object',
-                default: null
+                type: Array,
+                default: []
             },
             channelPayment: {
                 type: Array,
@@ -50,11 +49,7 @@ function getSchema(gameId) {
                 default: 1
             }
         });
-        schemaUsers[gameId].index({groupObject: 1});
-        schemaUsers[gameId].on('index', function(error) {
-            // "_id index cannot be sparse"
-            console.log("vao day in error " + error.message);
-          });
+        schemaUsers[gameId].index({ userId: 1});
     }
     
     return schemaUsers[gameId];

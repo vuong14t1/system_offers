@@ -9,6 +9,8 @@ var utils = require('../methods/utils');
 const ROLE = require('../const/role_const');
 const { raw } = require('body-parser');
 require('../models/offer_lives');
+var mongoose = require('mongoose');
+var logger = require('../methods/winston');
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -134,7 +136,7 @@ router.post('/create', async function (req, res, next) {
         if(error) {
             res.send({errorCode: ERROR_CODE.FAIL});
         }else{
-            Users.getModel(gameId).updateMany({}, {groupObject: groupObject._id, isModifiedOffer: true}, {new: true}, async function(err, raws){
+            Users.getModel(gameId).updateMany({}, { $push: {groupObject: groupObject._id}, isModifiedOffer: true}, {new: true}, async function(err, raws){
                 console.log("====================== 1 " + err);
                 console.log('============ 2 ' + JSON.stringify(raws));
                 if(raws.ok == 1) {
@@ -154,7 +156,6 @@ router.post('/create', async function (req, res, next) {
                 }
                 
             })
-            .where('groupObject').equals(null)
             .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
             .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
             .where("channelPayment." + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
@@ -193,7 +194,7 @@ router.post('/edit', async function (req, res, next) {
         dataModify: req.body.dataModify
     };
     
-    await GroupObjects.getModel(gameId).findByIdAndUpdate(body.idGroupObject, body.dataModify, {new: true}, async function (err, groupObject) {
+    await GroupObjects.getModel(gameId).findByIdAndUpdate(body.idGroupObject, body.dataModify, {new: true}).exec(async function (err, groupObject) {
         if(err) {
             res.send({errorCode: ERROR_CODE.FAIL});
             return;
@@ -202,8 +203,8 @@ router.post('/edit', async function (req, res, next) {
             res.send({errorCode: ERROR_CODE.NOT_FOUND});
             return;
         }
-        await Users.getModel(gameId).updateMany({groupObject: body.idGroupObject, isModifiedOffer: true}, {groupObject: null}, async function(err, users){
-        
+        await Users.getModel(gameId).updateMany({groupObject : mongoose.Types.ObjectId(body.idGroupObject)}, { $pull : { groupObject : { $in: [ mongoose.Types.ObjectId(body.idGroupObject) ] } }, isModifiedOffer: true},{ multi: true }).exec(async function(err, users){
+            console.log("remove update " + JSON.stringify(users));
         });
 
         console.log("data group " + JSON.stringify(groupObject));
@@ -213,8 +214,7 @@ router.post('/edit', async function (req, res, next) {
         var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.to;
         var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.from;
         
-        await Users.getModel(gameId).updateMany({}, {groupObject: groupObject._id})
-        .where('groupObject').equals(null)
+        await Users.getModel(gameId).updateMany({}, {$push: {groupObject: groupObject._id}})
         .where('totalGame').gte(groupObject.totalGame.from).lte(groupObject.totalGame.to)
         .where('channelGame').gte(groupObject.channelGame.from).lte(groupObject.channelGame.to)
         .where("channelPayment." + channel + ".cost").gte(groupObject.totalCost.from).lte(groupObject.totalCost.to)
@@ -249,13 +249,13 @@ router.post('/delete', async function (req, res, next) {
     var body = {
         idGroupObject: req.body.idGroupObject
     };
-    await Users.getModel(gameId).updateMany({groupObject: body.idGroupObject}, {groupObject: null, isModified: true}, async function(err, users){
+    await Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(body.idGroupObject)}, {$pull : { groupObject : mongoose.Types.ObjectId(body.idGroupObject) }, isModified: true}).exec(function (err, users) {
+        logger.getLogger(gameId).info("delete group object | delete group of user " + JSON.stringify());
+    });
+    await GroupObjects.getModel(gameId).findByIdAndRemove(body.idGroupObject).exec(function (err, raw) {
         
     });
-    await GroupObjects.getModel(gameId).findByIdAndRemove(body.idGroupObject, function (err, raw) {
-        
-    });
-    await OfferLives.getModel(gameId).updateMany({groupObject: body.idGroupObject}, {groupObject: null}, {new: true}, function (err, raws) {
+    await OfferLives.getModel(gameId).updateMany({groupObject: body.idGroupObject}, {groupObject: null}, {new: true}).exec(function (err, raws) {
         
     });
     res.send({
@@ -272,7 +272,7 @@ router.get('/list_user', function (req, res, next) {
     }
     var numberOfPage = 10;
     console.log("numberOfPage ", numberOfPage , "indexPage ", indexPage);
-    Users.getModel(gameId).find({groupObject: idGroupObject}).skip(indexPage * numberOfPage).limit(numberOfPage).exec(function (err, users) {
+    Users.getModel(gameId).find({groupObject: mongoose.Types.ObjectId(idGroupObject)}).skip(indexPage * numberOfPage).limit(numberOfPage).exec(function (err, users) {
         if(err) return res.send({errorCode: ERROR_CODE.FAIL});
         if(users.length > 0){
             res.send({errorCode: ERROR_CODE.SUCCESS, data: users});

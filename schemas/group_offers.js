@@ -14,7 +14,8 @@ function getSchema(gameId) {
             promotionCost: Number,
             createAt: {
                 type: Number,
-                default: utils.TimeUtility.getCurrentTime(gameId)
+                default: utils.TimeUtility.getCurrentTime(gameId),
+                require: true
             },
         });
     }

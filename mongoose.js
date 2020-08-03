@@ -1,6 +1,7 @@
 var logger = require("./methods/winston");
 var db_config = require("./conf/db_config.json");
 var mongoose = require('mongoose');  
+var seed_accounts = require("./seed_db/seed_accounts");
 if(process.env.MODE_BUILD == null) {
 	logger.getLogger().info("mode build config null");
 	process.env.MODE_BUILD = "dev";
@@ -25,12 +26,14 @@ var recon = true;
 function getConnect(){  
 	var opts ={  
 	          db:{native_parser:true},  
-	          server:{ poolSize:5, auto_reconnect:true },  
+	          server:{ poolSize:10, auto_reconnect:true },  
 	          user: username,  
 			  pass: password,
+			  useCreateIndex : true,
 			  useNewUrlParser: true,
 			  useUnifiedTopology: true,
-			  autoIndex : false
+			  autoIndex : true,
+			  useFindAndModify: false
 	};  
 	mongoose.connect(url, opts);  
 	var dbcon = mongoose.connection;  
@@ -50,6 +53,7 @@ function getConnect(){
 	dbcon.on('open',function(){  
 		logger.getLogger().info("connect mongoose db success.");    
 		recon = true;  
+		seed_accounts.seedAccounts();
 	});  
 	dbcon.on('close',function(err){  
 		logger.getLogger().info("connect mongoose db closed.");    

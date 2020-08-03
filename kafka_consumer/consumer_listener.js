@@ -28,7 +28,7 @@ try{
                 }
                 var arrKey = message.key.split("|");
                 var gameId = arrKey[0];
-                logger.getLogger(gameId).info("receive message from kafka: " + JSON.stringify(message));
+                logger.getLogger("kafka_" + gameId).info("receive message from kafka: " + JSON.stringify(message));
                 var action = arrKey[1];
                 switch(action){
                     case conf.action.action1:
@@ -44,7 +44,7 @@ try{
                         handleReceiveMessage.trackingBoughtOfferLive(gameId, message.value);
                     break;
                     default:
-                        console.log("receive from kafka action " + action);
+                        logger.getLogger().info("receive from kafka action " + action);
                     break;
                 }
             })

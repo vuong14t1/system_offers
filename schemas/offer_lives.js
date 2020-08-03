@@ -49,7 +49,8 @@ function getSchema(gameId) {
 
             createAt: {
                 type: Number,
-                default: utils.TimeUtility.getCurrentTime(gameId)
+                default: utils.TimeUtility.getCurrentTime(gameId),
+                require: true
             },
         });
     }

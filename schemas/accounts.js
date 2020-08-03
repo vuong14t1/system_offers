@@ -7,7 +7,8 @@ function getSchema(gameId) {
         schemaAccounts[gameId] = new Schema({
             email: {
                 type: String,
-                default: "unknown"
+                default: "unknown",
+                unique: true
             },
             password: {
                 type: String,
@@ -17,7 +18,8 @@ function getSchema(gameId) {
                 type: Number,
                 default: ROLE.VIEWER
             }
-        });        
+        });
+        schemaAccounts[gameId].index({ email: -1});
     }
     return schemaAccounts[gameId];
 }

@@ -10,7 +10,7 @@ async function seedAccounts () {
         var super_admins = conf_games[i]['accounts'];
         for await(let user of super_admins) {
             user.password = md5(user.password);
-            await Accounts.getModel(gameId).findOne({email: user.email}, async function (err, account) {
+            await Accounts.getModel(gameId).findOne({email: user.email}).exec(async function (err, account) {
                 if(account == null) {
                  await Accounts.getModel(gameId).create(user, function (err, raw) {
                         if(raw) {

@@ -12,10 +12,13 @@ var mongoose1 = require('./mongoose');
 require("./kafka_consumer/consumer_listener");
 const cors = require('cors');
 var logger = require('./methods/winston');
-var seed_accounts = require("./seed_db/seed_accounts");
 var Accounts = require("./models/accounts");
 var utils = require('./methods/utils');
 utils.SchemaUtility.loadAllSchema();
+const EventEmitter = require('events');
+const myEmitter = new EventEmitter();
+// increase the limit
+myEmitter.setMaxListeners(50);
 var app = express();
 app.use(cors({
 	credentials: true,
@@ -36,7 +39,6 @@ app.locals.contains = contains;
 
 mongoose1.getConnect();
 // mongoose.pluralize(null);
-seed_accounts.seedAccounts();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

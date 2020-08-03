@@ -25,7 +25,7 @@ async function trackingUserLogin(gameId, message) {
         timeServer: timeServer
     };
     utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
-    await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {lastTimeOnline: body.lastTimeOnline, timeCreateAccount: body.timeCreateAccount, channelGame: body.channelGame, totalGame: body.totalGame}, {new: true}, async function(error, user){
+    await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {lastTimeOnline: body.lastTimeOnline, timeCreateAccount: body.timeCreateAccount, channelGame: body.channelGame, totalGame: body.totalGame}, {new: true}).exec(async function(error, user){
         if(error) return next(error);
         logger.getLogger(gameId).info("update usser login === " + JSON.stringify(user));
         if(user != null) {        
@@ -59,18 +59,8 @@ async function trackingStatsGame(gameId, message) {
         timeServer: props[3]
     };
     utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
-    await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {totalGame: body.totalGame, channelGame: body.channelGame}, {new: true}, function (error, user) {
-        if(user != null) {
-            
-        }else{
-            Users.getModel(gameId).create({userId: body.userId, totalGame: body.totalGame, channelGame: body.channelGame}, function(error, user) {
-                if(error) {
-                    console.log('post user login error');
-                }else{
-                    console.log('post user login success: ' + JSON.stringify(user));
-                }
-            });
-        }
+    await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {totalGame: body.totalGame, channelGame: body.channelGame}, {new: true}).exec(function (error, user) {
+        
     });
 }
 
@@ -84,7 +74,7 @@ async function trackingPayment(gameId, message) {
         timeServer: props[3]
     };
     utils.TimeUtility.setCurrentServerTime(gameId, body.timeServer);
-    Users.getModel(gameId).findOne({userId: body.userId}, async function (error, user) {
+    Users.getModel(gameId).findOne({userId: body.userId}).exec(async function (error, user) {
         if(user != null) {
             user.lastPaidPack = body.lastPaidPack;
             console.log("before tracking payment " + JSON.stringify(user));
@@ -93,7 +83,7 @@ async function trackingPayment(gameId, message) {
                 user.channelPayment[channel].cost += body.lastPaidPack;
                 user.channelPayment[channel].number += 1;
             }
-            Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {lastPaidPack: user.lastPaidPack, channelPayment: user.channelPayment}, {new: true}, function () {
+            Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {lastPaidPack: user.lastPaidPack, channelPayment: user.channelPayment}, {new: true}).exec(function () {
 
             });
         }
@@ -110,24 +100,14 @@ async function trackingBoughtOfferLive(gameId, message) {
         idOfferLive: idOfferLive
     };
     //sau khi mua xong thi xoa ref toi  group object
-    Users.getModel(gameId).findOneAndUpdate({userId: userId}, {groupObject: null}, {new: true}, function (err, raw) {
+    Users.getModel(gameId).findOneAndUpdate({userId: userId}, {groupObject: null}, {new: true}).exec(function (err, raw) {
 
     });
-    await OfferLives.getModel(gameId).findOne({_id: body.idOfferLive}, async function(err, offerLive){
+    await OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, { $inc: { totalBought: 1}}).exec(async function(err, offerLive){
         if(err) {
             console.log("trackingBoughtOfferLive err: " + err);
             return;
         }
-        if(offerLive) {
-            offerLive.totalBought += 1;
-            await offerLive.save();
-        }
-        GroupObjects.getModel(gameId).findOne({_id: offerLive.groupObject}, function (err, raw) {
-            if(raw) {
-                raw.totalCurrentUser -=1;
-                raw.save();
-            }
-        })  
     });
 }
 

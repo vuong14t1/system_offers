@@ -7,6 +7,7 @@ var GroupObjects = require('../models/group_objects');
 var Users = require('../models/users');
 var utils = require('../methods/utils');
 const ROLE = require('../const/role_const');
+var mongoose = require('mongoose');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
     if(req.path != "/tracking_show") {
@@ -67,7 +68,7 @@ router.post('/create', async function (req, res, next) {
         });
     }
     //check moi user chi co 1 offer
-    var offerLive = await OfferLives.getModel(gameId).findOne({groupObject: body.idObject, groupOffer: body.idOffer}, function (err, offerLive) {
+    var offerLive = await OfferLives.getModel(gameId).findOne({groupObject: body.idObject, groupOffer: body.idOffer}).exec(function (err, offerLive) {
 
     });
     if(offerLive) {
@@ -87,20 +88,20 @@ router.post('/create', async function (req, res, next) {
             res.send({errorCode: ERROR_CODE.FAIL});
             return;
         }
-        var groupObject = await GroupObjects.getModel(gameId).findById(body.idObject, function (error1, groupO) {
+        var groupObject = await GroupObjects.getModel(gameId).findById(body.idObject).exec(function (error1, groupO) {
             if(groupO) {
                 groupO.offerLive = raw._id;
                 groupO.save();
                 //notify to all users of group object
                 Users.getModel(gameId).updateMany({
-                    groupObject: groupO._id
-                }, {isModifiedOffer: true}, {new: true}, function (err, users) {
+                    groupObject: mongoose.Types.ObjectId(groupO._id)
+                }, {isModifiedOffer: true}, {new: true}).exec(function (err, users) {
                     
                 });
             }
         });
 
-        var groupOffer = await GroupOffers.getModel(gameId).findById(body.idOffer, function (error2, groupOffer) {
+        var groupOffer = await GroupOffers.getModel(gameId).findById(body.idOffer).exec(function (error2, groupOffer) {
 
         });
         raw.groupOffer = groupOffer;
@@ -120,20 +121,20 @@ router.post('/delete', function (req, res, next) {
             errorCode: ERROR_CODE.FAIL
         });
     }
-    OfferLives.getModel(gameId).findByIdAndRemove(body.idOfferLive, function (err) {
+    OfferLives.getModel(gameId).findByIdAndRemove(body.idOfferLive).exec(function (err) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
-            GroupObjects.getModel(gameId).findOne({offerLive: body.idOfferLive}, function (error1, groupO) {
+            GroupObjects.getModel(gameId).findOne({offerLive: body.idOfferLive}).exec(function (error1, groupO) {
                 if(groupO) {
                     groupO.offerLive = null;
                     groupO.save();
                     //notify to all users of group object
                     Users.getModel(gameId).updateMany({
-                        groupObject: groupO._id
-                    }, {isModifiedOffer: true}, {new: true}, function (err, users) {
+                        groupObject: mongoose.Types.ObjectId(groupO._id)
+                    }, {isModifiedOffer: true}, {new: true}).exec(function (err, users) {
                         
                     });
                 }
@@ -164,7 +165,7 @@ router.post('/edit', async function (req, res, next) {
     }
     console.log("edit offer live " + JSON.stringify(body));
     //xoa group cu
-    await GroupObjects.getModel(gameId).findOneAndUpdate({offerLive: body.idOfferLive}, {offerLive: null}, {new: true}, function (err, raws) {
+    await GroupObjects.getModel(gameId).findOneAndUpdate({offerLive: body.idOfferLive}, {offerLive: null}, {new: true}).exec(function (err, raws) {
         console.log("xoas group cu " + JSON.stringify(raws));
     });
     await OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, body.dataModify, {new: true}).populate("groupObject").populate("groupOffer").exec(function (err, offerLive) {
@@ -176,8 +177,8 @@ router.post('/edit', async function (req, res, next) {
         }
         //notify to all users of group object
         Users.getModel(gameId).updateMany({
-            groupObject: offerLive.groupObject._id
-        }, {isModifiedOffer: true}, {new: true}, function (err, users) {
+            groupObject: mongoose.Types.ObjectId(offerLive.groupObject._id)
+        }, {isModifiedOffer: true}, {new: true}).exec(function (err, users) {
             
         });
         //cap nhat group moi
@@ -203,7 +204,7 @@ router.get("/tracking_show", async function (req, res, next) {
         });
         return;
     }
-    await OfferLives.getModel(gameId).findOne({_id: idOfferLive}, function (err, offerLive) {
+    await OfferLives.getModel(gameId).findOne({_id: idOfferLive}).exec(function (err, offerLive) {
         if(err) {
             console.log("tracking_show error: " + err);
             res.send({

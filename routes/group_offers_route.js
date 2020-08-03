@@ -7,6 +7,7 @@ var Users = require('../models/users');
 var logger = require('../methods/winston');
 const ROLE = require('../const/role_const');
 var utils = require('../methods/utils');
+var mongoose = require('mongoose');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
@@ -32,7 +33,7 @@ router.use(['/create', '/delete', '/edit'],function timeLog (req, res, next) {
 
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
-    GroupOffers.getModel(gameId).find({}, function (error, offers) {
+    GroupOffers.getModel(gameId).find({}).exec(function (error, offers) {
         if(error) {
             console.log(error);
             return next();
@@ -86,23 +87,23 @@ router.post('/delete', async function (req, res, next) {
     var body = {
         idOffer: req.body.idOffer
     };
-    GroupOffers.getModel(gameId).findByIdAndRemove(body.idOffer, function (err) {
+    GroupOffers.getModel(gameId).findByIdAndRemove(body.idOffer).exec(function (err) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
             //find all offer live refer to self
-            OfferLives.getModel(gameId).find({groupOffer: body.idOffer}, async function (err, offerLives) {
+            OfferLives.getModel(gameId).find({groupOffer: body.idOffer}).exec(async function (err, offerLives) {
                 console.log('ref offer lives ' + JSON.stringify(offerLives));
                 for await(let offerLive of offerLives) {
                     //notify to user
-                    await Users.getModel(gameId).updateMany({groupObject: offerLive.groupObject}, {isModifiedOffer: true}, function (err, users) {
+                    await Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(offerLive.groupObject)}, {isModifiedOffer: true}).exec(function (err, users) {
                         
                     });
                     //delete ref to group offer
                     offerLives.groupOffer = null;
-                    await offerLives.save();
+                    await offerLive.save();
                 }
             });
 
@@ -119,7 +120,7 @@ router.post('/edit', function (req, res, next) {
         idOffer: req.body.idOffer,
         dataModify: req.body.dataModify
     };
-    GroupOffers.getModel(gameId).findOneAndUpdate({_id: body.idOffer}, body.dataModify, {new: true}, function (err, raw) {
+    GroupOffers.getModel(gameId).findOneAndUpdate({_id: body.idOffer}, body.dataModify, {new: true}).exec(function (err, raw) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -130,10 +131,10 @@ router.post('/edit', function (req, res, next) {
                 data: raw
             });
             //find all offer live refer to self
-            OfferLives.getModel(gameId).find({groupOffer: raw._id}, function (err, offerLives) {
+            OfferLives.getModel(gameId).find({groupOffer: raw._id}).exec(function (err, offerLives) {
                 for(var i in offerLives) {
                     //notify to user    
-                    Users.getModel(gameId).findOneAndUpdate({groupObject: offerLives[i].groupObject}, {isModifiedOffer: true}, {new: true}, function (err, user) {
+                    Users.getModel(gameId).findOneAndUpdate({groupObject: mongoose.Types.ObjectId(offerLives[i].groupObject)}, {isModifiedOffer: true}, {new: true}).exec(function (err, user) {
                         
                     });
                 }
