@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose1 = require('./mongoose');
-require("./kafka_consumer/consumer_listener");
+// require("./kafka_consumer/consumer_listener");
 const cors = require('cors');
 var logger = require('./methods/winston');
 var Accounts = require("./models/accounts");
@@ -19,7 +19,10 @@ const EventEmitter = require('events');
 const myEmitter = new EventEmitter();
 // increase the limit
 myEmitter.setMaxListeners(50);
+const fileUpload = require('express-fileupload');
+
 var app = express();
+app.use(fileUpload());
 app.use(cors({
 	credentials: true,
 	origin: process.env.MODE_BUILD == "dev" ? process.env.API_CLIENT_DEV: process.env.API_CLIENT_RELEASE
