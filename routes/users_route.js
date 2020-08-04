@@ -381,47 +381,54 @@ router.post("/import_data_user", async function (req, res, next) {
     var obj = xlsx.parse(fileData.data)[0].data // parses a file
     var checkSuccess = 0;
     var checkFail = 0;
-    for (let i = 1; i < obj.length; i++) {
+    for await(let item of obj) {
         let channelPayment = [];
-        let detaiChannelPayment = obj[i][1].split('-');
+        let detaiChannelPayment = item[1].split('-');
         for (let j in detaiChannelPayment) {
             let detaiChannelPayment1 = detaiChannelPayment[j].split('|');
             let data = {
                 channel: detaiChannelPayment1[0],
-                cost: detaiChannelPayment1[1],
-                number: detaiChannelPayment1[2],
+                cost: parseInt(detaiChannelPayment1[1]),
+                number: parseInt(detaiChannelPayment1[2]),
             }
             channelPayment.push(data);
         }
         let userData = {
-            userId: obj[i][0],
-            totalGame: obj[i][2],
-            lastPaidPack: obj[i][3],
-            timeCreateAccount: utils.TimeUtility.getCurrentTime(gameId) - parseInt(obj[i][4]) * 86400,
-            lastTimeOnline: utils.TimeUtility.getCurrentTime(gameId) - parseInt(obj[i][5]) * 86400,
-            isModifiedOffer: obj[i][6],
-            channelGame: obj[i][7],
+            userId: item[0] + 10000,
+            totalGame: parseInt(item[2]),
+            lastPaidPack: parseInt(item[3]),
+            timeCreateAccount: utils.TimeUtility.getCurrentTime(gameId) - parseInt(item[4]) * 86400,
+            lastTimeOnline: utils.TimeUtility.getCurrentTime(gameId) - parseInt(item[5]) * 86400,
+            isModifiedOffer: item[6],
+            channelGame: parseInt(item[7]),
             channelPayment: channelPayment
         }
         await Users.getModel(gameId).findOneAndUpdate({userId: userData.userId},
-             userData, {upsert: true, new: true, runValidators: true}).exec(function(err, user){
+             userData, {new: true, runValidators: true}).exec(async function(err, user){
             if(err){
                 checkFail++;
             }
             if(user){
                 checkSuccess++;
+            }else{
+                await Users.getModel(gameId).create(userData, function (err, raw) {
+                    if(err){
+                        checkFail++;
+                    }
+                    if(raw){
+                        checkSuccess++;
+                    }
+                });
             }
         })
     }
-
-    setTimeout(function(){
-        res.send({
-            errorCode: ERROR_CODE.SUCCESS,
-            data: {
-                checkFail: checkFail,
-                checkSuccess: checkSuccess
-            }
-        })
-    }.bind(this), 2000)
+    console.log("checkSuccess " + checkSuccess + "| checkFail" + checkFail);
+    res.send({
+        errorCode: ERROR_CODE.SUCCESS,
+        data: {
+            checkFail: checkFail,
+            checkSuccess: checkSuccess
+        }
+    })
 });
 module.exports = router;

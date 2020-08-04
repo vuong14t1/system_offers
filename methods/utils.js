@@ -84,7 +84,7 @@ SchemaUtility.getDefaultSchemaChannelPayment= function(gameId) {
     var schema = [];
     for(var i in CHANNEL_PAYMENT[gameId]) {
         schema[CHANNEL_PAYMENT[gameId][i]] = {
-            channel: i +' ',
+            channel: i + '',
             cost: 0,
             number: 0
         };
