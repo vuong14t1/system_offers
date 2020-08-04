@@ -204,7 +204,7 @@ router.get("/tracking_show", async function (req, res, next) {
         });
         return;
     }
-    await OfferLives.getModel(gameId).findOne({_id: idOfferLive}).exec(function (err, offerLive) {
+    await OfferLives.getModel(gameId).findOneAndUpdate({_id: idOfferLive}, { $inc: {totalShow : 1} }).exec(function (err, offerLive) {
         if(err) {
             console.log("tracking_show error: " + err);
             res.send({
@@ -213,8 +213,6 @@ router.get("/tracking_show", async function (req, res, next) {
             return;
         }
         if(offerLive) {
-            offerLive.totalShow += 1;
-            offerLive.save();
             res.send({
                 errorCode: ERROR_CODE.SUCCESS
             });

@@ -134,8 +134,8 @@ router.post('/edit', function (req, res, next) {
             OfferLives.getModel(gameId).find({groupOffer: raw._id}).exec(function (err, offerLives) {
                 for(var i in offerLives) {
                     //notify to user    
-                    Users.getModel(gameId).findOneAndUpdate({groupObject: mongoose.Types.ObjectId(offerLives[i].groupObject)}, {isModifiedOffer: true}, {new: true}).exec(function (err, user) {
-                        
+                    Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(offerLives[i].groupObject)}, {isModifiedOffer: true}, {new: true}).exec(function (err, user) {
+                        console.log("edit group offers ref to ussers " + JSON.stringify(user));
                     });
                 }
             });

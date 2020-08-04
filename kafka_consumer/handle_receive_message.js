@@ -6,6 +6,7 @@ var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var utils = require('../methods/utils');
 var logger = require('../methods/winston');
+const { mongoose } = require('../mongoose');
 
 async function trackingUserLogin(gameId, message) {
     logger.getLogger(gameId).info("tracking user login gameId: " + gameId + " | message:" + message);
@@ -99,15 +100,19 @@ async function trackingBoughtOfferLive(gameId, message) {
         userId: userId,
         idOfferLive: idOfferLive
     };
-    //sau khi mua xong thi xoa ref toi  group object
-    Users.getModel(gameId).findOneAndUpdate({userId: userId}, {groupObject: null}, {new: true}).exec(function (err, raw) {
 
-    });
     await OfferLives.getModel(gameId).findOneAndUpdate({_id: body.idOfferLive}, { $inc: { totalBought: 1}}).exec(async function(err, offerLive){
         if(err) {
             console.log("trackingBoughtOfferLive err: " + err);
             return;
         }
+        //sau khi mua xong thi xoa ref toi  group object
+        Users.getModel(gameId).findOneAndUpdate({userId: userId}, {$pull: {groupObject: mongoose.Types.ObjectId(offerLive.groupObject)}}, {new: true}).exec(function (err, raw) {
+
+        });
+        GroupObjects.getModel(gameId).findOneAndUpdate({_id: offerLive.groupObject}, {$inc: {totalCurrentUser: -1}}).exec(function (err, raw) {
+
+        });
     });
 }
 

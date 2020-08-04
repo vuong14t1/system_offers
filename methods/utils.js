@@ -6,6 +6,7 @@ var OfferLives = require('../models/offer_lives');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var registerGameConf = require('../conf/register_games.json');
 var logger = require('./winston');
+var mongoose = require('mongoose');
 var TimeUtility = {
 };
 var SchemaUtility = {};
@@ -71,7 +72,7 @@ TimeUtility.checkStatusOfferLive = async function (gameId) {
                 group.totalCurrentUser = 0;
                 group.save();
                 logger.getLogger(gameId).info("This offer is experied!");
-                await Users.getModel(gameId).updateMany({groupObject: group._id}, {groupObject: null}, {new: true}, function (err, users) {
+                Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(group._id)}, {$pull: {groupObject: mongoose.Types.ObjectId(group._id)}}, {new: true}, function (err, users) {
                 });
             }
         }

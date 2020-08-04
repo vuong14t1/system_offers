@@ -7,6 +7,8 @@ var OfferLives = require('../models/offer_lives');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var utils = require('../methods/utils');
+const { mongoose } = require('../mongoose');
+var logger = require('../methods/winston');
 router.get('/user_login', async function (req, res, next) {
     var gameId = req.query.gameId;
     console.log("post user login " + gameId);
@@ -114,15 +116,14 @@ router.get('/get_offer', async function (req, res, next){
     var body = {
         userId: req.query.userId
     };
-    var user = await Users.getModel(gameId).findOne({userId: body.userId});
-    console.log("vao day get offer " + JSON.stringify(user));
+    var user = await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {isModifiedOffer: false}, {new: false});
     if(user == null) {
         res.send({
             errorCode: ERROR_CODE.NOT_CHANGE
         });
         return;
     }
-    console.log("get_offer " + JSON.stringify(user));
+    logger.getLogger(gameId).info("get_offer " + JSON.stringify(user));
     try{
         if(user != null) {
             if(user.isModifiedOffer) {
@@ -131,7 +132,7 @@ router.get('/get_offer', async function (req, res, next){
                 //TH user khong nam trong group nao ca
                 if(user.groupObject != null && user.groupObject.length > 0) {
                     var data = [];
-                    for await (const offerLive of OfferLives.getModel(gameId).findOne({groupObject: {$in: user.groupObject}}).populate("groupObject").populate("groupOffer")) {
+                    for await (const offerLive of OfferLives.getModel(gameId).find({groupObject: {$in: user.groupObject}}).populate("groupObject").populate("groupOffer")) {
                         console.log("find offer by group " + JSON.stringify(offerLive));
                         if(offerLive != null) {
                             if(utils.TimeUtility.getCurrentTime(gameId) > offerLive.timeFinish) {
@@ -152,11 +153,13 @@ router.get('/get_offer', async function (req, res, next){
                             data.push(offerRes);
                         }
                     }
-                    console.log("get offer res " + JSON.stringify(data));
+                    logger.getLogger(gameId).info("get offer res " + JSON.stringify(data));
                     if(data.length > 0) {
                         res.send({
                             errorCode: ERROR_CODE.SUCCESS,
                             data: data
+                        });
+                        OfferLives.getModel(gameId).updateMany({groupObject: {$in: user.groupObject}}, { $inc: {totalReceived: 1}}).exec(function (err, raw) {
                         });
                     }else{
                         res.send({
@@ -271,7 +274,7 @@ router.get('/search_user', function (req, res, next){
     var body = {
         userId: req.query.userId
     };
-    Users.getModel(gameId).findOne({userId: body.userId}).populate('groupObject').populate('groupOffer').exec(function (err, data) {
+    Users.getModel(gameId).findOne({userId: body.userId}).populate('groupOffer').exec(function (err, data) {
         if(err) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL
@@ -291,7 +294,7 @@ router.get("/search_user_by_group", function (req, res, next) {
         userId: req.query.userId,
         groupObject: req.query.groupObject
     };
-    Users.getModel(gameId).findOne({userId: body.userId, groupObject: body.groupObject}, function (err, raw) {
+    Users.getModel(gameId).findOne({userId: body.userId, groupObject: mongoose.Types.ObjectId(body.groupObject)}, function (err, raw) {
         if(err) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL

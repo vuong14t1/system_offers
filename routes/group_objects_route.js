@@ -214,7 +214,7 @@ router.post('/edit', async function (req, res, next) {
         var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.to;
         var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.from;
         
-        await Users.getModel(gameId).updateMany({}, {$push: {groupObject: groupObject._id}})
+        await Users.getModel(gameId).updateMany({}, {$push: {groupObject: groupObject._id}, isModifiedOffer: true})
         .where('totalGame').gte(groupObject.totalGame.from).lte(groupObject.totalGame.to)
         .where('channelGame').gte(groupObject.channelGame.from).lte(groupObject.channelGame.to)
         .where("channelPayment." + channel + ".cost").gte(groupObject.totalCost.from).lte(groupObject.totalCost.to)
@@ -223,7 +223,13 @@ router.post('/edit', async function (req, res, next) {
         .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
         .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
         .exec(async function (err, raws) {
-            if(raws.ok == 1) {
+            if(err) {
+                logger.getLogger(gameId).info("edit group object fail " + err);
+                return res.send({
+                    errorCode: ERROR_CODE.FAIL
+                });
+            }
+            if(raws && raws.ok == 1) {
                 // console.log("usersAfters ===", usersAfters);
                 groupObject.totalUser = raws.nModified;
                 groupObject.totalCurrentUser = raws.nModified;
@@ -249,8 +255,8 @@ router.post('/delete', async function (req, res, next) {
     var body = {
         idGroupObject: req.body.idGroupObject
     };
-    await Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(body.idGroupObject)}, {$pull : { groupObject : mongoose.Types.ObjectId(body.idGroupObject) }, isModified: true}).exec(function (err, users) {
-        logger.getLogger(gameId).info("delete group object | delete group of user " + JSON.stringify());
+    await Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(body.idGroupObject)}, {$pull : { groupObject : mongoose.Types.ObjectId(body.idGroupObject) }, isModified: true}).exec(function (err, raw) {
+        logger.getLogger(gameId).info("delete group object | delete group of user " + JSON.stringify(raw));
     });
     await GroupObjects.getModel(gameId).findByIdAndRemove(body.idGroupObject).exec(function (err, raw) {
         
@@ -284,7 +290,7 @@ router.get('/list_user', function (req, res, next) {
 
 router.get('/get_list_group_object',async function (req, res, next) {
     var gameId = req.query.gameId;
-    await GroupObjects.getModel(gameId).find({}).where("totalUser").gt(0).where("offerLive").equals(null).exec(async function (err, groupObjects) {
+    await GroupObjects.getModel(gameId).find({}).where("totalUser").gt(0).exec(async function (err, groupObjects) {
         console.log("get_list_group_object ", groupObjects);
         if(err) {
             res.send({
