@@ -10,6 +10,10 @@ function getSchema(gameId) {
             description: String,
             type: Number,
             value: Number,
+            items: {
+                type: Array,
+                default: []
+            },
             originalCost: Number,
             promotionCost: Number,
             createAt: {

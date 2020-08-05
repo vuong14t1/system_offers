@@ -194,6 +194,7 @@ router.post('/edit', async function (req, res, next) {
         dataModify: req.body.dataModify
     };
     
+    
     await GroupObjects.getModel(gameId).findByIdAndUpdate(body.idGroupObject, body.dataModify, {new: true}).exec(async function (err, groupObject) {
         if(err) {
             res.send({errorCode: ERROR_CODE.FAIL});

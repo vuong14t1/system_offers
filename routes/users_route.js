@@ -173,7 +173,8 @@ router.get('/get_offer', async function (req, res, next) {
                                 originalCost: offerLive.groupOffer.originalCost,
                                 promotionCost: offerLive.groupOffer.promotionCost,
                                 timeStart: offerLive.timeStart,
-                                timeFinish: offerLive.timeFinish
+                                timeFinish: offerLive.timeFinish,
+                                items: offerLive.groupOffer.items
                             };
                             data.push(offerRes);
                         }
@@ -303,13 +304,14 @@ router.get('/search_user', function (req, res, next) {
     var body = {
         userId: req.query.userId
     };
-    Users.getModel(gameId).findOne({userId: body.userId}).populate('groupOffer').exec(function (err, data) {
+    Users.getModel(gameId).findOne({userId: body.userId}).exec(function (err, data) {
         if(err) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL
             });
 
         }
+        logger.getLogger(gameId).info("search user " + JSON.stringify(data));
         return res.send({
             errorCode: ERROR_CODE.SUCCESS,
             data: data
@@ -394,7 +396,7 @@ router.post("/import_data_user", async function (req, res, next) {
             channelPayment.push(data);
         }
         let userData = {
-            userId: item[0] + 10000,
+            userId: item[0],
             totalGame: parseInt(item[2]),
             lastPaidPack: parseInt(item[3]),
             timeCreateAccount: utils.TimeUtility.getCurrentTime(gameId) - parseInt(item[4]) * 86400,

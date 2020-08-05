@@ -55,8 +55,17 @@ router.post('/create', function (req, res, next) {
         type: parseInt(req.body.type),
         value: parseInt(req.body.value),
         originalCost: parseInt(req.body.originalCost),
-        promotionCost: parseInt(req.body.promotionCost)
+        promotionCost: parseInt(req.body.promotionCost),
+        items: req.body.items
     };
+    //
+    if(body.items == null) {
+        body.items = [];
+        body.items.push({
+            type: body.type,
+            value: body.value
+        });
+    }
     GroupOffers.getModel(gameId).create({
         nameOffer: body.nameOffer,
         durationCountDown: body.durationCountDown,
@@ -65,7 +74,8 @@ router.post('/create', function (req, res, next) {
         value: body.value,
         originalCost: body.originalCost,
         promotionCost: body.promotionCost,
-        createAt: utils.TimeUtility.getCurrentTime(gameId)
+        createAt: utils.TimeUtility.getCurrentTime(gameId),
+        items: body.items
     }, function (error, offer) {
         if(error) {
             logger.getLogger(gameId).info("create offer error " + error);
@@ -120,6 +130,13 @@ router.post('/edit', function (req, res, next) {
         idOffer: req.body.idOffer,
         dataModify: req.body.dataModify
     };
+    if(body.dataModify.items == null) {
+        body.dataModify.items = [];
+        body.dataModify.items.push({
+            type: body.dataModify.type,
+            value: body.dataModify.value
+        });
+    }
     GroupOffers.getModel(gameId).findOneAndUpdate({_id: body.idOffer}, body.dataModify, {new: true}).exec(function (err, raw) {
         if(err) {
             res.send({

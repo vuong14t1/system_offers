@@ -12,6 +12,7 @@ try{
             logger.getLogger().info("create topic error " + error);
         }else{
             logger.getLogger().info("create topic success " + JSON.stringify(result));
+            logger.getLogger().info("create consumer " + JSON.stringify(conf.topic));
             consumer = new Consumer(client, conf.topic,{
                 autoCommit: true
             });
