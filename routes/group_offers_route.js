@@ -143,6 +143,8 @@ router.post('/edit', function (req, res, next) {
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
+            // cập nhật lại thời gian tạo offer
+            raw.createAt = utils.TimeUtility.getCurrentTime();
             res.send({
                 errorCode: ERROR_CODE.SUCCESS,
                 data: raw

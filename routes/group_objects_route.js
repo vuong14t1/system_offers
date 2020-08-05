@@ -204,6 +204,9 @@ router.post('/edit', async function (req, res, next) {
             res.send({errorCode: ERROR_CODE.NOT_FOUND});
             return;
         }
+        // cập nhật lại thời gian tạo 
+        groupObject.createAt = utils.TimeUtility.getCurrentTime();
+
         await Users.getModel(gameId).updateMany({groupObject : mongoose.Types.ObjectId(body.idGroupObject)}, { $pull : { groupObject : { $in: [ mongoose.Types.ObjectId(body.idGroupObject) ] } }, isModifiedOffer: true},{ multi: true }).exec(async function(err, users){
             console.log("remove update " + JSON.stringify(users));
         });
