@@ -52,8 +52,8 @@ router.post('/create', function (req, res, next) {
         nameOffer: req.body.nameOffer,
         durationCountDown: parseInt(req.body.durationCountDown),
         description: req.body.description,
-        type: parseInt(req.body.type),
-        value: parseInt(req.body.value),
+        // type: parseInt(req.body.type),
+        // value: parseInt(req.body.value),
         originalCost: parseInt(req.body.originalCost),
         promotionCost: parseInt(req.body.promotionCost),
         items: req.body.items
