@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose1 = require('./mongoose');
-// require("./kafka_consumer/consumer_listener");
+require("./kafka_consumer/consumer_listener");
 const cors = require('cors');
 var logger = require('./methods/winston');
 var Accounts = require("./models/accounts");
@@ -58,7 +58,7 @@ app.use(session({
   secret: 'system_offer',
   resave:false,
   saveUninitialized:false, 
-  cookie: { maxAge: 36000000000000 },
+  cookie: { maxAge: 36000000000 },
   store:new MongoStore({
             mongooseConnection: mongoose1.mongoose.connection 
             })

@@ -11,6 +11,7 @@ const { raw } = require('body-parser');
 require('../models/offer_lives');
 var mongoose = require('mongoose');
 var logger = require('../methods/winston');
+var _ = require('lodash');
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -75,7 +76,7 @@ router.get('/list', function (req, res, next) {
 router.post('/create', async function (req, res, next) {
     var gameId = req.query.gameId;
     console.log("create ==== current time ====", utils.TimeUtility.getCurrentTime(gameId));
-    var body = {
+    let body = {
         totalGame: req.body.totalGame,
         channelPayment: req.body.channelPayment,
         totalCost: req.body.totalCost,
@@ -86,11 +87,65 @@ router.post('/create', async function (req, res, next) {
         channelGame: req.body.channelGame,
         nameObject: req.body.nameObject
     };
+    let bodyQuery = _.cloneDeep(body);
+    var INFINITY = 9999999999;
+    //check value data
+    if(bodyQuery.totalGame.from == null){
+        bodyQuery.totalGame.from = 0;
+    }
+    if(bodyQuery.totalGame.to == null){
+        bodyQuery.totalGame.to = INFINITY;
+    }
+
+    if(bodyQuery.totalCost.from == null){
+        bodyQuery.totalCost.from = 0;
+    }
+    if(bodyQuery.totalCost.to == null){
+        bodyQuery.totalCost.to = INFINITY;
+    }
+
+    if(bodyQuery.numberPay.from == null){
+        bodyQuery.numberPay.from = 0;
+    }
+    if(bodyQuery.numberPay.to == null){
+        bodyQuery.numberPay.to = INFINITY;
+    }
+
+    if(bodyQuery.lastPaidPack.from == null){
+        bodyQuery.lastPaidPack.from = 0;
+    }
+    if(bodyQuery.lastPaidPack.to == null){
+        bodyQuery.lastPaidPack.to = INFINITY;
+    }
+
+    if(bodyQuery.age.from == null){
+        bodyQuery.age.from = 0;
+    }
+    if(bodyQuery.age.to == null){
+        bodyQuery.age.to = utils.TimeUtility.getCurrentTime(gameId);
+    }
+
+    if(bodyQuery.timeLastOnline.from == null){
+        bodyQuery.timeLastOnline.from = 0;
+    }
+    if(bodyQuery.timeLastOnline.to == null){
+        bodyQuery.timeLastOnline.to = utils.TimeUtility.getCurrentTime(gameId);
+    }
+
+    if(bodyQuery.channelGame.from == null){
+        bodyQuery.channelGame.from = 0;
+    }
+    if(bodyQuery.channelGame.to == null){
+        bodyQuery.channelGame.to = INFINITY;
+    }
+
+    console.log("create group object body" + JSON.stringify(body));
+    console.log("create group object body query" + JSON.stringify(bodyQuery));
 	var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
-    var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.to;
-    var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - body.age.from;
-    var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - body.timeLastOnline.to;
-    var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - body.timeLastOnline.from;
+    var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.age.to;
+    var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.age.from;
+    var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.timeLastOnline.to;
+    var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.timeLastOnline.from;
     console.log("current time " + utils.TimeUtility.getCurrentTime() + "|min age" + timeMinAge + "| max age " + timeMaxAge);
     console.log("current time " + utils.TimeUtility.getCurrentTime() + "|min online" + timeMinOnline + "| max online " + timeMaxOnline);
     var groupObject = await GroupObjects.getModel(gameId).create({
@@ -156,11 +211,11 @@ router.post('/create', async function (req, res, next) {
                 }
                 
             })
-            .where('totalGame').gte(body.totalGame.from).lte(body.totalGame.to)
-            .where('channelGame').gte(body.channelGame.from).lte(body.channelGame.to)
-            .where("channelPayment." + channel + ".cost").gte(body.totalCost.from).lte(body.totalCost.to)
-            .where("channelPayment." + channel + ".number").gte(body.numberPay.from).lte(body.numberPay.to)
-            .where('lastPaidPack').gte(body.lastPaidPack.from).lte(body.lastPaidPack.to)
+            .where('totalGame').gte(bodyQuery.totalGame.from).lte(bodyQuery.totalGame.to)
+            .where('channelGame').gte(bodyQuery.channelGame.from).lte(bodyQuery.channelGame.to)
+            .where("channelPayment." + channel + ".cost").gte(bodyQuery.totalCost.from).lte(bodyQuery.totalCost.to)
+            .where("channelPayment." + channel + ".number").gte(bodyQuery.numberPay.from).lte(bodyQuery.numberPay.to)
+            .where('lastPaidPack').gte(bodyQuery.lastPaidPack.from).lte(bodyQuery.lastPaidPack.to)
             .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
             .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
         }
@@ -193,6 +248,58 @@ router.post('/edit', async function (req, res, next) {
         idGroupObject: req.body.idGroupObject,
         dataModify: req.body.dataModify
     };
+
+    let bodyQuery = _.cloneDeep(body);
+    var INFINITY = 9999999999;
+    //check value data
+    if(bodyQuery.dataModify.totalGame.from == null){
+        bodyQuery.dataModify.totalGame.from = 0;
+    }
+    if(bodyQuery.dataModify.totalGame.to == null){
+        bodyQuery.dataModify.totalGame.to = INFINITY;
+    }
+
+    if(bodyQuery.dataModify.totalCost.from == null){
+        bodyQuery.dataModify.totalCost.from = 0;
+    }
+    if(bodyQuery.dataModify.totalCost.to == null){
+        bodyQuery.dataModify.totalCost.to = INFINITY;
+    }
+
+    if(bodyQuery.dataModify.numberPay.from == null){
+        bodyQuery.dataModify.numberPay.from = 0;
+    }
+    if(bodyQuery.dataModify.numberPay.to == null){
+        bodyQuery.dataModify.numberPay.to = INFINITY;
+    }
+
+    if(bodyQuery.dataModify.lastPaidPack.from == null){
+        bodyQuery.dataModify.lastPaidPack.from = 0;
+    }
+    if(bodyQuery.dataModify.lastPaidPack.to == null){
+        bodyQuery.dataModify.lastPaidPack.to = INFINITY;
+    }
+
+    if(bodyQuery.dataModify.age.from == null){
+        bodyQuery.dataModify.age.from = 0;
+    }
+    if(bodyQuery.dataModify.age.to == null){
+        bodyQuery.dataModify.age.to = utils.TimeUtility.getCurrentTime(gameId);
+    }
+
+    if(bodyQuery.dataModify.timeLastOnline.from == null){
+        bodyQuery.dataModify.timeLastOnline.from = 0;
+    }
+    if(bodyQuery.dataModify.timeLastOnline.to == null){
+        bodyQuery.dataModify.timeLastOnline.to = utils.TimeUtility.getCurrentTime(gameId);
+    }
+
+    if(bodyQuery.dataModify.channelGame.from == null){
+        bodyQuery.dataModify.channelGame.from = 0;
+    }
+    if(bodyQuery.dataModify.channelGame.to == null){
+        bodyQuery.dataModify.channelGame.to = INFINITY;
+    }
     
     
     await GroupObjects.getModel(gameId).findByIdAndUpdate(body.idGroupObject, body.dataModify, {new: true}).exec(async function (err, groupObject) {
@@ -205,7 +312,7 @@ router.post('/edit', async function (req, res, next) {
             return;
         }
         // cập nhật lại thời gian tạo 
-        groupObject.createAt = utils.TimeUtility.getCurrentTime();
+        groupObject.createAt = utils.TimeUtility.getCurrentTime(gameId);
 
         await Users.getModel(gameId).updateMany({groupObject : mongoose.Types.ObjectId(body.idGroupObject)}, { $pull : { groupObject : { $in: [ mongoose.Types.ObjectId(body.idGroupObject) ] } }, isModifiedOffer: true},{ multi: true }).exec(async function(err, users){
             console.log("remove update " + JSON.stringify(users));
@@ -213,17 +320,17 @@ router.post('/edit', async function (req, res, next) {
 
         console.log("data group " + JSON.stringify(groupObject));
         var channel = CHANNEL_PAYMENT[gameId][groupObject.channelPayment + ''];
-        var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - groupObject.age.to;
-        var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - groupObject.age.from;
-        var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.to;
-        var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - groupObject.timeLastOnline.from;
+        var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.dataModify.age.to;
+        var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.dataModify.age.from;
+        var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.dataModify.timeLastOnline.to;
+        var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.dataModify.timeLastOnline.from;
         
         await Users.getModel(gameId).updateMany({}, {$push: {groupObject: groupObject._id}, isModifiedOffer: true})
-        .where('totalGame').gte(groupObject.totalGame.from).lte(groupObject.totalGame.to)
-        .where('channelGame').gte(groupObject.channelGame.from).lte(groupObject.channelGame.to)
-        .where("channelPayment." + channel + ".cost").gte(groupObject.totalCost.from).lte(groupObject.totalCost.to)
-        .where("channelPayment." + channel + ".number").gte(groupObject.numberPay.from).lte(groupObject.numberPay.to)
-        .where('lastPaidPack').gte(groupObject.lastPaidPack.from).lte(groupObject.lastPaidPack.to)
+        .where('totalGame').gte(bodyQuery.dataModify.totalGame.from).lte(bodyQuery.dataModify.totalGame.to)
+        .where('channelGame').gte(bodyQuery.dataModify.channelGame.from).lte(bodyQuery.dataModify.channelGame.to)
+        .where("channelPayment." + channel + ".cost").gte(bodyQuery.dataModify.totalCost.from).lte(bodyQuery.dataModify.totalCost.to)
+        .where("channelPayment." + channel + ".number").gte(bodyQuery.dataModify.numberPay.from).lte(bodyQuery.dataModify.numberPay.to)
+        .where('lastPaidPack').gte(bodyQuery.dataModify.lastPaidPack.from).lte(bodyQuery.dataModify.lastPaidPack.to)
         .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
         .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
         .exec(async function (err, raws) {

@@ -344,6 +344,7 @@ router.post("/edit_user", function (req, res, next) {
         idUser: req.body._id,
         dataModify: req.body.dataModify
     };
+    delete body.dataModify.groupObject;
     Users.getModel(gameId).findOneAndUpdate({
         userId: body.dataModify.userId
     }, body.dataModify, {

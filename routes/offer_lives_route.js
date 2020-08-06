@@ -88,7 +88,7 @@ router.post('/create', async function (req, res, next) {
             res.send({errorCode: ERROR_CODE.FAIL});
             return;
         }
-        var groupObject = await GroupObjects.getModel(gameId).findById(body.idObject).exec(function (error1, groupO) {
+        var groupObject = await GroupObjects.getModel(gameId).findById(body.idObject, function (error1, groupO) {
             if(groupO) {
                 groupO.offerLive = raw._id;
                 groupO.save();
@@ -101,7 +101,7 @@ router.post('/create', async function (req, res, next) {
             }
         });
 
-        var groupOffer = await GroupOffers.getModel(gameId).findById(body.idOffer).exec(function (error2, groupOffer) {
+        var groupOffer = await GroupOffers.getModel(gameId).findById(body.idOffer, function (error2, groupOffer) {
 
         });
         raw.groupOffer = groupOffer;

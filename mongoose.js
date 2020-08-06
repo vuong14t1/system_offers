@@ -36,7 +36,7 @@ function getConnect(){
 			  useFindAndModify: false
 	};  
 	mongoose.connect(url, opts);  
-	var dbcon = mongoose.connection;  
+	var dbcon = mongoose.connection;
 	// var dbcon = mongoose.createConnection(url, opts);  
 	dbcon.on('error',function(error){  
 	    logger.getLogger().info("connect mongoose db error: " + error);    
