@@ -424,4 +424,15 @@ router.get('/get_list_group_object',async function (req, res, next) {
         });
     });
 });
+
+router.get('/search_by_name', function (req, res, next) {
+    var gameId = req.query.gameId;
+    var nameObject = req.query.nameObject;
+    GroupObjects.getModel(gameId).find({nameObject:nameObject}).exec(function (err, raws) {
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: raws
+        });
+    });
+});
 module.exports = router;
