@@ -164,6 +164,7 @@ router.post('/edit', async function (req, res, next) {
         body.dataModify.isExpired = true;
     }
     console.log("edit offer live " + JSON.stringify(body));
+    body.dataModify.createAt = utils.TimeUtility.getCurrentTime(gameId);
     //xoa group cu
     await GroupObjects.getModel(gameId).findOneAndUpdate({offerLive: body.idOfferLive}, {offerLive: null}, {new: true}).exec(function (err, raws) {
         console.log("xoas group cu " + JSON.stringify(raws));
@@ -175,9 +176,6 @@ router.post('/edit', async function (req, res, next) {
             });
             return;
         }
-
-        // cập nhật lại thời gian tạo offerLive
-        offerLive.createAt = utils.TimeUtility.getCurrentTime();
 
         //notify to all users of group object
         Users.getModel(gameId).updateMany({
