@@ -435,4 +435,29 @@ router.get('/search_by_name', function (req, res, next) {
         });
     });
 });
+
+router.get('/add_user_to_group', function (req, res, next) {
+    var gameId = req.query.gameId;
+    var uId = req.query.uId;
+    var groupId = req.query.groupId;
+    Users.getModel(gameId).findOne({userId: uId}).exec(function (err, raw) {
+        if(raw) {
+            Users.getModel(gameId).updateOne({userId: uId}, { $push: {groupObject: mongoose.Types.ObjectId(groupId)}, isModifiedOffer: true}, {new: true}, async function(err, raw){
+                GroupObjects.getModel(gameId).updateOne({_id: groupId}, {$inc: {totalUser: 1, totalCurrentUser: 1}}).exec(function (err, raw1) {
+                    if(raw1) {
+                        logger.getLogger(gameId).info("add user to group " + uId + " | " + groupId);
+                        res.send({
+                            errorCode: ERROR_CODE.SUCCESS,
+                            data: raw1
+                        });
+                    }
+                })
+            });
+        }else{
+            res.send({
+                errorCode: ERROR_CODE.FAIL
+            });
+        }
+    })
+});
 module.exports = router;
