@@ -53,7 +53,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+require('events').EventEmitter.defaultMaxListeners = 15;
 app.use(session({
   secret: 'system_offer',
   resave:false,

@@ -152,8 +152,6 @@ router.get('/get_offer', async function (req, res, next) {
     try{
         if(user != null) {
             if(user.isModifiedOffer) {
-                // user.isModifiedOffer = false;
-                // await user.save();
                 //TH user khong nam trong group nao ca
                 if (user.groupObject != null && user.groupObject.length > 0) {
                     var data = [];

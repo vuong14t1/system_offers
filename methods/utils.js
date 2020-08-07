@@ -72,7 +72,7 @@ TimeUtility.checkStatusOfferLive = async function (gameId) {
                 group.totalCurrentUser = 0;
                 group.save();
                 logger.getLogger(gameId).info("This offer is experied!");
-                Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(group._id)}, {$pull: {groupObject: mongoose.Types.ObjectId(group._id)}}, {new: true}, function (err, users) {
+                Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(group._id)}, {$pull: {groupObject: mongoose.Types.ObjectId(group._id)}, isModifiedOffer: true}, {new: true}, function (err, users) {
                 });
             }
         }
