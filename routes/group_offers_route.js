@@ -59,19 +59,21 @@ router.post('/create', function (req, res, next) {
         items: req.body.items
     };
     //
-    if(body.items == null) {
-        body.items = [];
-        body.items.push({
-            type: body.type,
-            value: body.value
-        });
+    // if(body.items == null) {
+    //     body.items = [];
+    //     body.items.push({
+    //         type: body.type,
+    //         value: body.value
+    //     });
+    // } 
+    for(var i in body.items) {
+        body.items[i].value = parseInt(body.items[i].value);
+        body.items[i].type = parseInt(body.items[i].type);
     }
     GroupOffers.getModel(gameId).create({
         nameOffer: body.nameOffer,
         durationCountDown: body.durationCountDown,
         description: body.description,
-        type: body.type,
-        value: body.value,
         originalCost: body.originalCost,
         promotionCost: body.promotionCost,
         createAt: utils.TimeUtility.getCurrentTime(gameId),
@@ -137,14 +139,13 @@ router.post('/edit', function (req, res, next) {
             value: body.dataModify.value
         });
     }
+    body.dataModify.createAt = utils.TimeUtility.getCurrentTime(gameId);
     GroupOffers.getModel(gameId).findOneAndUpdate({_id: body.idOffer}, body.dataModify, {new: true}).exec(function (err, raw) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
-            // cập nhật lại thời gian tạo offer
-            raw.createAt = utils.TimeUtility.getCurrentTime();
             res.send({
                 errorCode: ERROR_CODE.SUCCESS,
                 data: raw

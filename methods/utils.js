@@ -62,7 +62,7 @@ TimeUtility.checkStatusOfferLive = async function (gameId) {
         };
         logger.getLogger(gameId).info('checkStatusOfferLive' + JSON.stringify(groupObjects));
         for await (let group of groupObjects) {
-            if(group.offerLive.isExpired) {
+            if(group.offerLive == null || group.offerLive.isExpired) {
                 continue;
             }
             logger.getLogger(gameId).info("check status offer " + JSON.stringify(group._id) +"current time " + TimeUtility.getCurrentTime() + "| time finish " + group.offerLive.timeFinish);
