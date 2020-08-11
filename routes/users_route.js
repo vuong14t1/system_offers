@@ -303,4 +303,27 @@ router.get("/search_user_by_group", function (req, res, next) {
         });
     });
 });
+
+router.post("/edit_user", function(req, res, next){
+    var gameId = req.query.gameId;
+    var body = {
+        idUser: req.body._id,
+        dataModify: req.body.dataModify
+    };
+    Users.getModel(gameId).findOneAndUpdate({userId: body.dataModify.userId}, body.dataModify, {new: false}, function(err, user){
+        if(err) {
+            res.send({errorCode: ERROR_CODE.FAIL});
+            return;
+        }
+        if(user == null) {
+            res.send({errorCode: ERROR_CODE.NOT_FOUND});
+            return;
+        }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: user
+        })
+
+    })
+});
 module.exports = router;
