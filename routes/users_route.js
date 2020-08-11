@@ -7,8 +7,13 @@ var OfferLives = require('../models/offer_lives');
 var ERROR_CODE = require('../const/error_code');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var utils = require('../methods/utils');
-const { mongoose } = require('../mongoose');
+const {
+    mongoose
+} = require('../mongoose');
 var logger = require('../methods/winston');
+const {
+    resolve
+} = require('bluebird');
 router.get('/user_login', async function (req, res, next) {
     var gameId = req.query.gameId;
     console.log("post user login " + gameId);
@@ -141,21 +146,31 @@ router.get('/get_offer', async function (req, res, next) {
     var body = {
         userId: req.query.userId
     };
-    var user = await Users.getModel(gameId).findOneAndUpdate({userId: body.userId}, {isModifiedOffer: false}, {new: false});
-    if(user == null) {
+    var user = await Users.getModel(gameId).findOneAndUpdate({
+        userId: body.userId
+    }, {
+        isModifiedOffer: false
+    }, {
+        new: false
+    });
+    if (user == null) {
         res.send({
             errorCode: ERROR_CODE.NOT_CHANGE
         });
         return;
     }
     logger.getLogger(gameId).info("get_offer " + JSON.stringify(user));
-    try{
-        if(user != null) {
-            if(user.isModifiedOffer) {
+    try {
+        if (user != null) {
+            if (user.isModifiedOffer) {
                 //TH user khong nam trong group nao ca
                 if (user.groupObject != null && user.groupObject.length > 0) {
                     var data = [];
-                    for await (const offerLive of OfferLives.getModel(gameId).find({groupObject: {$in: user.groupObject}}).populate("groupObject").populate("groupOffer")) {
+                    for await (const offerLive of OfferLives.getModel(gameId).find({
+                        groupObject: {
+                            $in: user.groupObject
+                        }
+                    }).populate("groupObject").populate("groupOffer")) {
                         console.log("find offer by group " + JSON.stringify(offerLive));
                         if (offerLive != null) {
                             if (utils.TimeUtility.getCurrentTime(gameId) > offerLive.timeFinish) {
@@ -175,14 +190,21 @@ router.get('/get_offer', async function (req, res, next) {
                         }
                     }
                     logger.getLogger(gameId).info("get offer res " + JSON.stringify(data));
-                    if(data.length > 0) {
+                    if (data.length > 0) {
                         res.send({
                             errorCode: ERROR_CODE.SUCCESS,
                             data: data
                         });
-                        OfferLives.getModel(gameId).updateMany({groupObject: {$in: user.groupObject}}, { $inc: {totalReceived: 1}}).exec(function (err, raw) {
-                        });
-                    }else{
+                        OfferLives.getModel(gameId).updateMany({
+                            groupObject: {
+                                $in: user.groupObject
+                            }
+                        }, {
+                            $inc: {
+                                totalReceived: 1
+                            }
+                        }).exec(function (err, raw) {});
+                    } else {
                         res.send({
                             errorCode: ERROR_CODE.EMPTY
                         });
@@ -299,8 +321,10 @@ router.get('/search_user', function (req, res, next) {
     var body = {
         userId: req.query.userId
     };
-    Users.getModel(gameId).findOne({userId: body.userId}).exec(function (err, data) {
-        if(err) {
+    Users.getModel(gameId).findOne({
+        userId: body.userId
+    }).exec(function (err, data) {
+        if (err) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL
             });
@@ -320,8 +344,11 @@ router.get("/search_user_by_group", function (req, res, next) {
         userId: req.query.userId,
         groupObject: req.query.groupObject
     };
-    Users.getModel(gameId).findOne({userId: body.userId, groupObject: mongoose.Types.ObjectId(body.groupObject)}, function (err, raw) {
-        if(err) {
+    Users.getModel(gameId).findOne({
+        userId: body.userId,
+        groupObject: mongoose.Types.ObjectId(body.groupObject)
+    }, function (err, raw) {
+        if (err) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL
             });
@@ -366,6 +393,7 @@ router.post("/edit_user", function (req, res, next) {
 });
 
 router.post("/import_data_user", async function (req, res, next) {
+    console.log("/import_data_user");
     var gameId = req.query.gameId;
     if (req.files == null) {
         res.send({
@@ -379,7 +407,18 @@ router.post("/import_data_user", async function (req, res, next) {
     var obj = xlsx.parse(fileData.data)[0].data // parses a file
     var checkSuccess = 0;
     var checkFail = 0;
-    for await(let item of obj) {
+    for (let item of obj) {
+        if(item.length == 0){
+            console.log("checkSuccess " + checkSuccess + "| checkFail" + checkFail);
+            res.send({
+                errorCode: ERROR_CODE.SUCCESS,
+                data: {
+                    checkFail: checkFail,
+                    checkSuccess: checkSuccess
+                }
+            })
+            break;
+        } 
         let channelPayment = [];
         let detaiChannelPayment = item[1].split('-');
         for (let j in detaiChannelPayment) {
@@ -408,6 +447,7 @@ router.post("/import_data_user", async function (req, res, next) {
             }
             if(user){
                 checkSuccess++;
+                console.log("checkSuccess ", checkSuccess);
             }else{
                 await Users.getModel(gameId).create(userData, function (err, raw) {
                     if(err){
@@ -420,13 +460,17 @@ router.post("/import_data_user", async function (req, res, next) {
             }
         })
     }
-    console.log("checkSuccess " + checkSuccess + "| checkFail" + checkFail);
-    res.send({
-        errorCode: ERROR_CODE.SUCCESS,
-        data: {
-            checkFail: checkFail,
-            checkSuccess: checkSuccess
-        }
-    })
+
+    // setInterval(function(){
+    //     console.log("checkSuccess " + checkSuccess + "| checkFail" + checkFail);
+    //     res.send({
+    //         errorCode: ERROR_CODE.SUCCESS,
+    //         data: {
+    //             checkFail: checkFail,
+    //             checkSuccess: checkSuccess
+    //         }
+    //     })
+    // }.bind(this), 2000);
+   
 });
 module.exports = router;
