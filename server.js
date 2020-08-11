@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose1 = require('./mongoose');
-// require("./kafka_consumer/consumer_listener");
+require("./kafka_consumer/consumer_listener");
 const cors = require('cors');
 var logger = require('./methods/winston');
 var Accounts = require("./models/accounts");

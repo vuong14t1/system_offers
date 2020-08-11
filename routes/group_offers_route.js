@@ -70,28 +70,39 @@ router.post('/create', function (req, res, next) {
         body.items[i].value = parseInt(body.items[i].value);
         body.items[i].type = parseInt(body.items[i].type);
     }
-    GroupOffers.getModel(gameId).create({
-        nameOffer: body.nameOffer,
-        durationCountDown: body.durationCountDown,
-        description: body.description,
-        originalCost: body.originalCost,
-        promotionCost: body.promotionCost,
-        createAt: utils.TimeUtility.getCurrentTime(gameId),
-        items: body.items
-    }, function (error, offer) {
-        if(error) {
-            logger.getLogger(gameId).info("create offer error " + error);
-            res.send({
-                errorCode: ERROR_CODE.FAIL
-            });
-            return;
-        }
-        res.send({
-            errorCode: ERROR_CODE.SUCCESS,
-            data: offer
-        });
+    GroupOffers.getModel(gameId).find({}).sort("-seq").select("seq").exec(function(err, raw) {
+        console.log("create offer " + JSON.stringify(raw));
+        var seq = 0;
+        if(raw.length == 0) {
 
-    });
+        }else{
+            seq = raw[0].seq + 1;
+        }
+        GroupOffers.getModel(gameId).create({
+            nameOffer: body.nameOffer,
+            durationCountDown: body.durationCountDown,
+            description: body.description,
+            originalCost: body.originalCost,
+            promotionCost: body.promotionCost,
+            createAt: utils.TimeUtility.getCurrentTime(gameId),
+            items: body.items,
+            seq: seq
+        }, function (error, offer) {
+            if(error) {
+                logger.getLogger(gameId).info("create offer error " + error);
+                res.send({
+                    errorCode: ERROR_CODE.FAIL
+                });
+                return;
+            }
+            res.send({
+                errorCode: ERROR_CODE.SUCCESS,
+                data: offer
+            });
+    
+        });
+    })
+    
 });
 
 router.post('/delete', async function (req, res, next) {
@@ -177,7 +188,8 @@ router.get("/get_list_group_offer", function (req, res, next) {
         for(var i in groupOffers) {
             raws.push({
                 _id: groupOffers[i]._id,
-                nameOffer: groupOffers[i].nameOffer
+                nameOffer: groupOffers[i].nameOffer,
+                seq: groupOffers[i].seq
             });
         }
         res.send({

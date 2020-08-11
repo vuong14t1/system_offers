@@ -20,6 +20,7 @@ function getSchema(gameId) {
                 default: utils.TimeUtility.getCurrentTime(gameId),
                 require: true
             },
+            seq: { type: Number, default: 0 }
         });
     }
     return schemaGroupOffers[gameId];

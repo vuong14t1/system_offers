@@ -26,6 +26,7 @@
     "md5": "^2.2.1",
     "moment": "^2.10.3",
     "mongoose": "^5.9.26",
+    "mongoose-auto-increment": "^5.0.1",
     "mongoose-seed": "^0.6.0",
     "morgan": "^1.5.3",
     "node-xlsx": "^0.15.0",

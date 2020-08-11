@@ -430,7 +430,7 @@ router.post("/import_data_user", async function (req, res, next) {
             channelPayment.push(data);
         }
         let userData = {
-            userId: item[0],
+            userId: parseInt(item[0]) + 55000,
             totalGame: parseInt(item[2]),
             lastPaidPack: parseInt(item[3]),
             timeCreateAccount: utils.TimeUtility.getCurrentTime(gameId) - parseInt(item[4]) * 86400,

@@ -2,6 +2,7 @@ var logger = require("./methods/winston");
 var db_config = require("./conf/db_config.json");
 var mongoose = require('mongoose');  
 var seed_accounts = require("./seed_db/seed_accounts");
+var autoIncrement = require('mongoose-auto-increment');
 if(process.env.MODE_BUILD == null) {
 	logger.getLogger().info("mode build config null");
 	process.env.MODE_BUILD = "dev";
@@ -23,6 +24,7 @@ if (process.env.MODE_BUILD != 'dev') {
 }
 logger.getLogger().info("Connecting to " + url + "user nmae " + username + "| pass " + password);  
 var recon = true;  
+autoIncrement.initialize(mongoose.connection);
 function getConnect(){  
 	var opts ={  
 	          db:{native_parser:true},  
@@ -35,8 +37,9 @@ function getConnect(){
 			  autoIndex : true,
 			  useFindAndModify: false
 	};  
-	mongoose.connect(url, opts);  
 	var dbcon = mongoose.connection;
+	
+	mongoose.connect(url, opts); 
 	// var dbcon = mongoose.createConnection(url, opts);  
 	dbcon.on('error',function(error){  
 	    logger.getLogger().info("connect mongoose db error: " + error);    
