@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose1 = require('./mongoose');
-require("./kafka_consumer/consumer_listener");
+// require("./kafka_consumer/consumer_listener");
 const cors = require('cors');
 var logger = require('./methods/winston');
 var Accounts = require("./models/accounts");
@@ -36,6 +36,8 @@ var group_offers_route = require('./routes/group_offers_route');
 var offer_lives_route = require('./routes/offer_lives_route');
 var accounts_route = require('./routes/accounts_route');
 var danger_route = require('./routes/danger_route');
+var utils_route = require('./routes/utils_route');
+
 
 app.locals.moment = require('moment');
 app.locals.contains = contains;
@@ -92,6 +94,8 @@ app.use('/group_offers', group_offers_route);
 app.use('/offer_lives', offer_lives_route);
 app.use('/accounts_route', accounts_route);
 app.use('/danger_route', danger_route);
+app.use('/utils_route', utils_route);
+
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
