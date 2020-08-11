@@ -87,6 +87,14 @@ router.post('/create', async function (req, res, next) {
         channelGame: req.body.channelGame,
         nameObject: req.body.nameObject
     };
+    var groupObject = await GroupObjects.getModel(gameId).findOne({nameObject: body.nameObject}, function (err, raw) {
+
+    })
+    if(groupObject != null) {
+        console.log("same name");
+        res.send({errorCode: ERROR_CODE.EXIST});
+        return;
+    }
     let bodyQuery = _.cloneDeep(body);
     var INFINITY = 9999999999;
     //check value data
@@ -195,6 +203,15 @@ router.post('/create', async function (req, res, next) {
                 console.log("====================== 1 " + err);
                 console.log('============ 2 ' + JSON.stringify(raws));
                 if(raws.ok == 1) {
+                    if(raws.nModified == 0) {
+                        GroupObjects.getModel(gameId).findByIdAndDelete(groupObject._id, function (err, raw) {
+                            
+                        })
+                        res.send({
+                            errorCode: ERROR_CODE.EMPTY
+                        }); 
+                        return;
+                    }
                     groupObject.totalUser = raws.nModified;
                     groupObject.totalCurrentUser = raws.nModified;
                     await groupObject.save();

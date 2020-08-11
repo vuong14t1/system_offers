@@ -6,7 +6,6 @@ function getSchema(gameId) {
     if(schemaGroupOffers[gameId] == null) {
         schemaGroupOffers[gameId] = new Schema({
             nameOffer: String,
-            durationCountDown: Number,
             description: String,
             type: Number,
             value: Number,

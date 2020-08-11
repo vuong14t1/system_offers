@@ -164,7 +164,6 @@ router.get('/get_offer', async function (req, res, next) {
                             var offerRes = {
                                 idOfferLive: offerLive._id,
                                 nameOffer: offerLive.groupOffer.nameOffer,
-                                durationCountDown: offerLive.groupOffer.durationCountDown,
                                 originalCost: offerLive.groupOffer.originalCost,
                                 promotionCost: offerLive.groupOffer.promotionCost,
                                 timeStart: offerLive.timeStart,
