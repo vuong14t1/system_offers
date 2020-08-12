@@ -69,7 +69,7 @@ TimeUtility.checkStatusOfferLive = async function (gameId) {
             if(group.offerLive && TimeUtility.getCurrentTime() >= group.offerLive.timeFinish) {
                 group.offerLive.isExpired = true;
                 group.offerLive.save();
-                group.totalCurrentUser = 0;
+                // group.totalCurrentUser = 0;
                 group.save();
                 logger.getLogger(gameId).info("This offer is experied!");
                 // Users.getModel(gameId).updateMany({groupObject: mongoose.Types.ObjectId(group._id)}, {$pull: {groupObject: mongoose.Types.ObjectId(group._id)}, isModifiedOffer: true}, {new: true}, function (err, users) {

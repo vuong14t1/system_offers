@@ -110,9 +110,9 @@ async function trackingBoughtOfferLive(gameId, message) {
         // Users.getModel(gameId).findOneAndUpdate({userId: userId}, {$pull: {groupObject: mongoose.Types.ObjectId(offerLive.groupObject)}}, {new: true}).exec(function (err, raw) {
 
         // });
-        GroupObjects.getModel(gameId).findOneAndUpdate({_id: offerLive.groupObject}, {$inc: {totalCurrentUser: -1}}).exec(function (err, raw) {
+        // GroupObjects.getModel(gameId).findOneAndUpdate({_id: offerLive.groupObject}, {$inc: {totalCurrentUser: -1}}).exec(function (err, raw) {
 
-        });
+        // });
     });
 }
 

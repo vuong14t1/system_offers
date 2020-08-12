@@ -20,10 +20,10 @@ function getSchema(gameId) {
                 default: 0
             },
 
-            totalCurrentUser: {
-                type: Number,
-                default: 0
-            },
+            // totalCurrentUser: {
+            //     type: Number,
+            //     default: 0
+            // },
             
             totalGame: {
                 from: Number,
