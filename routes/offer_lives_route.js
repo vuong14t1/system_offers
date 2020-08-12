@@ -175,6 +175,10 @@ router.post('/edit', async function (req, res, next) {
             });
             return;
         }
+
+        // cập nhật lại thời gian tạo offerLive
+        offerLive.createAt = utils.TimeUtility.getCurrentTime();
+
         //notify to all users of group object
         Users.getModel(gameId).updateMany({
             groupObject: mongoose.Types.ObjectId(offerLive.groupObject._id)
