@@ -132,11 +132,12 @@ SchemaUtility.isRegisteredGame = function (gameId) {
     return registerGameConf[gameId] !== undefined;
 }
 
-HistoryActionUtility.addAction = function (gameId, author, msg) {
+HistoryActionUtility.addAction = function (gameId, author, msg, tab) {
     HistoryAction.getModel(gameId).create({
         author: author,
         msg: msg,
-        createAt: TimeUtility.getCurrentTime(gameId)
+        createAt: TimeUtility.getCurrentTime(gameId),
+        tab: tab,
     }, function (err, raw) {
         
     });

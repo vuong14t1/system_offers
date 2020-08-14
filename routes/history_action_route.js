@@ -15,7 +15,8 @@ router.use(function timeLog (req, res, next) {
 })
 router.get('/list', function (req, res, next) {
     var gameId = req.query.gameId;
-    HistoryAction.getModel(gameId).find({}).exec(function (error, raws) {
+    var tab = req.query.tab;
+    HistoryAction.getModel(gameId).find({tab: tab}).exec(function (error, raws) {
         if(error) {
             return res.send({
                 errorCode: ERROR_CODE.FAIL
