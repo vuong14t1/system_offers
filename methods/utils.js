@@ -91,6 +91,24 @@ SchemaUtility.getDefaultSchemaChannelPayment= function(gameId) {
     }
     return schema;
 }
+
+SchemaUtility.getDefaultQueryChannelPayment = function (gameId) {
+    gameId = gameId === undefined? "p13": gameId;
+    var schema = [];
+    for(var i in CHANNEL_PAYMENT[gameId]) {
+        schema[CHANNEL_PAYMENT[gameId][i]] = {
+            totalCost: {
+                from: 0,
+                to: 9999999999
+            },
+            numberPay:  {
+                from: 0,
+                to:9999999999
+            }
+        };
+    }
+    return schema;
+}
 //lay thoi gian server tu thoi gian client
 TimeUtility.convertTimeClientToTimeServer = function (gameId, timeClient) {
     return timeClient + TimeUtility.getOffetClientVsServer(gameId);

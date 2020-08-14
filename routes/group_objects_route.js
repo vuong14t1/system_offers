@@ -119,12 +119,10 @@ router.post('/create', async function (req, res, next) {
         bodyQuery.numberPay.to = INFINITY;
     }
 
-    if(bodyQuery.lastPaidPack.from == null){
-        bodyQuery.lastPaidPack.from = 0;
+    if(bodyQuery.lastPaidPack.length  <= 0){
+        bodyQuery.lastPaidPack = [0];
     }
-    if(bodyQuery.lastPaidPack.to == null){
-        bodyQuery.lastPaidPack.to = INFINITY;
-    }
+    
 
     if(bodyQuery.age.from == null){
         bodyQuery.age.from = 0;
@@ -149,7 +147,13 @@ router.post('/create', async function (req, res, next) {
 
     console.log("create group object body" + JSON.stringify(body));
     console.log("create group object body query" + JSON.stringify(bodyQuery));
-	var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
+    var channel = CHANNEL_PAYMENT[gameId][body.channelPayment + ''];
+    var queryFindUsers = {};
+    for(var i = 0; i < body.channelPayment.length; i++) {
+        var indexC = CHANNEL_PAYMENT[gameId][body.channelPayment[i] + ''];
+        queryFindUsers['channelPayment.' + indexC +'.cost'] = { $gte: bodyQuery.totalCost.from, $lte: bodyQuery.totalCost.to}
+    }
+
     var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.age.to;
     var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.age.from;
     var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.timeLastOnline.to;
@@ -179,10 +183,8 @@ router.post('/create', async function (req, res, next) {
                 from: body.numberPay.from,
                 to: body.numberPay.to
             },
-            lastPaidPack: {
-                from: body.lastPaidPack.from,
-                to: body.lastPaidPack.to
-            },
+
+            lastPaidPack: body.lastPaidPack,
     
             age: {
                 from: body.age.from,
@@ -207,7 +209,8 @@ router.post('/create', async function (req, res, next) {
             if(error) {
                 res.send({errorCode: ERROR_CODE.FAIL});
             }else{
-                Users.getModel(gameId).updateMany({}, { $push: {groupObject: groupObject._id}, isModifiedOffer: true}, {new: true}, async function(err, raws){
+                console.log("query ======= " + JSON.stringify(queryFindUsers));
+                Users.getModel(gameId).updateMany(queryFindUsers, { $push: {groupObject: groupObject._id}, isModifiedOffer: true}, {new: true}, async function(err, raws){
                     console.log("====================== 1 " + err);
                     console.log('============ 2 ' + JSON.stringify(raws));
                     if(raws.ok == 1) {
@@ -238,9 +241,7 @@ router.post('/create', async function (req, res, next) {
                 })
                 .where('totalGame').gte(bodyQuery.totalGame.from).lte(bodyQuery.totalGame.to)
                 .where('channelGame').gte(bodyQuery.channelGame.from).lte(bodyQuery.channelGame.to)
-                .where("channelPayment." + channel + ".cost").gte(bodyQuery.totalCost.from).lte(bodyQuery.totalCost.to)
-                .where("channelPayment." + channel + ".number").gte(bodyQuery.numberPay.from).lte(bodyQuery.numberPay.to)
-                .where('lastPaidPack').gte(bodyQuery.lastPaidPack.from).lte(bodyQuery.lastPaidPack.to)
+                .where('lastPaidPack').in(bodyQuery.lastPaidPack)
                 .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
                 .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
             }
@@ -280,6 +281,7 @@ router.post('/edit', async function (req, res, next) {
     if(bodyQuery.dataModify.totalGame.from == null){
         bodyQuery.dataModify.totalGame.from = 0;
     }
+
     if(bodyQuery.dataModify.totalGame.to == null){
         bodyQuery.dataModify.totalGame.to = INFINITY;
     }
@@ -287,6 +289,7 @@ router.post('/edit', async function (req, res, next) {
     if(bodyQuery.dataModify.totalCost.from == null){
         bodyQuery.dataModify.totalCost.from = 0;
     }
+
     if(bodyQuery.dataModify.totalCost.to == null){
         bodyQuery.dataModify.totalCost.to = INFINITY;
     }
@@ -294,15 +297,13 @@ router.post('/edit', async function (req, res, next) {
     if(bodyQuery.dataModify.numberPay.from == null){
         bodyQuery.dataModify.numberPay.from = 0;
     }
+
     if(bodyQuery.dataModify.numberPay.to == null){
         bodyQuery.dataModify.numberPay.to = INFINITY;
     }
 
-    if(bodyQuery.dataModify.lastPaidPack.from == null){
-        bodyQuery.dataModify.lastPaidPack.from = 0;
-    }
-    if(bodyQuery.dataModify.lastPaidPack.to == null){
-        bodyQuery.dataModify.lastPaidPack.to = INFINITY;
+    if(bodyQuery.dataModify.lastPaidPack.length  <= 0){
+        bodyQuery.lastPaidPack = [0];
     }
 
     if(bodyQuery.dataModify.age.from == null){
@@ -345,17 +346,23 @@ router.post('/edit', async function (req, res, next) {
 
         console.log("data group " + JSON.stringify(groupObject));
         var channel = CHANNEL_PAYMENT[gameId][groupObject.channelPayment + ''];
+
+        var queryFindUsers = {};
+        for(var i = 0; i < body.channelPayment.length; i++) {
+            var indexC = CHANNEL_PAYMENT[gameId][body.channelPayment[i] + ''];
+            queryFindUsers['channelPayment.' + indexC +'.cost'] = { $gte: bodyQuery.totalCost.from, $lte: bodyQuery.totalCost.to}
+        }
+
+
         var timeMinAge = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.dataModify.age.to;
         var timeMaxAge = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.dataModify.age.from;
         var timeMinOnline = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.dataModify.timeLastOnline.to;
         var timeMaxOnline = utils.TimeUtility.getCurrentTime(gameId) - bodyQuery.dataModify.timeLastOnline.from;
         
-        await Users.getModel(gameId).updateMany({}, {$push: {groupObject: groupObject._id}, isModifiedOffer: true})
+        await Users.getModel(gameId).updateMany(queryFindUsers, {$push: {groupObject: groupObject._id}, isModifiedOffer: true})
         .where('totalGame').gte(bodyQuery.dataModify.totalGame.from).lte(bodyQuery.dataModify.totalGame.to)
         .where('channelGame').gte(bodyQuery.dataModify.channelGame.from).lte(bodyQuery.dataModify.channelGame.to)
-        .where("channelPayment." + channel + ".cost").gte(bodyQuery.dataModify.totalCost.from).lte(bodyQuery.dataModify.totalCost.to)
-        .where("channelPayment." + channel + ".number").gte(bodyQuery.dataModify.numberPay.from).lte(bodyQuery.dataModify.numberPay.to)
-        .where('lastPaidPack').gte(bodyQuery.dataModify.lastPaidPack.from).lte(bodyQuery.dataModify.lastPaidPack.to)
+        .where('lastPaidPack').in(bodyQuery.dataModify.lastPaidPack).lte(bodyQuery.dataModify.lastPaidPack.to)
         .where('timeCreateAccount').gte(timeMinAge).lte(timeMaxAge)
         .where('lastTimeOnline').gte(timeMinOnline).lte(timeMaxOnline)
         .exec(async function (err, raws) {
@@ -415,7 +422,6 @@ router.get('/list_user', function (req, res, next) {
     var numberOfPage = 10;
     console.log("numberOfPage ", numberOfPage , "indexPage ", indexPage);
     Users.getModel(gameId).find({groupObject: mongoose.Types.ObjectId(idGroupObject)}).skip(indexPage * numberOfPage).limit(numberOfPage).exec(function (err, users) {
-        console.log("data list user " + JSON.stringify(users));
         if(err) return res.send({errorCode: ERROR_CODE.FAIL});
         if(users.length > 0){
             res.send({errorCode: ERROR_CODE.SUCCESS, data: users});

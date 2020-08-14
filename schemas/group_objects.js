@@ -31,7 +31,8 @@ function getSchema(gameId) {
             },
         
             channelPayment: {
-                type: String
+                type: Array,
+                default: []
             },
         
             totalCost: {
@@ -45,8 +46,8 @@ function getSchema(gameId) {
             },
         
             lastPaidPack: {
-                from: Number,
-                to: Number
+                type: Array,
+                default: []
             },
         
             age: {
