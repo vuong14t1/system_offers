@@ -5,6 +5,9 @@ var Accounts = require("../models/accounts");
 var md5 = require('md5');
 const ROLE = require('../const/role_const');
 const e = require('express');
+var utils = require('../methods/utils');
+var HISTORY_HISTORY_CONST = require('../const/history_action_const');
+
 router.use(['/delete', '/edit'],function timeLog (req, res, next) {
     if(!req.session.loggedIn) {
         res.send({
@@ -87,12 +90,18 @@ router.get('/list', function (req, res, next) {
 router.post('/delete', function (req, res, next) {
     var gameId = req.query.gameId;
     var body = {
-        idAccount: req.body.idAccount
+        idAccount: req.body.idAccount,
+        email: req.body.email
     };
     Accounts.getModel(gameId).findByIdAndRemove(body.idAccount).exec(function (err) {
-        res.send({
-            errorCode: ERROR_CODE.SUCCESS
-        });
+        if(err){
+
+        }else{
+            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã xóa tài khoản " + body.email, HISTORY_HISTORY_CONST.TAB.ACCOUNT);
+            res.send({
+                errorCode: ERROR_CODE.SUCCESS
+            });
+        }
     });
 });
 
@@ -110,6 +119,7 @@ router.post('/edit', function (req, res, next) {
         if(err) {
             return res.send({errorCode: ERROR_CODE.FAIL});
         }
+        utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã chỉnh sửa tài khoản của " + account.email, HISTORY_HISTORY_CONST.TAB.ACCOUNT);
         res.send({
             errorCode: ERROR_CODE.SUCCESS,
             data: account
@@ -131,6 +141,8 @@ router.post('/add', function(req, res, next) {
         if(acc == null){
             return res.send({errorCode: ERROR_CODE.NOT_FOUND});
         }
+        utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã thêm tài khoản của " + body.email, HISTORY_HISTORY_CONST.TAB.ACCOUNT);
+
         res.send({
             errorCode: ERROR_CODE.SUCCESS,
             data: acc
