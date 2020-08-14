@@ -95,6 +95,7 @@ router.post('/create', function (req, res, next) {
                 });
                 return;
             }
+            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã tạo offer OFFER_" + seq);
             res.send({
                 errorCode: ERROR_CODE.SUCCESS,
                 data: offer
@@ -110,12 +111,13 @@ router.post('/delete', async function (req, res, next) {
     var body = {
         idOffer: req.body.idOffer
     };
-    GroupOffers.getModel(gameId).findByIdAndRemove(body.idOffer).exec(function (err) {
+    GroupOffers.getModel(gameId).findByIdAndRemove(body.idOffer).exec(function (err, raw) {
         if(err) {
             res.send({
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
+            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã xóa offer OFFER_" + raw.seq);
             //find all offer live refer to self
             OfferLives.getModel(gameId).find({groupOffer: body.idOffer}).exec(async function (err, offerLives) {
                 console.log('ref offer lives ' + JSON.stringify(offerLives));
@@ -157,6 +159,7 @@ router.post('/edit', function (req, res, next) {
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
+            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã chỉnh sửa offer OFFER_" + raw.seq);
             res.send({
                 errorCode: ERROR_CODE.SUCCESS,
                 data: raw

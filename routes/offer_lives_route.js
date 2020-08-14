@@ -104,6 +104,7 @@ router.post('/create', async function (req, res, next) {
         var groupOffer = await GroupOffers.getModel(gameId).findById(body.idOffer, function (error2, groupOffer) {
 
         });
+        utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã chạy offer OFFER_" + groupOffer.seq + " với OBJECT_" + groupObject.seq);
         raw.groupOffer = groupOffer;
         raw.groupObject = groupObject;
         res.send({errorCode: ERROR_CODE.SUCCESS, data: raw});
@@ -139,7 +140,7 @@ router.post('/delete', function (req, res, next) {
                     });
                 }
             });
-
+            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã xóa offer đang chạy có ID " + body.idOfferLive);
             res.send({
                 errorCode: ERROR_CODE.SUCCESS
             });
@@ -189,7 +190,7 @@ router.post('/edit', async function (req, res, next) {
                 console.log("cap nhat group moi " + JSON.stringify(raw));
             });
         }
-        
+        utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã chỉnh sửa offer đang chạy có ID " + body.idOfferLive);
         res.send({
             errorCode: ERROR_CODE.SUCCESS,
             data: offerLive

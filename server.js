@@ -36,6 +36,7 @@ var group_offers_route = require('./routes/group_offers_route');
 var offer_lives_route = require('./routes/offer_lives_route');
 var accounts_route = require('./routes/accounts_route');
 var danger_route = require('./routes/danger_route');
+var history_action_route = require('./routes/history_action_route');
 var utils_route = require('./routes/utils_route');
 
 
@@ -95,6 +96,7 @@ app.use('/offer_lives', offer_lives_route);
 app.use('/accounts_route', accounts_route);
 app.use('/danger_route', danger_route);
 app.use('/utils_route', utils_route);
+app.use('/history_action_route', history_action_route);
 
 
 // catch 404 and forward to error handler

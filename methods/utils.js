@@ -3,6 +3,7 @@ var Users = require('../models/users');
 var Accounts = require('../models/accounts');
 var GroupOffers = require('../models/group_offers');
 var OfferLives = require('../models/offer_lives');
+var HistoryAction = require('../models/history_action');
 var CHANNEL_PAYMENT = require('../const/channel_const');
 var registerGameConf = require('../conf/register_games.json');
 var logger = require('./winston');
@@ -10,6 +11,8 @@ var mongoose = require('mongoose');
 var TimeUtility = {
 };
 var SchemaUtility = {};
+
+var HistoryActionUtility = {};
 //dong bo thoi gian voi server tung game
 TimeUtility.setCurrentServerTime = function (gameId, time) {
     logger.getLogger(gameId).info("set current time server " + time);
@@ -65,8 +68,8 @@ TimeUtility.checkStatusOfferLive = async function (gameId) {
             if(group.offerLive == null || group.offerLive.isExpired) {
                 continue;
             }
-            logger.getLogger(gameId).info("check status offer " + JSON.stringify(group._id) +"current time " + TimeUtility.getCurrentTime() + "| time finish " + group.offerLive.timeFinish);
-            if(group.offerLive && TimeUtility.getCurrentTime() >= group.offerLive.timeFinish) {
+            logger.getLogger(gameId).info("check status offer " + JSON.stringify(group._id) +"current time " + TimeUtility.getCurrentTime(gameId) + "| time finish " + group.offerLive.timeFinish);
+            if(group.offerLive && TimeUtility.getCurrentTime(gameId) >= group.offerLive.timeFinish) {
                 group.offerLive.isExpired = true;
                 group.offerLive.save();
                 // group.totalCurrentUser = 0;
@@ -121,11 +124,23 @@ SchemaUtility.loadAllSchema = function () {
         GroupObjects.getModel(i);
         GroupOffers.getModel(i);
         OfferLives.getModel(i);
+        HistoryAction.getModel(i);
     }
 }
 //kiem tra gameId ra duoc dang ki config o file register game hay chua?
 SchemaUtility.isRegisteredGame = function (gameId) {
     return registerGameConf[gameId] !== undefined;
 }
+
+HistoryActionUtility.addAction = function (gameId, author, msg) {
+    HistoryAction.getModel(gameId).create({
+        author: author,
+        msg: msg,
+        createAt: TimeUtility.getCurrentTime(gameId)
+    }, function (err, raw) {
+        
+    });
+}
 exports.TimeUtility = TimeUtility;
 exports.SchemaUtility = SchemaUtility;
+exports.HistoryActionUtility = HistoryActionUtility;
