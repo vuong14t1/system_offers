@@ -348,9 +348,9 @@ router.post('/edit', async function (req, res, next) {
         var channel = CHANNEL_PAYMENT[gameId][groupObject.channelPayment + ''];
 
         var queryFindUsers = {};
-        for(var i = 0; i < body.channelPayment.length; i++) {
-            var indexC = CHANNEL_PAYMENT[gameId][body.channelPayment[i] + ''];
-            queryFindUsers['channelPayment.' + indexC +'.cost'] = { $gte: bodyQuery.totalCost.from, $lte: bodyQuery.totalCost.to}
+        for(var i = 0; i < body.dataModify.channelPayment.length; i++) {
+            var indexC = CHANNEL_PAYMENT[gameId][body.dataModify.channelPayment[i] + ''];
+            queryFindUsers['channelPayment.' + indexC +'.cost'] = { $gte: bodyQuery.dataModify.totalCost.from, $lte: bodyQuery.dataModify.totalCost.to}
         }
 
 
