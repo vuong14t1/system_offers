@@ -8,6 +8,7 @@ var logger = require('../methods/winston');
 const ROLE = require('../const/role_const');
 var utils = require('../methods/utils');
 var mongoose = require('mongoose');
+var HISTORY_HISTORY_CONST = require('../const/history_action_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
@@ -95,7 +96,7 @@ router.post('/create', function (req, res, next) {
                 });
                 return;
             }
-            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã tạo offer OFFER_" + seq);
+            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã tạo offer OFFER_" + seq, HISTORY_HISTORY_CONST.TAB.OFFER);
             res.send({
                 errorCode: ERROR_CODE.SUCCESS,
                 data: offer
@@ -117,7 +118,7 @@ router.post('/delete', async function (req, res, next) {
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
-            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã xóa offer OFFER_" + raw.seq);
+            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã xóa offer OFFER_" + raw.seq, HISTORY_HISTORY_CONST.TAB.OFFER);
             //find all offer live refer to self
             OfferLives.getModel(gameId).find({groupOffer: body.idOffer}).exec(async function (err, offerLives) {
                 console.log('ref offer lives ' + JSON.stringify(offerLives));
@@ -159,7 +160,7 @@ router.post('/edit', function (req, res, next) {
                 errorCode: ERROR_CODE.FAIL
             });
         }else{
-            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã chỉnh sửa offer OFFER_" + raw.seq);
+            utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã chỉnh sửa offer OFFER_" + raw.seq, HISTORY_HISTORY_CONST.TAB.OFFER);
             res.send({
                 errorCode: ERROR_CODE.SUCCESS,
                 data: raw

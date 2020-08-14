@@ -32,10 +32,13 @@ router.post('/add', function (req, res, next) {
     var gameId = req.query.gameId;
     var author = req.query.author;
     var msg = req.query.msg;
+    var tab = req.query.tab
+    
     HistoryAction.getModel(gameId).create({
         author: author,
         msg: msg,
-        createAt: utils.TimeUtility.getCurrentTime(gameId)
+        createAt: utils.TimeUtility.getCurrentTime(gameId),
+        tab: tab
     }, function (err, raw) {
         if(error) {
             return res.send({

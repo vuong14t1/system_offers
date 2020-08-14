@@ -12,6 +12,7 @@ require('../models/offer_lives');
 var mongoose = require('mongoose');
 var logger = require('../methods/winston');
 var _ = require('lodash');
+var HISTORY_HISTORY_CONST = require('../const/history_action_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
 	console.log('Time 111: ', Date.now())
@@ -222,7 +223,7 @@ router.post('/create', async function (req, res, next) {
                             }); 
                             return;
                         }
-                        utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã tạo object OBJECT_" + groupObject.seq);
+                        utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã tạo object OBJECT_" + groupObject.seq, HISTORY_HISTORY_CONST.TAB.OBJECT);
                         groupObject.totalUser = raws.nModified;
                         // groupObject.totalCurrentUser = raws.nModified;
                         await groupObject.save();
@@ -376,7 +377,7 @@ router.post('/edit', async function (req, res, next) {
                 // console.log("usersAfters ===", usersAfters);
                 groupObject.totalUser = raws.nModified;
                 // groupObject.totalCurrentUser = raws.nModified;
-                utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã chỉnh sửa object OBJECT_" + groupObject.seq);
+                utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã chỉnh sửa object OBJECT_" + groupObject.seq, HISTORY_HISTORY_CONST.TAB.OBJECT);
                 await groupObject.save();
                 console.log("groupObject.totalUser == ", groupObject.totalUser);
                 res.send({
@@ -403,7 +404,7 @@ router.post('/delete', async function (req, res, next) {
         logger.getLogger(gameId).info("delete group object | delete group of user " + JSON.stringify(raw));
     });
     await GroupObjects.getModel(gameId).findByIdAndRemove(body.idGroupObject).exec(function (err, raw) {
-        utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã xóa object OBJECT_" + raw.seq);        
+        utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã xóa object OBJECT_" + raw.seq, HISTORY_HISTORY_CONST.TAB.OBJECT);        
     });
     await OfferLives.getModel(gameId).updateMany({groupObject: body.idGroupObject}, {groupObject: null}, {new: true}).exec(function (err, raws) {
         
@@ -486,7 +487,7 @@ router.get('/add_user_to_group', function (req, res, next) {
                     Users.getModel(gameId).updateOne({userId: uId}, { $push: {groupObject: mongoose.Types.ObjectId(groupId)}, isModifiedOffer: true}, {new: true}, async function(err, raw){
                         GroupObjects.getModel(gameId).updateOne({_id: groupId}, {$inc: {totalUser: 1, totalCurrentUser: 1}}).exec(function (err, raw1) {
                             if(raw1) {
-                                utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã thêm user" + uId + " vào object OBJECT_" + raw1.seq);
+                                utils.HistoryActionUtility.addAction(gameId, req.session.email, "Đã thêm user" + uId + " vào object OBJECT_" + raw1.seq, HISTORY_HISTORY_CONST.TAB.OBJECT);
                                 logger.getLogger(gameId).info("add user to group " + uId + " | " + groupId);
                                 res.send({
                                     errorCode: ERROR_CODE.SUCCESS,

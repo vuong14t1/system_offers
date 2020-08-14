@@ -16,6 +16,10 @@ function getSchema(gameId) {
             msg: {
                 type: String,
                 default: "unknown"
+            },
+            tab: {
+                type: Number,
+                default: -1
             }
         });
     }
