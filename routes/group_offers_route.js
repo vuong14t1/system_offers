@@ -146,4 +146,24 @@ router.post('/edit', function (req, res, next) {
         }
     });
 });
+
+router.get("/get_list_group_offer", function (req, res, next) {
+    var gameId = res.query.gameId;
+    GroupOffers.getModel(gameId).find({}).exec(function (err, groupOffers) {
+        if(err) {
+            res.send({
+                errorCode: ERROR_CODE.FAIL,
+                data: []
+            });
+            return;
+        }
+        var raws = [];
+        for(var i in groupOffers) {
+            raws.push({
+                id: groupOffers[i],
+                nameOffer: groupOffers[i].nameOffer
+            });
+        }
+    });
+});
 module.exports = router;

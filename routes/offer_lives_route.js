@@ -8,8 +8,8 @@ var utils = require('../methods/utils');
 const ROLE = require('../const/role_const');
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    if(req.path != "/offer_lives/tracking_show") {
+    console.log('Time: ', Date.now() + req.path);
+    if(req.path != "/tracking_show") {
         if(!req.session.loggedIn) {
             res.send({
                 errorCode: ERROR_CODE.NOT_LOGIN
@@ -171,7 +171,7 @@ router.post('/edit', function (req, res, next) {
 router.get("/tracking_show", async function (req, res, next) {
     var gameId = req.query.gameId;
     var idOfferLive = req.query.idOfferLive;
-    if(gameId == null || idOfferLive == null) {
+    if(idOfferLive == null) {
         res.send({
             errorCode: ERROR_CODE.FAIL
         });

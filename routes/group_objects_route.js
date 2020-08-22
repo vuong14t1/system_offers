@@ -281,4 +281,29 @@ router.get('/list_user', function (req, res, next) {
         res.send({errorCode: ERROR_CODE.SUCCESS, data: users});
     });
 });
+
+router.get('/get_list_group_object', function (req, res, next) {
+    var gameId = req.query.gameId;
+    await GroupObjects.getModel(gameId).find({}).where("offerLive").ne(null).exec(async function (err, groupObjects) {
+        if(err) {
+            res.send({
+                errorCode: ERROR_CODE.FAIL,
+                data: []
+            });
+            return;
+        };
+        console.log("get_list_group_object" + JSON.stringify(groupObjects));
+        var raws = [];
+        for(var i in groupObjects) {
+            raw.push({
+                id: groupObjects[i]._id,
+                nameObject: groupObjects[i].nameObject
+            });
+        }
+        res.send({
+            errorCode: ERROR_CODE.SUCCESS,
+            data: raws
+        });
+    });
+});
 module.exports = router;
