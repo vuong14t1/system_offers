@@ -422,7 +422,7 @@ router.get('/list_user', function (req, res, next) {
     if(indexPage == null) {
         indexPage = 0;
     }
-    var numberOfPage = 10;
+    var numberOfPage = 20;
     console.log("numberOfPage ", numberOfPage , "indexPage ", indexPage);
     Users.getModel(gameId).find({groupObject: mongoose.Types.ObjectId(idGroupObject)}).skip(indexPage * numberOfPage).limit(numberOfPage).exec(function (err, users) {
         if(err) return res.send({errorCode: ERROR_CODE.FAIL});
